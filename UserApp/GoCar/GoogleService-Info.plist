@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>213045637799-h484q1momt1n7fdtocuq68rgfdcvo6aq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.213045637799-h484q1momt1n7fdtocuq68rgfdcvo6aq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAG0cEoU3cwiYoxPlbV-tZ4rTZ4OSJ6JP0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>213045637799</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Swift.GoCar</string>
+	<key>PROJECT_ID</key>
+	<string>gocarrmit</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gocarrmit.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:213045637799:ios:0564ff698415cdfeb46182</string>
+</dict>
+</plist>
