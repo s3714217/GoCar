@@ -3,197 +3,253 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DB94991BF8A47EC7C332674 /* Pods_GoCar_GoCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB59A743E4692BC48DF3C113 /* Pods_GoCar_GoCarUITests.framework */; };
-		7D164E49E84025FC85005A3F /* Pods_GoCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E977CC44BC4E306819924E5E /* Pods_GoCarTests.framework */; };
-		9696CA1425EF7A5B00799E59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA1325EF7A5B00799E59 /* AppDelegate.swift */; };
-		9696CA1625EF7A5B00799E59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA1525EF7A5B00799E59 /* SceneDelegate.swift */; };
-		9696CA1825EF7A5B00799E59 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA1725EF7A5B00799E59 /* ContentView.swift */; };
-		9696CA1B25EF7A5B00799E59 /* GoCar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA1925EF7A5B00799E59 /* GoCar.xcdatamodeld */; };
-		9696CA1D25EF7A6200799E59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9696CA1C25EF7A6200799E59 /* Assets.xcassets */; };
-		9696CA2025EF7A6200799E59 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9696CA1F25EF7A6200799E59 /* Preview Assets.xcassets */; };
-		9696CA2325EF7A6200799E59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9696CA2125EF7A6200799E59 /* LaunchScreen.storyboard */; };
-		9696CA2E25EF7A6300799E59 /* GoCarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA2D25EF7A6300799E59 /* GoCarTests.swift */; };
-		9696CA3925EF7A6300799E59 /* GoCarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9696CA3825EF7A6300799E59 /* GoCarUITests.swift */; };
-		9696CCAD25EF7C0700799E59 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9696CCAC25EF7C0700799E59 /* GoogleService-Info.plist */; };
-		A86CF931BF9B95D2DBE9F40F /* Pods_GoCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7C8EEFD35A7B9E7AF8767F /* Pods_GoCar.framework */; };
+		2C997E4DAA7BBB8EFE6BC14E /* Pods_GoCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C26A350C86A123C0522D889 /* Pods_GoCarTests.framework */; };
+		38280439FAE359580E982786 /* Pods_GoCar_GoCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6025565330CE39B30D42954A /* Pods_GoCar_GoCarUITests.framework */; };
+		406C4BBDDBA8D670E39BD41B /* Pods_GoCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C16936D261D8B6E8CF0A592 /* Pods_GoCar.framework */; };
+		965F3C4725F512E400CE1100 /* start-img.png in Resources */ = {isa = PBXBuildFile; fileRef = 965F3C4625F512E400CE1100 /* start-img.png */; };
+		965F3C4C25F6169E00CE1100 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C4B25F6169E00CE1100 /* LoginController.swift */; };
+		965F3C5125F616BF00CE1100 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C5025F616BF00CE1100 /* SignUpController.swift */; };
+		965F3C5625F6279800CE1100 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C5525F6279800CE1100 /* User.swift */; };
+		965F3C5B25F62D6D00CE1100 /* DBservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C5A25F62D6D00CE1100 /* DBservice.swift */; };
+		965F3C6025F6339700CE1100 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 965F3C5F25F6339700CE1100 /* GoogleService-Info.plist */; };
+		96F2E2A625F2155C00044F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2A525F2155C00044F56 /* AppDelegate.swift */; };
+		96F2E2A825F2155C00044F56 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2A725F2155C00044F56 /* SceneDelegate.swift */; };
+		96F2E2AA25F2155C00044F56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2A925F2155C00044F56 /* ViewController.swift */; };
+		96F2E2AD25F2155C00044F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2AB25F2155C00044F56 /* Main.storyboard */; };
+		96F2E2B025F2155C00044F56 /* GoCar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2AE25F2155C00044F56 /* GoCar.xcdatamodeld */; };
+		96F2E2B225F2155F00044F56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2B125F2155F00044F56 /* Assets.xcassets */; };
+		96F2E2B525F2155F00044F56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2B325F2155F00044F56 /* LaunchScreen.storyboard */; };
+		96F2E2C025F2156000044F56 /* GoCarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2BF25F2156000044F56 /* GoCarTests.swift */; };
+		96F2E2CB25F2156000044F56 /* GoCarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2CA25F2156000044F56 /* GoCarUITests.swift */; };
+		96F2E2F625F218F800044F56 /* app-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2F525F218F800044F56 /* app-logo.png */; };
+		96F2E2FC25F502AC00044F56 /* app-logo-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2FA25F502AB00044F56 /* app-logo-2.png */; };
+		96F2E2FD25F502AC00044F56 /* app-logo-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2FB25F502AB00044F56 /* app-logo-3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9696CA2A25EF7A6300799E59 /* PBXContainerItemProxy */ = {
+		96F2E2BC25F2156000044F56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9696CA0825EF7A5B00799E59 /* Project object */;
+			containerPortal = 96F2E29A25F2155C00044F56 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9696CA0F25EF7A5B00799E59;
+			remoteGlobalIDString = 96F2E2A125F2155C00044F56;
 			remoteInfo = GoCar;
 		};
-		9696CA3525EF7A6300799E59 /* PBXContainerItemProxy */ = {
+		96F2E2C725F2156000044F56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9696CA0825EF7A5B00799E59 /* Project object */;
+			containerPortal = 96F2E29A25F2155C00044F56 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9696CA0F25EF7A5B00799E59;
+			remoteGlobalIDString = 96F2E2A125F2155C00044F56;
 			remoteInfo = GoCar;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06349AA2E10C05158CB58D89 /* Pods-GoCarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCarTests.debug.xcconfig"; path = "Target Support Files/Pods-GoCarTests/Pods-GoCarTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2B02D2AEE7CEDC1F48AC2A16 /* Pods-GoCar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar.debug.xcconfig"; path = "Target Support Files/Pods-GoCar/Pods-GoCar.debug.xcconfig"; sourceTree = "<group>"; };
-		521A0B4DFDDA65B7042957CC /* Pods-GoCar-GoCarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar-GoCarUITests.release.xcconfig"; path = "Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests.release.xcconfig"; sourceTree = "<group>"; };
-		7E713D30109B054C5B80D752 /* Pods-GoCar-GoCarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar-GoCarUITests.debug.xcconfig"; path = "Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		9696CA1025EF7A5B00799E59 /* GoCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9696CA1325EF7A5B00799E59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9696CA1525EF7A5B00799E59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9696CA1725EF7A5B00799E59 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		9696CA1A25EF7A5B00799E59 /* GoCar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GoCar.xcdatamodel; sourceTree = "<group>"; };
-		9696CA1C25EF7A6200799E59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9696CA1F25EF7A6200799E59 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9696CA2225EF7A6200799E59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9696CA2425EF7A6200799E59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9696CA2925EF7A6300799E59 /* GoCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9696CA2D25EF7A6300799E59 /* GoCarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCarTests.swift; sourceTree = "<group>"; };
-		9696CA2F25EF7A6300799E59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9696CA3425EF7A6300799E59 /* GoCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoCarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9696CA3825EF7A6300799E59 /* GoCarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCarUITests.swift; sourceTree = "<group>"; };
-		9696CA3A25EF7A6300799E59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9696CCAC25EF7C0700799E59 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		AB59A743E4692BC48DF3C113 /* Pods_GoCar_GoCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCar_GoCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD7C8EEFD35A7B9E7AF8767F /* Pods_GoCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2D324F598695C519A687740 /* Pods-GoCarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCarTests.release.xcconfig"; path = "Target Support Files/Pods-GoCarTests/Pods-GoCarTests.release.xcconfig"; sourceTree = "<group>"; };
-		E977CC44BC4E306819924E5E /* Pods_GoCarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB800C8094C176D6A4F21D0E /* Pods-GoCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar.release.xcconfig"; path = "Target Support Files/Pods-GoCar/Pods-GoCar.release.xcconfig"; sourceTree = "<group>"; };
+		0C16936D261D8B6E8CF0A592 /* Pods_GoCar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11F06C682457F3B7C337C2C5 /* Pods-GoCarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCarTests.release.xcconfig"; path = "Target Support Files/Pods-GoCarTests/Pods-GoCarTests.release.xcconfig"; sourceTree = "<group>"; };
+		1FBDB7A226EFE25FC566FFA9 /* Pods-GoCarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCarTests.debug.xcconfig"; path = "Target Support Files/Pods-GoCarTests/Pods-GoCarTests.debug.xcconfig"; sourceTree = "<group>"; };
+		33CD70FDB27F31F3DADB4F47 /* Pods-GoCar-GoCarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar-GoCarUITests.release.xcconfig"; path = "Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests.release.xcconfig"; sourceTree = "<group>"; };
+		6025565330CE39B30D42954A /* Pods_GoCar_GoCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCar_GoCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C8AD7B4FF8C2F50ADC5F4CC /* Pods-GoCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar.release.xcconfig"; path = "Target Support Files/Pods-GoCar/Pods-GoCar.release.xcconfig"; sourceTree = "<group>"; };
+		7C26A350C86A123C0522D889 /* Pods_GoCarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		965F3C4625F512E400CE1100 /* start-img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-img.png"; sourceTree = "<group>"; };
+		965F3C4B25F6169E00CE1100 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		965F3C5025F616BF00CE1100 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		965F3C5525F6279800CE1100 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		965F3C5A25F62D6D00CE1100 /* DBservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBservice.swift; sourceTree = "<group>"; };
+		965F3C5F25F6339700CE1100 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		96F2E2A225F2155C00044F56 /* GoCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96F2E2A525F2155C00044F56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		96F2E2A725F2155C00044F56 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		96F2E2A925F2155C00044F56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		96F2E2AC25F2155C00044F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		96F2E2AF25F2155C00044F56 /* GoCar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GoCar.xcdatamodel; sourceTree = "<group>"; };
+		96F2E2B125F2155F00044F56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		96F2E2B425F2155F00044F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		96F2E2B625F2155F00044F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96F2E2BB25F2156000044F56 /* GoCarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoCarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		96F2E2BF25F2156000044F56 /* GoCarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCarTests.swift; sourceTree = "<group>"; };
+		96F2E2C125F2156000044F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96F2E2C625F2156000044F56 /* GoCarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoCarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		96F2E2CA25F2156000044F56 /* GoCarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoCarUITests.swift; sourceTree = "<group>"; };
+		96F2E2CC25F2156000044F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96F2E2F525F218F800044F56 /* app-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-logo.png"; sourceTree = "<group>"; };
+		96F2E2FA25F502AB00044F56 /* app-logo-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-logo-2.png"; sourceTree = "<group>"; };
+		96F2E2FB25F502AB00044F56 /* app-logo-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-logo-3.png"; sourceTree = "<group>"; };
+		9E53004FB803EB36CA6D9284 /* Pods-GoCar-GoCarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar-GoCarUITests.debug.xcconfig"; path = "Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD8119E36128EA50CF0587A7 /* Pods-GoCar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar.debug.xcconfig"; path = "Target Support Files/Pods-GoCar/Pods-GoCar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9696CA0D25EF7A5B00799E59 /* Frameworks */ = {
+		96F2E29F25F2155C00044F56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A86CF931BF9B95D2DBE9F40F /* Pods_GoCar.framework in Frameworks */,
+				406C4BBDDBA8D670E39BD41B /* Pods_GoCar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA2625EF7A6300799E59 /* Frameworks */ = {
+		96F2E2B825F2156000044F56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D164E49E84025FC85005A3F /* Pods_GoCarTests.framework in Frameworks */,
+				2C997E4DAA7BBB8EFE6BC14E /* Pods_GoCarTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA3125EF7A6300799E59 /* Frameworks */ = {
+		96F2E2C325F2156000044F56 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DB94991BF8A47EC7C332674 /* Pods_GoCar_GoCarUITests.framework in Frameworks */,
+				38280439FAE359580E982786 /* Pods_GoCar_GoCarUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1C5FEEF0C93D39C848535BB7 /* Frameworks */ = {
+		19B55D1361FF05441A8EE3DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CD7C8EEFD35A7B9E7AF8767F /* Pods_GoCar.framework */,
-				AB59A743E4692BC48DF3C113 /* Pods_GoCar_GoCarUITests.framework */,
-				E977CC44BC4E306819924E5E /* Pods_GoCarTests.framework */,
+				0C16936D261D8B6E8CF0A592 /* Pods_GoCar.framework */,
+				6025565330CE39B30D42954A /* Pods_GoCar_GoCarUITests.framework */,
+				7C26A350C86A123C0522D889 /* Pods_GoCarTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		79E5570AF34401899D4C7390 /* Pods */ = {
+		96F2E29925F2155C00044F56 = {
 			isa = PBXGroup;
 			children = (
-				2B02D2AEE7CEDC1F48AC2A16 /* Pods-GoCar.debug.xcconfig */,
-				FB800C8094C176D6A4F21D0E /* Pods-GoCar.release.xcconfig */,
-				7E713D30109B054C5B80D752 /* Pods-GoCar-GoCarUITests.debug.xcconfig */,
-				521A0B4DFDDA65B7042957CC /* Pods-GoCar-GoCarUITests.release.xcconfig */,
-				06349AA2E10C05158CB58D89 /* Pods-GoCarTests.debug.xcconfig */,
-				D2D324F598695C519A687740 /* Pods-GoCarTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		9696CA0725EF7A5B00799E59 = {
-			isa = PBXGroup;
-			children = (
-				9696CA1225EF7A5B00799E59 /* GoCar */,
-				9696CA2C25EF7A6300799E59 /* GoCarTests */,
-				9696CA3725EF7A6300799E59 /* GoCarUITests */,
-				9696CA1125EF7A5B00799E59 /* Products */,
-				79E5570AF34401899D4C7390 /* Pods */,
-				1C5FEEF0C93D39C848535BB7 /* Frameworks */,
+				96F2E2A425F2155C00044F56 /* GoCar */,
+				96F2E2BE25F2156000044F56 /* GoCarTests */,
+				96F2E2C925F2156000044F56 /* GoCarUITests */,
+				96F2E2A325F2155C00044F56 /* Products */,
+				AAB2F252CAA710C70BDB8C9A /* Pods */,
+				19B55D1361FF05441A8EE3DB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		9696CA1125EF7A5B00799E59 /* Products */ = {
+		96F2E2A325F2155C00044F56 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9696CA1025EF7A5B00799E59 /* GoCar.app */,
-				9696CA2925EF7A6300799E59 /* GoCarTests.xctest */,
-				9696CA3425EF7A6300799E59 /* GoCarUITests.xctest */,
+				96F2E2A225F2155C00044F56 /* GoCar.app */,
+				96F2E2BB25F2156000044F56 /* GoCarTests.xctest */,
+				96F2E2C625F2156000044F56 /* GoCarUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9696CA1225EF7A5B00799E59 /* GoCar */ = {
+		96F2E2A425F2155C00044F56 /* GoCar */ = {
 			isa = PBXGroup;
 			children = (
-				9696CCAC25EF7C0700799E59 /* GoogleService-Info.plist */,
-				9696CA1325EF7A5B00799E59 /* AppDelegate.swift */,
-				9696CA1525EF7A5B00799E59 /* SceneDelegate.swift */,
-				9696CA1725EF7A5B00799E59 /* ContentView.swift */,
-				9696CA1C25EF7A6200799E59 /* Assets.xcassets */,
-				9696CA2125EF7A6200799E59 /* LaunchScreen.storyboard */,
-				9696CA2425EF7A6200799E59 /* Info.plist */,
-				9696CA1925EF7A5B00799E59 /* GoCar.xcdatamodeld */,
-				9696CA1E25EF7A6200799E59 /* Preview Content */,
+				96F2E2F425F218EB00044F56 /* Lib */,
+				96F2E2F225F217E700044F56 /* Model */,
+				96F2E2F325F217EE00044F56 /* View */,
+				96F2E2F125F217E000044F56 /* Control */,
+				96F2E2F025F217D800044F56 /* Util */,
+				96F2E2B125F2155F00044F56 /* Assets.xcassets */,
+				96F2E2B625F2155F00044F56 /* Info.plist */,
+				965F3C5F25F6339700CE1100 /* GoogleService-Info.plist */,
+				96F2E2AE25F2155C00044F56 /* GoCar.xcdatamodeld */,
 			);
 			path = GoCar;
 			sourceTree = "<group>";
 		};
-		9696CA1E25EF7A6200799E59 /* Preview Content */ = {
+		96F2E2BE25F2156000044F56 /* GoCarTests */ = {
 			isa = PBXGroup;
 			children = (
-				9696CA1F25EF7A6200799E59 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		9696CA2C25EF7A6300799E59 /* GoCarTests */ = {
-			isa = PBXGroup;
-			children = (
-				9696CA2D25EF7A6300799E59 /* GoCarTests.swift */,
-				9696CA2F25EF7A6300799E59 /* Info.plist */,
+				96F2E2BF25F2156000044F56 /* GoCarTests.swift */,
+				96F2E2C125F2156000044F56 /* Info.plist */,
 			);
 			path = GoCarTests;
 			sourceTree = "<group>";
 		};
-		9696CA3725EF7A6300799E59 /* GoCarUITests */ = {
+		96F2E2C925F2156000044F56 /* GoCarUITests */ = {
 			isa = PBXGroup;
 			children = (
-				9696CA3825EF7A6300799E59 /* GoCarUITests.swift */,
-				9696CA3A25EF7A6300799E59 /* Info.plist */,
+				96F2E2CA25F2156000044F56 /* GoCarUITests.swift */,
+				96F2E2CC25F2156000044F56 /* Info.plist */,
 			);
 			path = GoCarUITests;
+			sourceTree = "<group>";
+		};
+		96F2E2F025F217D800044F56 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				96F2E2A525F2155C00044F56 /* AppDelegate.swift */,
+				96F2E2A725F2155C00044F56 /* SceneDelegate.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		96F2E2F125F217E000044F56 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				96F2E2A925F2155C00044F56 /* ViewController.swift */,
+				965F3C4B25F6169E00CE1100 /* LoginController.swift */,
+				965F3C5025F616BF00CE1100 /* SignUpController.swift */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		96F2E2F225F217E700044F56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				965F3C5525F6279800CE1100 /* User.swift */,
+				965F3C5A25F62D6D00CE1100 /* DBservice.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96F2E2F325F217EE00044F56 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				96F2E2AB25F2155C00044F56 /* Main.storyboard */,
+				96F2E2B325F2155F00044F56 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96F2E2F425F218EB00044F56 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				965F3C4625F512E400CE1100 /* start-img.png */,
+				96F2E2FA25F502AB00044F56 /* app-logo-2.png */,
+				96F2E2FB25F502AB00044F56 /* app-logo-3.png */,
+				96F2E2F525F218F800044F56 /* app-logo.png */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		AAB2F252CAA710C70BDB8C9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BD8119E36128EA50CF0587A7 /* Pods-GoCar.debug.xcconfig */,
+				6C8AD7B4FF8C2F50ADC5F4CC /* Pods-GoCar.release.xcconfig */,
+				9E53004FB803EB36CA6D9284 /* Pods-GoCar-GoCarUITests.debug.xcconfig */,
+				33CD70FDB27F31F3DADB4F47 /* Pods-GoCar-GoCarUITests.release.xcconfig */,
+				1FBDB7A226EFE25FC566FFA9 /* Pods-GoCarTests.debug.xcconfig */,
+				11F06C682457F3B7C337C2C5 /* Pods-GoCarTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9696CA0F25EF7A5B00799E59 /* GoCar */ = {
+		96F2E2A125F2155C00044F56 /* GoCar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9696CA3D25EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCar" */;
+			buildConfigurationList = 96F2E2CF25F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCar" */;
 			buildPhases = (
-				133BE2B2E1269D5DD1F59870 /* [CP] Check Pods Manifest.lock */,
-				9696CA0C25EF7A5B00799E59 /* Sources */,
-				9696CA0D25EF7A5B00799E59 /* Frameworks */,
-				9696CA0E25EF7A5B00799E59 /* Resources */,
+				81FF960757D15DA03AEBBB88 /* [CP] Check Pods Manifest.lock */,
+				96F2E29E25F2155C00044F56 /* Sources */,
+				96F2E29F25F2155C00044F56 /* Frameworks */,
+				96F2E2A025F2155C00044F56 /* Resources */,
+				D27BAE9AB12C66F6E7821D0E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,71 +257,71 @@
 			);
 			name = GoCar;
 			productName = GoCar;
-			productReference = 9696CA1025EF7A5B00799E59 /* GoCar.app */;
+			productReference = 96F2E2A225F2155C00044F56 /* GoCar.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9696CA2825EF7A6300799E59 /* GoCarTests */ = {
+		96F2E2BA25F2156000044F56 /* GoCarTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9696CA4025EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCarTests" */;
+			buildConfigurationList = 96F2E2D225F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCarTests" */;
 			buildPhases = (
-				1D6D529A5AA80D1E0119C1C3 /* [CP] Check Pods Manifest.lock */,
-				9696CA2525EF7A6300799E59 /* Sources */,
-				9696CA2625EF7A6300799E59 /* Frameworks */,
-				9696CA2725EF7A6300799E59 /* Resources */,
-				B8E7F6C28E409BCF7E2A0559 /* [CP] Embed Pods Frameworks */,
+				6B12627E6843C807D9012443 /* [CP] Check Pods Manifest.lock */,
+				96F2E2B725F2156000044F56 /* Sources */,
+				96F2E2B825F2156000044F56 /* Frameworks */,
+				96F2E2B925F2156000044F56 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9696CA2B25EF7A6300799E59 /* PBXTargetDependency */,
+				96F2E2BD25F2156000044F56 /* PBXTargetDependency */,
 			);
 			name = GoCarTests;
 			productName = GoCarTests;
-			productReference = 9696CA2925EF7A6300799E59 /* GoCarTests.xctest */;
+			productReference = 96F2E2BB25F2156000044F56 /* GoCarTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9696CA3325EF7A6300799E59 /* GoCarUITests */ = {
+		96F2E2C525F2156000044F56 /* GoCarUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9696CA4325EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCarUITests" */;
+			buildConfigurationList = 96F2E2D525F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCarUITests" */;
 			buildPhases = (
-				963AACD0B11517AA5536E8A9 /* [CP] Check Pods Manifest.lock */,
-				9696CA3025EF7A6300799E59 /* Sources */,
-				9696CA3125EF7A6300799E59 /* Frameworks */,
-				9696CA3225EF7A6300799E59 /* Resources */,
+				F907C657752F21A6849E2F77 /* [CP] Check Pods Manifest.lock */,
+				96F2E2C225F2156000044F56 /* Sources */,
+				96F2E2C325F2156000044F56 /* Frameworks */,
+				96F2E2C425F2156000044F56 /* Resources */,
+				681D39BD09E648FDE909F47C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9696CA3625EF7A6300799E59 /* PBXTargetDependency */,
+				96F2E2C825F2156000044F56 /* PBXTargetDependency */,
 			);
 			name = GoCarUITests;
 			productName = GoCarUITests;
-			productReference = 9696CA3425EF7A6300799E59 /* GoCarUITests.xctest */;
+			productReference = 96F2E2C625F2156000044F56 /* GoCarUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9696CA0825EF7A5B00799E59 /* Project object */ = {
+		96F2E29A25F2155C00044F56 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
-					9696CA0F25EF7A5B00799E59 = {
+					96F2E2A125F2155C00044F56 = {
 						CreatedOnToolsVersion = 12.2;
 					};
-					9696CA2825EF7A6300799E59 = {
+					96F2E2BA25F2156000044F56 = {
 						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 9696CA0F25EF7A5B00799E59;
+						TestTargetID = 96F2E2A125F2155C00044F56;
 					};
-					9696CA3325EF7A6300799E59 = {
+					96F2E2C525F2156000044F56 = {
 						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 9696CA0F25EF7A5B00799E59;
+						TestTargetID = 96F2E2A125F2155C00044F56;
 					};
 				};
 			};
-			buildConfigurationList = 9696CA0B25EF7A5B00799E59 /* Build configuration list for PBXProject "GoCar" */;
+			buildConfigurationList = 96F2E29D25F2155C00044F56 /* Build configuration list for PBXProject "GoCar" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -273,38 +329,42 @@
 				en,
 				Base,
 			);
-			mainGroup = 9696CA0725EF7A5B00799E59;
-			productRefGroup = 9696CA1125EF7A5B00799E59 /* Products */;
+			mainGroup = 96F2E29925F2155C00044F56;
+			productRefGroup = 96F2E2A325F2155C00044F56 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9696CA0F25EF7A5B00799E59 /* GoCar */,
-				9696CA2825EF7A6300799E59 /* GoCarTests */,
-				9696CA3325EF7A6300799E59 /* GoCarUITests */,
+				96F2E2A125F2155C00044F56 /* GoCar */,
+				96F2E2BA25F2156000044F56 /* GoCarTests */,
+				96F2E2C525F2156000044F56 /* GoCarUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9696CA0E25EF7A5B00799E59 /* Resources */ = {
+		96F2E2A025F2155C00044F56 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9696CA2325EF7A6200799E59 /* LaunchScreen.storyboard in Resources */,
-				9696CCAD25EF7C0700799E59 /* GoogleService-Info.plist in Resources */,
-				9696CA2025EF7A6200799E59 /* Preview Assets.xcassets in Resources */,
-				9696CA1D25EF7A6200799E59 /* Assets.xcassets in Resources */,
+				96F2E2FD25F502AC00044F56 /* app-logo-3.png in Resources */,
+				965F3C6025F6339700CE1100 /* GoogleService-Info.plist in Resources */,
+				96F2E2FC25F502AC00044F56 /* app-logo-2.png in Resources */,
+				96F2E2B525F2155F00044F56 /* LaunchScreen.storyboard in Resources */,
+				96F2E2B225F2155F00044F56 /* Assets.xcassets in Resources */,
+				96F2E2F625F218F800044F56 /* app-logo.png in Resources */,
+				96F2E2AD25F2155C00044F56 /* Main.storyboard in Resources */,
+				965F3C4725F512E400CE1100 /* start-img.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA2725EF7A6300799E59 /* Resources */ = {
+		96F2E2B925F2156000044F56 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA3225EF7A6300799E59 /* Resources */ = {
+		96F2E2C425F2156000044F56 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,29 +374,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		133BE2B2E1269D5DD1F59870 /* [CP] Check Pods Manifest.lock */ = {
+		681D39BD09E648FDE909F47C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GoCar-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoCar-GoCarUITests/Pods-GoCar-GoCarUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1D6D529A5AA80D1E0119C1C3 /* [CP] Check Pods Manifest.lock */ = {
+		6B12627E6843C807D9012443 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -358,7 +413,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		963AACD0B11517AA5536E8A9 /* [CP] Check Pods Manifest.lock */ = {
+		81FF960757D15DA03AEBBB88 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GoCar-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D27BAE9AB12C66F6E7821D0E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoCar/Pods-GoCar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GoCar/Pods-GoCar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoCar/Pods-GoCar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F907C657752F21A6849E2F77 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,73 +474,68 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B8E7F6C28E409BCF7E2A0559 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GoCarTests/Pods-GoCarTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GoCarTests/Pods-GoCarTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GoCarTests/Pods-GoCarTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9696CA0C25EF7A5B00799E59 /* Sources */ = {
+		96F2E29E25F2155C00044F56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9696CA1425EF7A5B00799E59 /* AppDelegate.swift in Sources */,
-				9696CA1625EF7A5B00799E59 /* SceneDelegate.swift in Sources */,
-				9696CA1B25EF7A5B00799E59 /* GoCar.xcdatamodeld in Sources */,
-				9696CA1825EF7A5B00799E59 /* ContentView.swift in Sources */,
+				96F2E2AA25F2155C00044F56 /* ViewController.swift in Sources */,
+				965F3C5B25F62D6D00CE1100 /* DBservice.swift in Sources */,
+				96F2E2A625F2155C00044F56 /* AppDelegate.swift in Sources */,
+				96F2E2B025F2155C00044F56 /* GoCar.xcdatamodeld in Sources */,
+				96F2E2A825F2155C00044F56 /* SceneDelegate.swift in Sources */,
+				965F3C4C25F6169E00CE1100 /* LoginController.swift in Sources */,
+				965F3C5125F616BF00CE1100 /* SignUpController.swift in Sources */,
+				965F3C5625F6279800CE1100 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA2525EF7A6300799E59 /* Sources */ = {
+		96F2E2B725F2156000044F56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9696CA2E25EF7A6300799E59 /* GoCarTests.swift in Sources */,
+				96F2E2C025F2156000044F56 /* GoCarTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9696CA3025EF7A6300799E59 /* Sources */ = {
+		96F2E2C225F2156000044F56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9696CA3925EF7A6300799E59 /* GoCarUITests.swift in Sources */,
+				96F2E2CB25F2156000044F56 /* GoCarUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9696CA2B25EF7A6300799E59 /* PBXTargetDependency */ = {
+		96F2E2BD25F2156000044F56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9696CA0F25EF7A5B00799E59 /* GoCar */;
-			targetProxy = 9696CA2A25EF7A6300799E59 /* PBXContainerItemProxy */;
+			target = 96F2E2A125F2155C00044F56 /* GoCar */;
+			targetProxy = 96F2E2BC25F2156000044F56 /* PBXContainerItemProxy */;
 		};
-		9696CA3625EF7A6300799E59 /* PBXTargetDependency */ = {
+		96F2E2C825F2156000044F56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9696CA0F25EF7A5B00799E59 /* GoCar */;
-			targetProxy = 9696CA3525EF7A6300799E59 /* PBXContainerItemProxy */;
+			target = 96F2E2A125F2155C00044F56 /* GoCar */;
+			targetProxy = 96F2E2C725F2156000044F56 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		9696CA2125EF7A6200799E59 /* LaunchScreen.storyboard */ = {
+		96F2E2AB25F2155C00044F56 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9696CA2225EF7A6200799E59 /* Base */,
+				96F2E2AC25F2155C00044F56 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		96F2E2B325F2155F00044F56 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				96F2E2B425F2155F00044F56 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -454,7 +543,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9696CA3B25EF7A6300799E59 /* Debug */ = {
+		96F2E2CD25F2156000044F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -515,7 +604,7 @@
 			};
 			name = Debug;
 		};
-		9696CA3C25EF7A6300799E59 /* Release */ = {
+		96F2E2CE25F2156000044F56 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -570,20 +659,14 @@
 			};
 			name = Release;
 		};
-		9696CA3E25EF7A6300799E59 /* Debug */ = {
+		96F2E2D025F2156000044F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B02D2AEE7CEDC1F48AC2A16 /* Pods-GoCar.debug.xcconfig */;
+			baseConfigurationReference = BD8119E36128EA50CF0587A7 /* Pods-GoCar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"GoCar/Preview Content\"";
 				DEVELOPMENT_TEAM = 84T7K6Z4JS;
-				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/GoCar/Downloads/Group_3_Assignment_2/a1-s3656798_s3714217_s3698883_s3487069-master/Pods/Mapbox-iOS-SDK/dynamic",
-				);
 				INFOPLIST_FILE = GoCar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -596,20 +679,14 @@
 			};
 			name = Debug;
 		};
-		9696CA3F25EF7A6300799E59 /* Release */ = {
+		96F2E2D125F2156000044F56 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB800C8094C176D6A4F21D0E /* Pods-GoCar.release.xcconfig */;
+			baseConfigurationReference = 6C8AD7B4FF8C2F50ADC5F4CC /* Pods-GoCar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"GoCar/Preview Content\"";
 				DEVELOPMENT_TEAM = 84T7K6Z4JS;
-				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/GoCar/Downloads/Group_3_Assignment_2/a1-s3656798_s3714217_s3698883_s3487069-master/Pods/Mapbox-iOS-SDK/dynamic",
-				);
 				INFOPLIST_FILE = GoCar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -622,9 +699,9 @@
 			};
 			name = Release;
 		};
-		9696CA4125EF7A6300799E59 /* Debug */ = {
+		96F2E2D325F2156000044F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06349AA2E10C05158CB58D89 /* Pods-GoCarTests.debug.xcconfig */;
+			baseConfigurationReference = 1FBDB7A226EFE25FC566FFA9 /* Pods-GoCarTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -645,9 +722,9 @@
 			};
 			name = Debug;
 		};
-		9696CA4225EF7A6300799E59 /* Release */ = {
+		96F2E2D425F2156000044F56 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2D324F598695C519A687740 /* Pods-GoCarTests.release.xcconfig */;
+			baseConfigurationReference = 11F06C682457F3B7C337C2C5 /* Pods-GoCarTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -668,9 +745,9 @@
 			};
 			name = Release;
 		};
-		9696CA4425EF7A6300799E59 /* Debug */ = {
+		96F2E2D625F2156000044F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E713D30109B054C5B80D752 /* Pods-GoCar-GoCarUITests.debug.xcconfig */;
+			baseConfigurationReference = 9E53004FB803EB36CA6D9284 /* Pods-GoCar-GoCarUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -689,9 +766,9 @@
 			};
 			name = Debug;
 		};
-		9696CA4525EF7A6300799E59 /* Release */ = {
+		96F2E2D725F2156000044F56 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 521A0B4DFDDA65B7042957CC /* Pods-GoCar-GoCarUITests.release.xcconfig */;
+			baseConfigurationReference = 33CD70FDB27F31F3DADB4F47 /* Pods-GoCar-GoCarUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -713,38 +790,38 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9696CA0B25EF7A5B00799E59 /* Build configuration list for PBXProject "GoCar" */ = {
+		96F2E29D25F2155C00044F56 /* Build configuration list for PBXProject "GoCar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9696CA3B25EF7A6300799E59 /* Debug */,
-				9696CA3C25EF7A6300799E59 /* Release */,
+				96F2E2CD25F2156000044F56 /* Debug */,
+				96F2E2CE25F2156000044F56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9696CA3D25EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCar" */ = {
+		96F2E2CF25F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9696CA3E25EF7A6300799E59 /* Debug */,
-				9696CA3F25EF7A6300799E59 /* Release */,
+				96F2E2D025F2156000044F56 /* Debug */,
+				96F2E2D125F2156000044F56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9696CA4025EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCarTests" */ = {
+		96F2E2D225F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCarTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9696CA4125EF7A6300799E59 /* Debug */,
-				9696CA4225EF7A6300799E59 /* Release */,
+				96F2E2D325F2156000044F56 /* Debug */,
+				96F2E2D425F2156000044F56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9696CA4325EF7A6300799E59 /* Build configuration list for PBXNativeTarget "GoCarUITests" */ = {
+		96F2E2D525F2156000044F56 /* Build configuration list for PBXNativeTarget "GoCarUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9696CA4425EF7A6300799E59 /* Debug */,
-				9696CA4525EF7A6300799E59 /* Release */,
+				96F2E2D625F2156000044F56 /* Debug */,
+				96F2E2D725F2156000044F56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -752,17 +829,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9696CA1925EF7A5B00799E59 /* GoCar.xcdatamodeld */ = {
+		96F2E2AE25F2155C00044F56 /* GoCar.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9696CA1A25EF7A5B00799E59 /* GoCar.xcdatamodel */,
+				96F2E2AF25F2155C00044F56 /* GoCar.xcdatamodel */,
 			);
-			currentVersion = 9696CA1A25EF7A5B00799E59 /* GoCar.xcdatamodel */;
+			currentVersion = 96F2E2AF25F2155C00044F56 /* GoCar.xcdatamodel */;
 			path = GoCar.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
 	};
-	rootObject = 9696CA0825EF7A5B00799E59 /* Project object */;
+	rootObject = 96F2E29A25F2155C00044F56 /* Project object */;
 }
