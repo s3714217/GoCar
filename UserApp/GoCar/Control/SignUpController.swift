@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class SignUpController: UIViewController {
+class SignUpController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet private weak var fullName: UITextField!
     
@@ -29,6 +29,12 @@ class SignUpController: UIViewController {
         
         self.password.textContentType = .password
         self.password.isSecureTextEntry = true
+        
+        self.fullName.delegate = self
+        self.email.delegate = self
+        self.password.delegate = self
+        self.confirmPassword.delegate = self
+
         
         self.confirmPassword.textContentType = .password
         self.confirmPassword.isSecureTextEntry = true
@@ -64,15 +70,20 @@ class SignUpController: UIViewController {
                 self.displayNoti(noti: "* Email already in use")
             }
             else{
+                
                 Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
                     if error != nil {
                         self.displayNoti(noti: "* Error with user authentication")
                     }
                     else{
                         self.db.addUserInfo(userID: Auth.auth().currentUser!.uid, fullName: self.fullName.text! )
+                        CDService().addUser(email: self.email.text!, password: self.password.text!)
                         self.performSegue(withIdentifier: "toDashboard", sender: self)
                     }
                 }
+                
+                
+                
             }
         }
        
@@ -92,7 +103,9 @@ class SignUpController: UIViewController {
         return emailPred.evaluate(with: email)
     }
     
-    
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
 }

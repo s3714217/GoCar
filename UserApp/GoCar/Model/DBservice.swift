@@ -12,12 +12,6 @@ import FirebaseAuth
 class DBService{
     
     private var db = Firestore.firestore()
-    let EXCEPTION = 0
-    let EMAIL_EXISTED = 1
-    let WRONG_PASSWORD = 2
-    let MISSING_VALUE = 3
-    let PASSED = 4
-    let REJECTED = 5
     
     public init(){
     
@@ -73,6 +67,7 @@ class DBService{
         }
         
     }
+    
 
 }
 
