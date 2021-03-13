@@ -1,11 +1,18 @@
 <?php 
 
+    require __DIR__ . '/vendor/autoload.php';
+    session_start();
+
 $login_email_address = $login_password = '';
 $login_email_address_err = $login_password_err = $login_err = '';
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $_SESSION['portal_logged_in'] = TRUE;
+}
+
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head> 
     <title>Login | GoCar</title>
@@ -27,7 +34,7 @@ $login_email_address_err = $login_password_err = $login_err = '';
 <body id="portalLogin" class="d-flex m-0 p-0 vh-100">
     <div class="container m-auto text-center">
         <div id="loginCard" class="card bg-secondary mx-auto">
-            <img src="style/logo.png" id="logo" class="card-img-top w-50 mx-auto mt-2" alt="GoCar Logo">
+            <img src="style/logo.svg" id="logo" class="card-img-top w-50 mx-auto mt-2" alt="GoCar Logo">
 
             <div class="card-body">
                 <h1 class="card-title">Login</h1>
