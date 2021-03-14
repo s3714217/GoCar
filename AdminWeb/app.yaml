@@ -1,11 +1,11 @@
 runtime: php73
 
 handlers:
+  - url: /
+    script: auto
+
   - url: /style
     static_dir: style
-
-  - url: .*
-    script: auto
 
 env_variables:
   APP_DEBUG: true
