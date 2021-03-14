@@ -8,6 +8,7 @@ $login_email_address_err = $login_password_err = $login_err = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['portal_logged_in'] = TRUE;
+    header('location: /');
 }
 
 ?>
@@ -33,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body id="portalLogin" class="d-flex m-0 p-0 vh-100">
     <div class="container m-auto text-center">
-        <div id="loginCard" class="card bg-secondary mx-auto">
-            <img src="style/logo.svg" id="logo" class="card-img-top w-50 mx-auto mt-2" alt="GoCar Logo">
+        <div id="loginCard" class="card bg-secondary mx-auto rounded-lg">
+            <img src="style/login_logo.svg" id="logo" class="card-img-top w-50 mx-auto mt-4" alt="GoCar Logo">
 
             <div class="card-body">
                 <h1 class="card-title">Login</h1>
@@ -44,28 +45,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!--Form validation for admin email-->
                         <label class="sr-only" for="portalEmail">Email</label>
 
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-lg" id="portalEmail" name="portalEmail" placeholder="Email" value="">
+                        <div class="input-group border-0">
+                            <input type="text" class="form-control form-control-lg border-0" id="portalEmail" name="portalEmail" placeholder="Email" value="">
                         </div>
                     </div>
 
-                    <div class="col-auto mt-3 p-0">
+                    <div class="col-auto mt-4 p-0">
                         <!--Form validation for admin password-->
                         <label class="sr-only" for="portalPassword">Password</label>
 
-                        <div class="input-group">
-                            <input type="password" class="form-control form-control-lg" id="portalPassword" name="portalPassword" placeholder="Password" value="">
+                        <div class="input-group border-0">
+                            <input type="password" class="form-control form-control-lg border-0" id="portalPassword" name="portalPassword" placeholder="Password" value="">
                         </div>
                     </div>
 
-                    <button id="loginSubmitButton" type="submit" class="btn btn-primary btn-block btn-lg-mt-4">
-                        <span id="loginButton">Login</span> 
-                    </button>
+                    <button id="loginSubmitButton" type="submit" class="btn btn-primary btn-block btn-lg mt-5 border-0">Login</button>
                 </form>
             </div>
 
-            <div class="py-2 text-logo">
-                <h6 class="mb-0">Copyright &copy; 2021 &#64; gocar.com</h6>
+            <div class="text-logo my-4">
+                <h6 class="mb-0">Copyright &copy; <?php echo date('Y'); ?> &#64; gocar.com</h6>
             </div>
             
         </div>
