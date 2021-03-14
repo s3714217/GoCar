@@ -5,7 +5,7 @@ if(isset($_SESSION['portal_logged_in']) && $_SESSION['portal_logged_in'] == TRUE
 {
     switch (parse_url($_SERVER['REQUEST_URI'])['path']) {
         case '/':
-            require 'register.php';
+            require 'main.php';
             break;
         case '/register':
             require 'register.php';
@@ -26,8 +26,8 @@ if(isset($_SESSION['portal_logged_in']) && $_SESSION['portal_logged_in'] == TRUE
             require 'login.php';
             break;
         default:
-            http_response_code(404);
-            exit('Not Found');
-}
+            require 'login.php';
+            exit;
+    }
 }
 ?>
