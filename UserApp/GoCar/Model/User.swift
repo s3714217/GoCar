@@ -14,6 +14,9 @@ public struct User{
     var card: CreditCard
     var history: [History]
     var renting: Bool
+    var verified: String
+    var email = ""
+    var phone_number = ""
     
     init(fullName: String, userID: String) {
         self.fullName = fullName
@@ -21,6 +24,7 @@ public struct User{
         self.card = CreditCard(cardNumber: "", cvv: "", date: "")
         self.history = []
         self.renting = false
+        self.verified = ""
     }
     
     init(fullName: String, userID: String, card: CreditCard, rent: Bool) {
@@ -29,6 +33,7 @@ public struct User{
         self.card = card
         self.history = []
         self.renting = rent
+        self.verified = ""
     }
     init(fullName: String, userID: String, rent: Bool) {
         self.fullName = fullName
@@ -36,6 +41,7 @@ public struct User{
         self.renting = rent
         self.card = CreditCard()
         self.history = []
+        self.verified = ""
     }
     
 }

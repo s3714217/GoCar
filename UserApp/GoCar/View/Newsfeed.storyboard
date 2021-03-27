@@ -121,7 +121,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nez-uh-uNX">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="728"/>
                             </mapView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for location" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-gf-ReA">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for suburb" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-gf-ReA">
                                 <rect key="frame" x="25" y="57" width="285" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="xsX-d4-vic"/>
@@ -362,7 +362,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1461.5999999999999" y="902.21674876847294"/>
+            <point key="canvasLocation" x="1462" y="901"/>
         </scene>
         <!--Description Controller-->
         <scene sceneID="rnu-dL-gdR">
@@ -373,16 +373,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cqu-dc-qd8">
-                                <rect key="frame" x="30" y="94" width="315" height="664"/>
+                                <rect key="frame" x="30" y="94" width="315" height="644"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pfc-BH-8gP">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="200"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="160"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="KTj-zC-ege"/>
+                                            <constraint firstAttribute="height" constant="160" id="zJD-Ar-eA5"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fGk-QR-TBh">
-                                        <rect key="frame" x="0.0" y="220" width="315" height="60"/>
+                                        <rect key="frame" x="0.0" y="180" width="315" height="60"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ghati the Sportage" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mjf-qf-HRt">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="30"/>
@@ -424,7 +424,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQC-hc-rS2">
-                                        <rect key="frame" x="0.0" y="300" width="315" height="304"/>
+                                        <rect key="frame" x="0.0" y="260" width="315" height="324"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Two-3U-LQy">
                                                 <rect key="frame" x="20" y="10" width="51" height="18"/>
@@ -443,7 +443,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-GR-kYI">
-                                        <rect key="frame" x="0.0" y="624" width="315" height="40"/>
+                                        <rect key="frame" x="0.0" y="604" width="315" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$9/hr $80/day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjw-vN-F67">
                                                 <rect key="frame" x="0.0" y="0.0" width="165" height="40"/>
@@ -461,6 +461,9 @@
                                                 <state key="normal" title="Book Now">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="unX-QM-I66" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="nOw-2O-BzV"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -491,7 +494,7 @@
                             <constraint firstItem="gaZ-6c-ujO" firstAttribute="leading" secondItem="6fE-Z8-X4A" secondAttribute="leading" constant="20" id="0cd-tC-xKs"/>
                             <constraint firstItem="gaZ-6c-ujO" firstAttribute="top" secondItem="6fE-Z8-X4A" secondAttribute="top" id="2kr-l9-16Z"/>
                             <constraint firstItem="Pfc-BH-8gP" firstAttribute="centerX" secondItem="6fE-Z8-X4A" secondAttribute="centerX" id="47F-1u-lbD"/>
-                            <constraint firstItem="6fE-Z8-X4A" firstAttribute="bottom" secondItem="cqu-dc-qd8" secondAttribute="bottom" constant="20" id="TGT-mG-afv"/>
+                            <constraint firstItem="6fE-Z8-X4A" firstAttribute="bottom" secondItem="cqu-dc-qd8" secondAttribute="bottom" constant="40" id="GCW-JQ-waO"/>
                             <constraint firstItem="cqu-dc-qd8" firstAttribute="top" secondItem="6fE-Z8-X4A" secondAttribute="top" constant="50" id="mW5-Of-EOu"/>
                             <constraint firstItem="6fE-Z8-X4A" firstAttribute="trailing" secondItem="cqu-dc-qd8" secondAttribute="trailing" constant="30" id="oHl-T7-a46"/>
                             <constraint firstItem="cqu-dc-qd8" firstAttribute="leading" secondItem="6fE-Z8-X4A" secondAttribute="leading" constant="30" id="xjD-rk-zFZ"/>
@@ -511,6 +514,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbk-jj-MKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1461.5999999999999" y="1665.5172413793105"/>
+        </scene>
+        <!--Booking-->
+        <scene sceneID="WAK-Pw-Ctv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Booking" id="unX-QM-I66" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gqJ-F6-OFQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2286" y="1792"/>
         </scene>
         <!--Profile Controller-->
         <scene sceneID="d6X-i2-Ojh">
