@@ -15,14 +15,19 @@ class EntryController: UIViewController {
     @IBOutlet weak var joinbtn: UIButton!
     @IBOutlet weak var loginbtn: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    var loaded_cars : [Car] = []
+    var loaded_location : [parking_location] = []
     
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
         self.joinbtn.isHidden = true
         self.loginbtn.isHidden = true
         self.spinner.startAnimating()
         let cd = CDService()
         let usr = cd.load()
+       
         
         Auth.auth().signIn(withEmail:usr.email!, password: usr.password!) { authResult, error in
                 if error != nil
@@ -30,33 +35,15 @@ class EntryController: UIViewController {
                     self.spinner.isHidden = true
                     self.joinbtn.isHidden = false
                     self.loginbtn.isHidden = false
-                    print ("ERROR",error!)
-                   
+                    self.spinner.stopAnimating()
+                    self.spinner.isHidden = true
                 }
                 else{
                     self.performSegue(withIdentifier: "toDashboard", sender: self)
                 }
+                        
+                }
             }
-        
-            
-        }
-    
-        
-            
-
-    }
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+}
+   
     
