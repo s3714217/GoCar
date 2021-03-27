@@ -15,17 +15,15 @@ class LoginController: UIViewController , UITextFieldDelegate{
     @IBOutlet private weak var password: UITextField!
     @IBOutlet private weak var notification: UILabel!
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.spinner.isHidden = true
         self.email.delegate = self
         self.password.delegate = self
-        
         self.password.textContentType = .password
         self.password.isSecureTextEntry = true
-        
         self.email.textContentType = .emailAddress
-        
         self.email.text = "thien@gmail.com" ; self.password.text = "123456"
     }
     
@@ -34,12 +32,14 @@ class LoginController: UIViewController , UITextFieldDelegate{
             self.displayNoti(noti: "* Email and password cannot be empty")
             return
         }
+        self.spinner.isHidden = false
+        self.spinner.startAnimating()
         Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
             if error != nil {
                 print(error!.localizedDescription)
                 let e = error!.localizedDescription
                 if e == "The email address is badly formatted."{
-                    self.displayNoti(noti: "* @Invalid email")
+                    self.displayNoti(noti: "* Invalid email")
                 }
                 else if e == "There is no user record corresponding to this identifier. The user may have been deleted."{
                     self.displayNoti(noti: "* User doesn't exist")
@@ -52,7 +52,9 @@ class LoginController: UIViewController , UITextFieldDelegate{
                 }
             }
             else{
+                
                 CDService().addUser(email: self.email.text!, password: self.password.text!)
+                self.spinner.stopAnimating()
                 self.performSegue(withIdentifier: "toDashboard", sender: self)
             }
         }

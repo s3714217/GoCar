@@ -21,12 +21,13 @@ class SignUpController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet private weak var notification: UILabel!
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     let db = DBService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.spinner.isHidden = true
         self.password.textContentType = .password
         self.password.isSecureTextEntry = true
         
@@ -70,14 +71,18 @@ class SignUpController: UIViewController, UITextFieldDelegate {
                 self.displayNoti(noti: "* Email already in use")
             }
             else{
-                
+                self.spinner.isHidden = false
+                self.spinner.startAnimating()
                 Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
                     if error != nil {
                         self.displayNoti(noti: "* Error with user authentication")
+                        self.spinner.stopAnimating()
+                        self.spinner.isHidden = true
                     }
                     else{
                         self.db.addUserInfo(userID: Auth.auth().currentUser!.uid, fullName: self.fullName.text! )
                         CDService().addUser(email: self.email.text!, password: self.password.text!)
+                        self.spinner.stopAnimating()
                         self.performSegue(withIdentifier: "toDashboard", sender: self)
                     }
                 }
