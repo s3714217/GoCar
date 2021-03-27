@@ -221,6 +221,7 @@ PODS:
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
+  - DropDown (2.3.13)
   - Firebase/Auth (7.7.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 7.7.0)
@@ -304,17 +305,21 @@ PODS:
   - nanopb/decode (2.30907.0)
   - nanopb/encode (2.30907.0)
   - PromisesObjC (1.2.12)
+  - SideMenu (6.5.0)
 
 DEPENDENCIES:
   - Charts (~> 3.4.0)
+  - DropDown
   - Firebase/Auth
   - Firebase/Firestore
+  - SideMenu
 
 SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
     - Charts
+    - DropDown
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -328,11 +333,13 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - SideMenu
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   Firebase: cd2ab85eec8170dc260186159f21072ecb679ad5
   FirebaseAuth: 76aa97ecd51e20ecd21321d08474d25f5d2b7b9f
   FirebaseCore: ac35d680a0bf32319a59966a1478e0741536b97b
@@ -346,7 +353,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: ef19c5e63d0c255e7bdf26b1944e454466da86af
+PODFILE CHECKSUM: c832a368a06e5c223a0849763327bcf81ac533e6
 
 COCOAPODS: 1.10.1
