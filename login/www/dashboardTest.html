@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "UTF-8"/>
+	<title>DashboardTest.html</title>
+	
+	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+	<script src="../js/config.js"></script>
+	<script src="../js/global.js"></script>
+	
+	<script>
+		function createAdmin(){
+			var txtUsernameSU = document.getElementById("usernameSU").value;
+			var txtPasswordSU = document.getElementById("passwordSU").value;
+			
+			if (txtUsernameSU === "" || txtPasswordSU === ""){
+				alert("Please enter a username and password");
+				return
+			}
+			
+			db.collection("admins").doc(txtUsernameSU).set({
+				password: txtPasswordSU
+			})
+			.then(() => {
+				alert("Sign up successful");
+			})
+			.catch((error) => {
+				alert("Please enter a valid username");
+			});
+		}
+		
+		function renderCars(doc){
+			var listCars = document.querySelector("#listCars");
+			
+			var li = document.createElement("li");
+			var carID = document.createElement("span")
+			var condition = document.createElement("span");
+			var leased = document.createElement("span");
+			var model = document.createElement("span");
+			var parking_location = document.createElement("span");
+			var rate = document.createElement("span");
+			var vehicle_type = document.createElement("span");
+			
+			li.setAttribute("data-id", doc.id);
+			carID.textContent = doc.id;
+			condition.textContent = doc.data().condition;
+			leased.textContent = doc.data().leased;
+			model.textContent = doc.data().model;
+			parking_location.textContent = doc.data().parking_location;
+			rate.textContent = doc.data().rate;
+			vehicle_type.textContent = doc.data().vehicle_type;
+			
+			li.appendChild(carID);
+			li.appendChild(condition);
+			li.appendChild(leased);
+			li.appendChild(model);
+			li.appendChild(parking_location);
+			li.appendChild(rate);
+			li.appendChild(vehicle_type);
+			
+			listCars.appendChild(li);
+		}
+		
+		function cars(){
+			db.collection("cars").get().then((snapshot) => {
+				snapshot.docs.forEach(doc => {
+					renderCars(doc);
+				})
+			})
+		}
+		
+		function renderParkings(doc){
+			var listParkings = document.querySelector("#listParkings");
+			
+			var li = document.createElement("li");
+			var address = document.createElement("span");
+			var location = document.createElement("span");
+			var numCars = document.createElement("span");
+			
+			li.setAttribute("data-id", doc.id);
+			address.textContent = doc.data().Address;
+			location.textContent = doc.data().Location.latitude + " "  + doc.data().Location.longitude;
+			numCars.textContent = doc.data().Number_cars;
+			
+			li.appendChild(address);
+			li.appendChild(location);
+			li.appendChild(numCars);
+			
+			listParkings.appendChild(li);
+		}
+		
+		function parking(){
+			db.collection("parking_location").get().then((snapshot) => {
+				snapshot.docs.forEach(doc => {
+					renderParkings(doc);
+				})
+			})
+		}
+		
+		function renderUsers(doc){
+			var listUsers = document.querySelector("#listUsers");
+			
+			var li = document.createElement("li");
+			var userID = document.createElement("span");
+			var fullName = document.createElement("span");
+			var renting = document.createElement("span");
+			
+			li.setAttribute("data-id", doc.id);
+			fullName.textContent = doc.data().fullName;
+			renting.textContent = doc.data().renting;
+
+			li.appendChild(fullName);
+			li.appendChild(renting);
+			
+			listUsers.appendChild(li);
+		}
+		
+		function users(){
+			db.collection("users").get().then((snapshot) => {
+				snapshot.docs.forEach(doc => {
+					renderUsers(doc);
+				})
+			})
+		}
+	</script>
+</head>
+
+<body onload = "getValues()">
+	<h1>Dashboard Test</h1>
+	
+	<nav>
+		<a href = "manageCars.html">Manage Cars</a>
+		<a href = "manageUsers.html">Manage Users</a>
+		<a href = "manageParkings.html">Manage Parking's</a>
+	</nav>
+	
+	<div id = "user">
+	</div>
+	
+	<h2>Sign Up</h2>
+	
+	<form action = "">
+		<label>Username</label>
+		<input type = "text" id = "usernameSU"/>
+		<br/>
+		<br/>
+		<label>Password</label>
+		<input type = "password" id = "passwordSU"/>
+		<br/>
+		<br/>
+		<button type = "button" id = "signUp" onclick = "createAdmin()">
+			Sign Up
+		</button>
+		<button type = "button" id = "signOut" onclick = "logOut()">
+			Sign Out
+		</button>
+		
+		<br/>
+		<br/>
+	</form>	
+	
+	<h3>Display Items</h3>
+		
+	<form action = "">	
+		<button type = "button" id = "displayCars" onclick = "cars()">
+			Display Cars
+		</button>
+		
+		<button type = "button" id = "displayParkings" onclick = "parking()">
+			Display Parking locations
+		</button>
+		
+		<button type = "button" id = "displayUsers" onclick = "users()">
+			Display Users
+		</button>
+	</form>
+	
+	<ul id = "listCars">
+	</ul>
+	
+	<ul id = "listParkings">
+	</ul>
+	
+	<ul id = "listUsers">
+	</ul>
+	
+	<div id = "countUsers">
+	</div>
+	
+	<div id = "countParkings">
+	</div>
+	
+	<div id = "countCars">
+	</div>
+</body>
+</html>
