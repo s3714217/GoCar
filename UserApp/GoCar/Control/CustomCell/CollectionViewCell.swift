@@ -63,7 +63,7 @@ class CollectionViewCell: UICollectionViewCell {
         title.frame = CGRect(x: 5, y: 0, width: contentView.frame.size.width-10, height: 20)
         label.frame = CGRect(x: 5, y: contentView.frame.size.height-20, width: contentView.frame.size.width-10, height: 20)
         info.frame = CGRect(x: 5, y: contentView.frame.size.height-40, width: contentView.frame.size.width-10, height: 20)
-        img.frame = CGRect(x: 5, y: 20, width: contentView.frame.size.width-10, height: contentView.frame.size.height-50)
+        img.frame = CGRect(x: 5, y: 20, width: contentView.frame.size.width-10, height: contentView.frame.size.height-60)
     }
     
     required init?(coder: NSCoder) {

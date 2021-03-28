@@ -19,7 +19,16 @@ class DescriptionController: UIViewController {
     @IBOutlet weak var bookBtn: UIButton!
     @IBOutlet weak var descriptionView: UIView!
     
+    @IBOutlet weak var carType: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toBooking"{
+            let controller = segue.destination as! BookingController
+           
+            controller.selectedCar = selectedCar
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +43,15 @@ class DescriptionController: UIViewController {
         self.bookBtn.layer.cornerRadius = 12
         self.carAddress.text = selectedCar.parking_location
         self.distanceAway.text = "\(distanceFromUser)m away"
-        self.carModel.text = selectedCar.model
+        self.carModel.text = "Model: \(selectedCar.model)"
+        self.carType.text = "Type: \(selectedCar.vehicle_type.capitalized)"
         self.carImg.image = UIImage(imageLiteralResourceName: selectedCar.model.lowercased().trimmingCharacters(in: .whitespaces))
     }
     
-
+    @IBAction func toBooking(_ sender: Any) {
+        self.performSegue(withIdentifier: "toBooking", sender: self)
+    }
+    
     @IBAction func backAct(_ sender: Any) {
         
         self.performSegue(withIdentifier: "toDashboard", sender: self)
