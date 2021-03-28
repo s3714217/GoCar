@@ -9,20 +9,22 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class LoginController: UIViewController {
+class LoginController: UIViewController , UITextFieldDelegate{
 
     @IBOutlet private weak var email: UITextField!
     @IBOutlet private weak var password: UITextField!
     @IBOutlet private weak var notification: UILabel!
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.spinner.isHidden = true
+        self.email.delegate = self
+        self.password.delegate = self
         self.password.textContentType = .password
         self.password.isSecureTextEntry = true
-        
         self.email.textContentType = .emailAddress
-        
+        self.email.text = "thien@gmail.com" ; self.password.text = "123456"
     }
     
     @IBAction func login(_ sender: Any) {
@@ -30,12 +32,14 @@ class LoginController: UIViewController {
             self.displayNoti(noti: "* Email and password cannot be empty")
             return
         }
+        self.spinner.isHidden = false
+        self.spinner.startAnimating()
         Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
             if error != nil {
                 print(error!.localizedDescription)
                 let e = error!.localizedDescription
                 if e == "The email address is badly formatted."{
-                    self.displayNoti(noti: "* @yahInvalid email")
+                    self.displayNoti(noti: "* Invalid email")
                 }
                 else if e == "There is no user record corresponding to this identifier. The user may have been deleted."{
                     self.displayNoti(noti: "* User doesn't exist")
@@ -48,9 +52,16 @@ class LoginController: UIViewController {
                 }
             }
             else{
+                
+                CDService().addUser(email: self.email.text!, password: self.password.text!)
+                self.spinner.stopAnimating()
                 self.performSegue(withIdentifier: "toDashboard", sender: self)
             }
         }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     private func displayNoti(noti: String){

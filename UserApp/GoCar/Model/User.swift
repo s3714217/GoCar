@@ -30,6 +30,13 @@ public struct User{
         self.history = []
         self.renting = rent
     }
+    init(fullName: String, userID: String, rent: Bool) {
+        self.fullName = fullName
+        self.userID = userID
+        self.renting = rent
+        self.card = CreditCard()
+        self.history = []
+    }
     
 }
 
@@ -55,17 +62,20 @@ public struct CreditCard{
 public struct History{
     
     var carRef: String
-    var duration: Int64
+    var totalCost: Double
+    var startDate: String
     var returnDate: String
     
-    init(carRef: String, duration: Int64, returnDate: String) {
+    init(carRef: String, totalCost:Double, returnDate: String, startDate: String) {
         self.carRef = carRef
-        self.duration = duration
+        self.totalCost = totalCost
         self.returnDate = returnDate
+        self.startDate = startDate
     }
     init() {
         self.carRef = ""
-        self.duration = 0
+        self.totalCost = 0
         self.returnDate = ""
+        self.startDate = ""
     }
 }
