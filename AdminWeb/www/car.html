@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Car | GoCar</title>
+    <title>Car Management | GoCar</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -38,26 +38,6 @@
     </script>
 
     <script>
-        function createAdmin() {
-            var txtUsernameSU = document.getElementById("usernameSU").value;
-            var txtPasswordSU = document.getElementById("passwordSU").value;
-
-            if (txtUsernameSU === "" || txtPasswordSU === "") {
-                alert("Please enter a username and password");
-                return
-            }
-
-            db.collection("admins").doc(txtUsernameSU).set({
-                    password: txtPasswordSU
-                })
-                .then(() => {
-                    alert("Sign up successful");
-                })
-                .catch((error) => {
-                    alert("Please enter a valid username");
-                });
-        }
-
         function renderCars(doc) {
             var listCars = document.querySelector("#listCars");
 
@@ -97,10 +77,26 @@
                 })
             })
         }
+
+        function carRemove() {
+            var optCars = document.getElementById("carsToRemove").value;
+
+            db.collection("test_cars").doc(optCars).delete()
+                .then(function () {
+                    alert("Car " + optCars + " was sucessfully removed");
+                })
+                .catch(function (error) {
+                    alert("Error: could not remove car " + error);
+                });
+        }
+
+        function addCarButton() {
+            window.location.replace("add_car.html");
+        }
     </script>
 </head>
 
-<body onload="displayUser()">
+<body onload="getValues()">
     <!--Car Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -110,8 +106,55 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">Car</h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+                    <div class="row mt-5">
+                        <h1 class="text-left font-weight-bold ml-15">Car Management <img
+                                src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
+                        <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+
+                        <!--Add Car Button-->
+                        <div class="col-7 px-0"></div>
+                        <div class="col-2">
+                            <button class="btn btn-primary btn-block btn-lg mt-5 border-0" onclick="addCarButton()">New
+                                Car</button>
+                        </div>
+                    </div>
+
+                    <!--Car Management Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Cars</h5>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Model</th>
+                                            <th scope="col" class="align-middle">Location</th>
+                                            <th scope="col" class="align-middle">Car Type</th>
+                                            <th scope="col" class="align-middle">Status</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
+
+                                            <!--More Action button-->
+                                            <td class="align-middle">
+                                                <a class="btn btn-primary" href="">Edit Details</a>
+                                                <a class="btn btn-primary" id="remove" onclick="carRemove()">Remove
+                                                    Car</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="footer"></div>
