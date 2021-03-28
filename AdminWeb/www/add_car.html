@@ -41,7 +41,7 @@
         function parking() {
             db.collection("parking_location").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
-                    var listParkings1 = document.querySelector("#location");
+                    var listParkings1 = document.querySelector("#parkingLocation");
                     var listParkings2 = document.querySelector("#updateLocation");
 
                     var option1 = document.createElement("option");
@@ -157,84 +157,89 @@
                     <h1 class="text-left font-weight-bold ml-15">Car Management <img
                             src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
                     <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
-                </div>
 
-                <!--Add Car Form-->
-                <div class="row mt-5">
-                    <div class="col border shadow bg-white rounded-lg p-3">
-                        <h5 class="my-auto text-black-50 font-weight-bold">Add New Car</h5>
+                    <!--Add Car Form-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">Add New Car</h5>
 
-                        <form class="mt-5" action="" method="post">
-                            <div class="row mt-4">
-                                <div class="form-group col-md-6">
-                                    <label for="carModel">Model</label>
+                            <form class="mt-5" action="" method="post">
+                                <div class="row mt-4">
+                                    <div class="form-group col-md-6">
+                                        <label for="carModel">Model</label>
 
-                                    <input type="text" class="form-control" id="carModel" name="carModel">
+                                        <input type="text" class="form-control" id="carModel" name="carModel">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="carCondition">Car Condition</label>
+
+                                        <select class="form-control" id="carCondition" name="carCondition">
+                                            <option value="new">New</option>
+                                            <option value="good">Good</option>
+                                            <option value="bad">Bad</option>
+                                            <option value="need_service">Need Service</option>
+                                            <option value="in_service">In Service</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="carCondition">Car Condition</label>
+                                <div class="row mt-2">
+                                    <div class="form-group col-md-6">
+                                        <label for="parkingLocation">Parking Location</label>
 
-                                    <select class="form-control" id="carCondition" name="carCondition">
-                                        <option value="new">New</option>
-                                        <option value="good">Good</option>
-                                        <option value="bad">Bad</option>
-                                        <option value="need_service">Need Service</option>
-                                        <option value="in_service">In Service</option>
-                                    </select>
-                                </div>
-                            </div>
+                                        <select class="form-control" id="parkingLocation"
+                                            name="parkingLocation"></select>
+                                    </div>
 
-                            <div class="row mt-2">
-                                <div class="form-group col-md-6">
-                                    <label for="parkingLocation">Parking Location</label>
+                                    <div class="form-group col-md-6">
+                                        <label for="leased">Leased</label>
 
-                                    <select class="form-control" id="parkingLocation" name="parkingLocation"></select>
+                                        <select class="form-control" id="leased" name="leased">
+                                            <option value="1">True</option>
+                                            <option value="0">False</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="leased">Leased</label>
+                                <div class="row mt-2">
+                                    <div class="form-group col-md-6">
+                                        <label for="carType">Car Type</label>
 
-                                    <select class="form-control" id="leased" name="leased">
-                                        <option value="1">True</option>
-                                        <option value="0">False</option>
-                                    </select>
-                                </div>
-                            </div>
+                                        <select class="form-control" id="carType" name="carType">
+                                            <option value="sedan">Sedan</option>
+                                            <option value="suv">SUV</option>
+                                            <option value="minivan">Minivan</option>
+                                        </select>
+                                    </div>
 
-                            <div class="row mt-2">
-                                <div class="form-group col-md-6">
-                                    <label for="carType">Car Type</label>
+                                    <div class="form-group col-md-6">
+                                        <label for="carRate">Rate</label>
 
-                                    <select class="form-control" id="carType" name="carType">
-                                        <option value="sedan">Sedan</option>
-                                        <option value="suv">SUV</option>
-                                        <option value="minivan">Minivan</option>
-                                    </select>
+                                        <input type="number" class="form-control" id="carRate" name="carRate" min="10"
+                                            max="20">
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="carRate">Rate</label>
+                                <div class="row mt-2">
+                                    <div class="form-group col-md-6">
+                                        <label for="carID">Car ID</label>
 
-                                    <input type="number" class="form-control" id="carRate" name="carRate" min="10"
-                                        max="20">
+                                        <input type="text" class="form-control" id="carID" name="carID" maxlength="7">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mt-2">
-                                <div class="form-group col-md-6">
-                                    <label for="carID">Car ID</label>
-
-                                    <input type="text" class="form-control" id="carID" name="carID" maxlength="7">
+                                <div class="col-2">
+                                    <button id="addCarButton" type="button"
+                                        class="btn btn-primary btn-block mt-5 border-0" onclick="carAdd()">Add
+                                        Car</button>
                                 </div>
-                            </div>
-
-                            <button id="addCarButton" type="button" class="btn btn-primary btn-block mt-5"
-                                onclick="carAdd()">Add Car</button>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
+                <div id="footer"></div>
             </div>
         </div>
 </body>
