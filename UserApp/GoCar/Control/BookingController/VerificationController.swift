@@ -75,12 +75,17 @@ class VerificationController: UIViewController, UIImagePickerControllerDelegate,
         return false
     }
     @IBAction func verifying(_ sender: Any) {
-        if self.area_code.text?.count != 3 && self.number.text!.count > 11 && self.number.text!.count > 5{
+        if self.area_code.text!.count != 3 || self.number.text!.count > 11 ||
+            self.number.text!.count < 5{
            self.errorNoti.text = "Invalid phone number"
             return
         }
         if !isValidEmail(email: self.emailLbl.text!){
             self.errorNoti.text = "Invalid email"
+            return
+        }
+        if self.photoUploaded < 1 {
+            self.errorNoti.text = "Please upload your licence"
             return
         }
         self.currentUser.email = String(self.emailLbl.text!)
