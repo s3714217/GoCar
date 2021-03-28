@@ -1,13 +1,23 @@
-runtime: php73
+runtime: python27
+api_version: 1
+threadsafe: true
 
 handlers:
-  - url: /style
-    static_dir: style
 
-  - url: .*
-    script: auto
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+  
+- url: /js
+  static_dir: js
+  
+- url: /
+  static_files: www/index.html
+  upload: www/index.html
 
-env_variables:
-  APP_DEBUG: true
-  LOG_CHANNEL: stderr
-  APP_STORAGE: /tmp
+- url: /style
+  static_dir: style
+  
+- url: /(.*)
+  static_files: www/\1
+  upload: www/(.*)
