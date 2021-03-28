@@ -23,6 +23,7 @@ class DBService{
         
         self.db.collection("users").document(userID).setData([
             "fullName": fullName,
+            "verified": "unverified",
             "renting": false
         ])
         { err in

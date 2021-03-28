@@ -22,7 +22,8 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     
     
-  
+    private var blurEffect : UIBlurEffect = .init()
+    private var blurEffectView : UIVisualEffectView = .init()
     private var databaseService = DBService()
     private let currentUser = Auth.auth().currentUser
     private var all_cars : [Car] = []
@@ -265,9 +266,17 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     }
     @IBAction func closePopUp(_ sender: Any) {
         self.popUp.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        
     }
     
     @IBAction func showFilter(_ sender: Any) {
+        blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.backgroundColor = .clear
+        self.view.addSubview(blurEffectView)
         self.pickerData = []
         self.smallView.isHidden = true
         self.collectionView.isHidden = true
@@ -330,6 +339,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
             
         }
       
+        self.blurEffectView.removeFromSuperview()
         
         self.displayMarker()
         self.popUp.removeFromSuperview()
