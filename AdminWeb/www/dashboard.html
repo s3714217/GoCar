@@ -28,7 +28,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
     <script src="../js/config.js"></script>
-    <script src="/js/global.js"></script>
+    <script src="../js/global.js"></script>
 
     <script>
         $(function () {
@@ -155,7 +155,7 @@
     </script>
 </head>
 
-<body onload="displayUser()">
+<body onload="getValues()">
     <div class="container-fluid">
         <div class="row">
 
@@ -177,9 +177,11 @@
                                 </span>
                             </div>
 
-                            <p class="h2 font-weight-bold">200</p>
+                            <p class="h2 font-weight-bold" id="countUsers"></p>
+                            <!--
                             <button type="button" id="displayUsers" onclick="users()">Display Users</button>
                             <ul id="listUsers"></ul>
+                            -->
                         </div>
 
                         <div class="col px-0"></div>
@@ -195,12 +197,14 @@
                                 </h5>
                             </div>
 
-                            <p class="h2 font-weight-bold text-success">200</p>
-                            <button type="button" id="displayCars" onclick="cars()">
+                            <p class="h2 font-weight-bold text-success" id="countCars"></p>
+                            <!--
+                                <button type="button" id="displayCars" onclick="cars()">
                                 Display Cars
-                            </button>
-                            <ul id="listCars">
-                            </ul>
+                                </button>
+                                <ul id="listCars">
+                                </ul>
+                            -->
                         </div>
 
                         <div class="col"></div>
@@ -214,7 +218,7 @@
                                 </span>
                             </div>
 
-                            <p class="h2 font-weight-bold">40</p>
+                            <p class="h2 font-weight-bold" id="countParkings"></p>
                         </div>
                     </div>
 
@@ -223,7 +227,7 @@
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">Notifications</h5>
 
-                            <p class="h2 font-weight-bold">40</p>
+                            <p class="h2 font-weight-bold"></p>
                         </div>
                     </div>
 
@@ -242,7 +246,7 @@
                                 </span>
                             </div>
 
-                            <p class="h2 font-weight-bold">40</p>
+                            <p class="h2 font-weight-bold"></p>
                         </div>
 
                         <div class="col-1 px-0"></div>
