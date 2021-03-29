@@ -24,6 +24,7 @@ class DBService{
         self.db.collection("users").document(userID).setData([
             "fullName": fullName,
             "verified": "unverified",
+            
             "renting": false
         ])
         { err in
@@ -103,6 +104,7 @@ class DBService{
             for car in self.cars{
                 if car.parking_location == self.locations[i].address {
                     self.locations[i].cars.append(car)
+                    self.locations[i].car_count += 1
                 }
             }
         }
@@ -117,8 +119,8 @@ class DBService{
                 for document in querySnapshot!.documents {
                     let address = document.get("Address") as! String
                     let location = document.get("Location") as! GeoPoint
-                    let number = document.get("Number_cars") as! Int
-                    self.locations.append(parking_location(parkID: document.documentID, address: address, lat: location.latitude, long: location.longitude, car_count: number))
+                   
+                    self.locations.append(parking_location(parkID: document.documentID, address: address, lat: location.latitude, long: location.longitude, car_count: 0))
                 }
                
             }
@@ -157,6 +159,9 @@ class DBService{
                 self.user.card.date = date
                
             } else {
+                self.user.card.cardNumber = ""
+                self.user.card.cvv = ""
+                self.user.card.date = ""
                 print("Card does not exist")
             }
         }
@@ -177,6 +182,45 @@ class DBService{
             }
            
         }
+    }
+    
+    public func addPayment(user:User){
+        self.db.collection("users").document(user.userID).collection("card").document("payment").setData([
+            "card_number": user.card.cardNumber,
+            "cvv": user.card.cvv,
+            "date": user.card.date
+        ])
+        { err in
+            if let err = err {
+                print("THERE IS AN ERROR \(err)")
+            }
+            else{
+                print("SUCCESSFULLY updating user")
+            }
+        }
+    }
+
+    public func addTransaction(user: User, car: Car, transaction: Transaction){
+        self.db.collection("transaction").document().setData([
+            "carID": car.rego,
+            "amount": transaction.numberOfDate * car.rate,
+            "return_date": transaction.returnDate,
+            "start_date": transaction.startDate,
+            "userID": user.userID
+        ])
+        { err in
+            if let err = err {
+                print("THERE IS AN ERROR \(err)")
+            }
+            else{
+                print("SUCCESSFULLY adding transaction")
+            }
+        }
+        
+        
+        self.db.collection("cars").document(car.rego).updateData(["leased" : true])
+        
+        self.db.collection("users").document(user.userID).updateData(["renting": true])
     }
     
     public func submitVerificationForm(user: User, image: UIImage){

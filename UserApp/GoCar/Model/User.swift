@@ -85,3 +85,17 @@ public struct History{
         self.startDate = ""
     }
 }
+
+public struct Transaction{
+    var startDate : Date
+    var returnDate : Date
+    var numberOfDate = 0
+   
+    init(startDate: Date, returnDate: Date, numberOfDate: Int){
+        self.startDate = startDate
+        self.returnDate = returnDate
+        self.numberOfDate = numberOfDate
+    }
+    
+    
+}

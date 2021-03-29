@@ -182,6 +182,7 @@
                     </view>
                     <connections>
                         <outlet property="Notification" destination="EZd-VJ-mA5" id="GbI-y5-YzY"/>
+                        <outlet property="acceptBtn" destination="sm5-Je-QHk" id="MT2-lK-J8o"/>
                         <outlet property="confirmPassword" destination="Ub5-GL-Nyd" id="auf-zz-Gyi"/>
                         <outlet property="email" destination="J9F-An-Pmo" id="Jqg-Bh-bcW"/>
                         <outlet property="fullName" destination="HuQ-P9-dNp" id="gkG-OX-nlg"/>
@@ -288,6 +289,7 @@
                     </view>
                     <connections>
                         <outlet property="email" destination="ocd-N5-DYi" id="PNB-cI-gIR"/>
+                        <outlet property="logIn" destination="hvp-yR-AG9" id="Jz2-Xu-qB8"/>
                         <outlet property="notification" destination="XDy-fQ-FLU" id="Luz-o0-v0n"/>
                         <outlet property="password" destination="6ml-40-vGM" id="i7O-xO-dVf"/>
                         <outlet property="spinner" destination="BtW-ZO-W1I" id="X9q-nR-faT"/>
@@ -300,8 +302,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="qKf-E3-Hc4"/>
-        <segue reference="weN-WN-8gs"/>
+        <segue reference="7tC-B3-LaP"/>
+        <segue reference="0Kh-go-EMs"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
