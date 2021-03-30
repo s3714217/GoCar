@@ -38,69 +38,38 @@
     </script>
 
     <script>
-        function createAdmin() {
-            var txtUsernameSU = document.getElementById("usernameSU").value;
-            var txtPasswordSU = document.getElementById("passwordSU").value;
+        function renderUsers(doc) {
+            var listUsers = document.querySelector("#userTable");
 
-            if (txtUsernameSU === "" || txtPasswordSU === "") {
-                alert("Please enter a username and password");
-                return
-            }
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var fullName = document.createElement("span");
+            var verified = document.createElement("span");
 
-            db.collection("admins").doc(txtUsernameSU).set({
-                    password: txtPasswordSU
-                })
-                .then(() => {
-                    alert("Sign up successful");
-                })
-                .catch((error) => {
-                    alert("Please enter a valid username");
-                });
+            fullName.textContent = doc.data().fullName;
+            verified.textContent = doc.data().verified;
+
+            td1.appendChild(fullName);
+            td2.appendChild(verified);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+
+            listUsers.appendChild(tr);
         }
 
-        function renderCars(doc) {
-            var listCars = document.querySelector("#listCars");
-
-            var li = document.createElement("li");
-            var carID = document.createElement("span")
-            var condition = document.createElement("span");
-            var leased = document.createElement("span");
-            var model = document.createElement("span");
-            var parking_location = document.createElement("span");
-            var rate = document.createElement("span");
-            var vehicle_type = document.createElement("span");
-
-            li.setAttribute("data-id", doc.id);
-            carID.textContent = doc.id;
-            condition.textContent = doc.data().condition;
-            leased.textContent = doc.data().leased;
-            model.textContent = doc.data().model;
-            parking_location.textContent = doc.data().parking_location;
-            rate.textContent = doc.data().rate;
-            vehicle_type.textContent = doc.data().vehicle_type;
-
-            li.appendChild(carID);
-            li.appendChild(condition);
-            li.appendChild(leased);
-            li.appendChild(model);
-            li.appendChild(parking_location);
-            li.appendChild(rate);
-            li.appendChild(vehicle_type);
-
-            listCars.appendChild(li);
-        }
-
-        function cars() {
-            db.collection("cars").get().then((snapshot) => {
+        function users() {
+            db.collection("users").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
-                    renderCars(doc);
+                    renderUsers(doc);
                 })
             })
         }
     </script>
 </head>
 
-<body onload="getValues()">
+<body onload="users()">
     <!--User Central Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -112,38 +81,39 @@
                 <div class="container-fluid my-3 footer-align-bottom">
                     <h1 class="text-left font-weight-bold ml-15">User Central <img src="style/total_users.svg"
                             alt="Total Users Icon"></h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
-                </div>
 
-                <!--User Central Table-->
-                <div class="row mt-5">
-                    <div class="col border shadow bg-white rounded-lg p-3">
-                        <h5 class="my-auto text-black-50 font-weight-bold">All Users</h5>
+                    <!--User Central Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Users</h5>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="align-middle">Name</th>
-                                        <th scope="col" class="align-middle">Status</th>
-                                        <th scope="col" class="align-middle">More Action</th>
-                                    </tr>
-                                </thead>
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="userTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">Status</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
-                                    <tr>
-                                        <td class="align-middle"></td>
-                                        <td class="align-middle"></td>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
 
-                                        <!--More Action button-->
-                                        <td class="align-middle">
-                                            <a class="btn btn-primary" id="" onclick="" href="">Verify</a>
-                                            <a class="btn btn-primary" id="" onclick="" href="">View Details</a>
-                                            <a class="btn btn-primary" id="" onclick="" href="">Remove User</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <!--More Action button-->
+                                            <td class="align-middle">
+                                                <a class="btn btn-secondary" id="verifyUser" onclick="">Verify</a>
+                                                <a class="btn btn-secondary" id="viewDetails" onclick="">View
+                                                    Details</a>
+                                                <a class="btn btn-secondary" id="removeUser" onclick="">Remove
+                                                    User</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
