@@ -61,7 +61,6 @@
             var txtModel = document.getElementById("carModel").value;
             var optCondtion = document.getElementById("carCondition").value;
             var optlocation = document.getElementById("parkingLocation").value;
-            var optLeased = document.getElementById("leased").value;
             var optType = document.getElementById("carType").value;
             var txtRate = document.getElementById("carRate").value;
             var txtCarID = document.getElementById("carID").value;
@@ -73,26 +72,21 @@
                 return
             }
 
-            var isTrue;
-            if (optLeased == "1") {
-                isTrue = true;
-            } else if (optLeased == "0") {
-                isTrue = false;
-            }
+            var carleased = false;
 
             if (txtCarID === "" || txtModel === "" || txtRate === "") {
                 alert("Please enter a CarID, Model and Rate");
                 return
             }
 
-            db.collection("test_cars").doc(txtCarID).get()
+            db.collection("cars").doc(txtCarID).get()
                 .then(function (doc) {
                     if (doc.exists) {
                         alert("Car ID already exists");
                     } else {
                         db.collection("test_cars").doc(txtCarID).set({
                             condition: optCondtion,
-                            leased: isTrue,
+                            leased: carleased,
                             model: txtModel,
                             parking_location: optlocation,
                             rate: rateNum,
@@ -163,17 +157,6 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="leased">Leased</label>
-
-                                        <select class="form-control" id="leased" name="leased">
-                                            <option value="1">True</option>
-                                            <option value="0">False</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-2">
-                                    <div class="form-group col-md-6">
                                         <label for="carType">Car Type</label>
 
                                         <select class="form-control" id="carType" name="carType">
@@ -182,18 +165,18 @@
                                             <option value="minivan">Minivan</option>
                                         </select>
                                     </div>
+                                </div>
 
+                                <div class="row mt-2">
                                     <div class="form-group col-md-6">
                                         <label for="carRate">Rate</label>
 
                                         <input type="number" class="form-control" id="carRate" name="carRate" min="10"
                                             max="20">
                                     </div>
-                                </div>
 
-                                <div class="row mt-2">
                                     <div class="form-group col-md-6">
-                                        <label for="carID">Car ID</label>
+                                        <label for="carID">Car Registration No.</label>
 
                                         <input type="text" class="form-control" id="carID" name="carID" maxlength="7">
                                     </div>
