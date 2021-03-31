@@ -68,21 +68,23 @@
             var rateNum = parseInt(txtRate);
 
             if (rateNum < 10 || rateNum > 20) {
-                alert("Please enter a rate between 10 and 20");
+                document.getElementById('rateNumError').innerHTML = "Please enter a rate between 10 and 20";
                 return
             }
 
             var carleased = false;
 
             if (txtCarID === "" || txtModel === "" || txtRate === "") {
-                alert("Please enter a CarID, Model and Rate");
+                document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
+                document.getElementById('carModelEmpty').innerHTML = "Please enter a car model";
+                document.getElementById('carRateEmpty').innerHTML = "Please enter a car rate";
                 return
             }
 
             db.collection("cars").doc(txtCarID).get()
                 .then(function (doc) {
                     if (doc.exists) {
-                        alert("Car ID already exists");
+                        document.getElementById('carIDExist').innerHTML = "Car registration number already exists";
                     } else {
                         db.collection("test_cars").doc(txtCarID).set({
                             condition: optCondtion,
@@ -92,7 +94,7 @@
                             rate: rateNum,
                             vehicle_type: optType
                         })
-                        alert("Car added sucessfully");
+                        document.getElementById('carAddedSuccess').innerHTML = "Car was added successfully";
                     }
                 })
                 .catch(function (error) {
@@ -133,6 +135,9 @@
                                         <label for="carModel">Model</label>
 
                                         <input type="text" class="form-control" id="carModel" name="carModel">
+
+                                        <!--Error Message for Empty Car Model-->
+                                        <p id="carModelEmpty" class="text-danger" role="alert"></p>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -173,12 +178,28 @@
 
                                         <input type="number" class="form-control" id="carRate" name="carRate" min="10"
                                             max="20">
+
+                                        <!--Error Message for Wrong Rate Number-->
+                                        <p id="rateNumError" class="text-danger" role="alert">
+                                        </p>
+
+                                        <!--Error Message for Empty Rate Number-->
+                                        <p id="carRateEmpty" class="text-danger" role="alert">
+                                        </p>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="carID">Car Registration No.</label>
 
                                         <input type="text" class="form-control" id="carID" name="carID" maxlength="7">
+
+                                        <!--Error Message for Empty Car ID-->
+                                        <p id="carIDEmpty" class="text-danger" role="alert">
+                                        </p>
+
+                                        <!--Error Message if Car ID Exists-->
+                                        <p id="carIDExist" class="text-danger" role="alert">
+                                        </p>
                                     </div>
                                 </div>
 
@@ -194,8 +215,10 @@
                                             class="btn btn-primary btn-block mt-5 border-0"
                                             onclick="carAdd()">Save</button>
                                     </div>
+
                                 </div>
 
+                                <p id="carAddedSuccess" class="text-success"></p>
                             </form>
                         </div>
                     </div>
