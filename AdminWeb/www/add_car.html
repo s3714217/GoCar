@@ -86,7 +86,7 @@
                     if (doc.exists) {
                         document.getElementById('carIDExist').innerHTML = "Car registration number already exists";
                     } else {
-                        db.collection("test_cars").doc(txtCarID).set({
+                        db.collection("cars").doc(txtCarID).set({
                             condition: optCondtion,
                             leased: carleased,
                             model: txtModel,
@@ -227,6 +227,7 @@
                 <div id="footer"></div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
