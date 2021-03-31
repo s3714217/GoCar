@@ -36,9 +36,45 @@
             $("#footer").load("footer.html");
         });
     </script>
+
+    <script>
+        function renderLocations(doc) {
+            var listLocations = document.querySelector("#locationsTable");
+
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            var address = document.createElement("span");
+            var location = document.createElement("span");
+            var numCars = document.createElement("span");
+
+            address.textContent = doc.data().Address;
+            location.textContent = doc.data().Location.latitude + " " + doc.data().Location.longitude;
+            numCars.textContent = doc.data().Number_cars;
+
+            td1.appendChild(address);
+            td2.appendChild(location);
+            td3.appendChild(numCars);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            listLocations.appendChild(tr);
+        }
+
+        function locations() {
+            db.collection("parking_location").get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    renderLocations(doc);
+                })
+            })
+        }
+    </script>
 </head>
 
-<body onload="displayUser()">
+<body onload="locations()">
     <!--Parking Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -48,8 +84,48 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">Parking</h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">Parking Management<img
+                                    src="style/parking_available.svg" alt="Parking Available Icon"></h1>
+                        </div>
+                    </div>
+
+                    <!--Parking Management Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Parking Location</h5>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="locationsTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Address</th>
+                                            <th scope="col" class="align-middle">Location</th>
+                                            <th scope="col" class="align-middle">Number of Cars</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
+                                            <td class="align-middle"></td>
+
+                                            <!--More Action button-->
+                                            <td class="align-middle">
+                                                <a class="btn btn-secondary" id="editParking" onclick="">Edit
+                                                    Parking</a>
+                                                <a class="btn btn-secondary" id="removeParking" onclick="">Remove
+                                                    Parking</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="footer"></div>
