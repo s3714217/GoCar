@@ -58,99 +58,8 @@
                 });
         }
 
-        function renderCars(doc) {
-            var listCars = document.querySelector("#listCars");
-
-            var li = document.createElement("li");
-            var carID = document.createElement("span")
-            var condition = document.createElement("span");
-            var leased = document.createElement("span");
-            var model = document.createElement("span");
-            var parking_location = document.createElement("span");
-            var rate = document.createElement("span");
-            var vehicle_type = document.createElement("span");
-
-            li.setAttribute("data-id", doc.id);
-            carID.textContent = doc.id;
-            condition.textContent = doc.data().condition;
-            leased.textContent = doc.data().leased;
-            model.textContent = doc.data().model;
-            parking_location.textContent = doc.data().parking_location;
-            rate.textContent = doc.data().rate;
-            vehicle_type.textContent = doc.data().vehicle_type;
-
-            li.appendChild(carID);
-            li.appendChild(condition);
-            li.appendChild(leased);
-            li.appendChild(model);
-            li.appendChild(parking_location);
-            li.appendChild(rate);
-            li.appendChild(vehicle_type);
-
-            listCars.appendChild(li);
-        }
-
-        function cars() {
-            db.collection("cars").get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    renderCars(doc);
-                })
-            })
-        }
-
-        function renderParkings(doc) {
-            var listParkings = document.querySelector("#listParkings");
-
-            var li = document.createElement("li");
-            var parkingID = document.createElement("span");
-            var address = document.createElement("span");
-            var location = document.createElement("span");
-            var numCars = document.createElement("span");
-
-            li.setAttribute("data-id", doc.id);
-            address.textContent = doc.data().Address;
-            location.textContent = doc.data().Location;
-            numCars.textContent = doc.data().Number_cars;
-
-            li.appendChild(address);
-            li.appendChild(location);
-            li.appendChild(numCars);
-
-            listParkings.appendChild(li);
-        }
-
-        function parking() {
-            db.collection("parking_location").get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    renderParkings(doc);
-                })
-            })
-        }
-
-        function renderUsers(doc) {
-            var listUsers = document.querySelector("#listUsers");
-
-            var li = document.createElement("li");
-            var userID = document.createElement("span");
-            var fullName = document.createElement("span");
-            var renting = document.createElement("span");
-
-            li.setAttribute("data-id", doc.id);
-            fullName.textContent = doc.data().fullName;
-            renting.textContent = doc.data().renting;
-
-            li.appendChild(fullName);
-            li.appendChild(renting);
-
-            listUsers.appendChild(li);
-        }
-
-        function users() {
-            db.collection("users").get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    renderUsers(doc);
-                })
-            })
+        function moreArrow() {
+            window.location.replace("user_central.html");
         }
     </script>
 </head>
@@ -178,10 +87,6 @@
                             </div>
 
                             <p class="h2 font-weight-bold" id="countUsers"></p>
-                            <!--
-                            <button type="button" id="displayUsers" onclick="users()">Display Users</button>
-                            <ul id="listUsers"></ul>
-                            -->
                         </div>
 
                         <div class="col px-0"></div>
@@ -198,13 +103,6 @@
                             </div>
 
                             <p class="h2 font-weight-bold text-success" id="countCars"></p>
-                            <!--
-                                <button type="button" id="displayCars" onclick="cars()">
-                                Display Cars
-                                </button>
-                                <ul id="listCars">
-                                </ul>
-                            -->
                         </div>
 
                         <div class="col"></div>
@@ -231,14 +129,14 @@
                         </div>
                     </div>
 
-                    <!--Notifications row-->
+                    <!--Recent Bookings row-->
                     <div class="row mt-5">
                         <div class="col-9 border shadow bg-white rounded-lg p-3">
                             <div class="d-flex">
                                 <h5 class="my-auto text-black-50 font-weight-bold">Recent Bookings</h5>
 
                                 <span class="ml-auto">
-                                    <a href="#">
+                                    <a onclick="moreArrow()" class="font-weight-bold">
                                         More
 
                                         <img src="style/arrow_right_alt-24px 1.svg" alt="Right Arrow Icon">
@@ -246,7 +144,19 @@
                                 </span>
                             </div>
 
-                            <p class="h2 font-weight-bold"></p>
+                            <!--List All Bookings-->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="recentBookingsTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">Booking Date</th>
+                                            <th scope="col" class="align-middle">Return Date</th>
+                                            <th scope="col" class="align-middle">Amount</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="col-1 px-0"></div>
