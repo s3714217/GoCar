@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Admin | GoCar</title>
+    <title>Admin Management | GoCar</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -38,31 +38,73 @@
     </script>
 
     <script>
-        function createAdmin() {
-            var txtUsernameSU = document.getElementById("usernameSU").value;
-            var txtPasswordSU = document.getElementById("passwordSU").value;
+        function renderAdmins(doc) {
+            var listAdmins = document.querySelector("#adminTable");
 
-            if (txtUsernameSU === "" || txtPasswordSU === "") {
-                alert("Please enter a username and password");
-                return
-            }
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
 
-            db.collection("admins").doc(txtUsernameSU).set({
-                    password: txtPasswordSU
+            var usernameSU = document.createElement("span");
+            var viewAdmin = document.createElement("button");
+            var removeAdmin = document.createElement("button");
+
+            viewAdmin.className = "btn btn-secondary";
+            removeAdmin.className = "btn btn-secondary";
+
+            usernameSU.textContent = doc.data().usernameSU;
+
+            var autoRemoveID = Math.floor(Math.random() * 300);
+
+            removeAdmin.setAttribute("id", autoRemoveID);
+
+            removeAdmin.setAttribute("value", doc.id);
+
+            viewAdmin.textContent = "View Details";
+            removeAdmin.textContent = "Remove Admin";
+
+            td1.appendChild(usernameSU);
+            td2.appendChild(viewAdmin);
+            td2.appendChild(removeAdmin);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+
+            listAdmins.appendChild(tr);
+
+            var rID = document.getElementById(autoRemoveID);
+
+            removeAdmin.addEventListener("click", function () {
+                db.collection("admins").doc(rID.value).delete()
+                    .then(function () {
+                        document.getElementById("removeAdminSuccess").innerHTML =
+                            "Admin was successfully removed";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById("removeAdminFailure").innerHTML =
+                            "Admin could not be removed";
+                    });
+            });
+        }
+
+        function admins() {
+            db.collection("admins").get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    renderAdmins(doc);
                 })
-                .then(() => {
-                    alert("Sign up successful");
-                })
-                .catch((error) => {
-                    alert("Please enter a valid username");
-                });
+            })
+        }
+
+        function addAdminButton() {
+            window.location.replace("add_admin.html");
         }
     </script>
 </head>
 
-<body onload="displayUser()">
+<body onload="admins()">
     <!--Admin Dashboard-->
-    <div class=" container-fluid">
+    <div class="container-fluid">
         <div class="row">
 
             <div class="col-3" id="header">
@@ -70,8 +112,36 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">Admin</h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">Admin Management</h1>
+                        </div>
+
+                        <!--Add Admin Button-->
+                        <div class="col-3 my-auto">
+                            <button class="btn" onclick="addAdminButton()"><img src="" alt="Add Admin Button"></button>
+                        </div>
+                    </div>
+
+                    <!--Admin Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Admins</h5>
+
+                            <!--Success/Failure Messages-->
+
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="adminTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="footer"></div>
