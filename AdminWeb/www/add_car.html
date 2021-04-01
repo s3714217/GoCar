@@ -98,6 +98,7 @@
                     }
                 })
                 .catch(function (error) {
+                    document.getElementById('carAddedFailure').innerHTML = "Car could not be added";
                     console.log("error", error);
                 });
         }
@@ -109,7 +110,7 @@
 </head>
 
 <body onload="parking()">
-    <!--Add Car-->
+    <!--Add Car Form-->
     <div class="container-fluid">
         <div class="row">
 
