@@ -44,17 +44,36 @@
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
             var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+
             var fullName = document.createElement("span");
             var verified = document.createElement("span");
+            var verifyUser = document.createElement("button");
+            var viewUser = document.createElement("button");
+            var removeUser = document.createElement("button");
+
+            verifyUser.className = "btn btn-secondary";
+            viewUser.className = "btn btn-secondary";
+            removeUser.className = "btn btn-secondary";
 
             fullName.textContent = doc.data().fullName;
             verified.textContent = doc.data().verified;
 
+            verifyUser.textContent = "Verify";
+            viewUser.textContent = "View Details";
+            removeUser.textContent = "Remove User";
+
             td1.appendChild(fullName);
             td2.appendChild(verified);
+            td3.appendChild(verifyUser);
+            td3.appendChild(viewUser);
+            td3.appendChild(removeUser);
 
             tr.appendChild(td1);
             tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td3);
+            tr.appendChild(td3);
 
             listUsers.appendChild(tr);
         }
@@ -79,13 +98,19 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">User Central <img src="style/total_users.svg"
-                            alt="Total Users Icon"></h1>
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">User Central <img src="style/total_users.svg"
+                                    alt="Total Users Icon"></h1>
+                        </div>
+                    </div>
 
                     <!--User Central Table-->
                     <div class="row mt-5">
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">All Users</h5>
+
+                            <!--Success/Failure Messages-->
 
                             <div class="table-responsive">
                                 <table class="table table-hover text-center" id="userTable">
@@ -96,22 +121,6 @@
                                             <th scope="col" class="align-middle">More Action</th>
                                         </tr>
                                     </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-middle"></td>
-                                            <td class="align-middle"></td>
-
-                                            <!--More Action button-->
-                                            <td class="align-middle">
-                                                <a class="btn btn-secondary" id="verifyUser" onclick="">Verify</a>
-                                                <a class="btn btn-secondary" id="viewDetails" onclick="">View
-                                                    Details</a>
-                                                <a class="btn btn-secondary" id="removeUser" onclick="">Remove
-                                                    User</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
