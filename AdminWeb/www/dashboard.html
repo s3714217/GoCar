@@ -38,24 +38,49 @@
     </script>
 
     <script>
-        function createAdmin() {
-            var txtUsernameSU = document.getElementById("usernameSU").value;
-            var txtPasswordSU = document.getElementById("passwordSU").value;
-
-            if (txtUsernameSU === "" || txtPasswordSU === "") {
-                alert("Please enter a username and password");
-                return
-            }
-
-            db.collection("admins").doc(txtUsernameSU).set({
-                    password: txtPasswordSU
+        function recent() {
+            db.collection("transaction").get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    renderTransactions(doc);
                 })
-                .then(() => {
-                    alert("Sign up successful");
-                })
-                .catch((error) => {
-                    alert("Please enter a valid username");
-                });
+            })
+        }
+
+        function renderTransactions(doc) {
+            var listTransactions = document.querySelector("#recentBookingsTable");
+
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+
+            var carRego = document.createElement("span");
+            var bookingDate = document.createElement("span");
+            var returnDate = document.createElement("span");
+
+            carRego.textContent = doc.data().carID;
+
+            var dateStart = doc.data().start_date;
+            var dateStartFormat = dateStart.toDate();
+            var startString = dateStartFormat.toString();
+            var dateStartSub = startString.substring(0, 16);
+            bookingDate.textContent = dateStartSub;
+
+            var dateReturn = doc.data().return_date;
+            var dateReturnFormat = dateReturn.toDate();
+            var returnString = dateReturnFormat.toString();
+            var dateReturnSub = returnString.substring(0, 16);
+            returnDate.textContent = dateReturnSub;
+
+            td1.appendChild(carRego);
+            td2.appendChild(bookingDate);
+            td3.appendChild(returnDate);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            listTransactions.appendChild(tr);
         }
 
         function moreArrow() {
@@ -64,7 +89,7 @@
     </script>
 </head>
 
-<body onload="getValues()">
+<body onload="getValues(); recent()">
     <div class="container-fluid">
         <div class="row">
 
@@ -149,10 +174,9 @@
                                 <table class="table table-hover text-center" id="recentBookingsTable">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">Car ID</th>
                                             <th scope="col" class="align-middle">Booking Date</th>
                                             <th scope="col" class="align-middle">Return Date</th>
-                                            <th scope="col" class="align-middle">Amount</th>
                                         </tr>
                                     </thead>
                                 </table>
