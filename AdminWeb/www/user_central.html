@@ -29,6 +29,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 
     <script>
         $(function () {
@@ -45,12 +46,16 @@
             var td1 = document.createElement("td");
             var td2 = document.createElement("td");
             var td3 = document.createElement("td");
+            var td4 = document.createElement("td");
+            var td5 = document.createElement("td");
 
             var fullName = document.createElement("span");
             var verified = document.createElement("span");
             var verifyUser = document.createElement("button");
             var viewUser = document.createElement("button");
             var removeUser = document.createElement("button");
+            var phoneNumber = document.createElement("span");
+            var dateOfBirth = document.createElement("span");
 
             verifyUser.className = "btn btn-secondary";
             viewUser.className = "btn btn-secondary";
@@ -58,6 +63,20 @@
 
             fullName.textContent = doc.data().fullName;
             verified.textContent = doc.data().verified;
+            phoneNumber.textContent = doc.data().phoneNumber;
+            dateOfBirth.textContent = doc.data().date_of_birth;
+
+            var autoVerifyID = Math.floor(Math.random() * 300);
+            var autoViewID = Math.floor(Math.random() * 300);
+            var autoRemoveID = Math.floor(Math.random() * 300);
+
+            verifyUser.setAttribute("id", autoVerifyID);
+            viewUser.setAttribute("id", autoViewID);
+            removeUser.setAttribute("id", autoRemoveID);
+
+            verifyUser.setAttribute("value", doc.id);
+            viewUser.setAttribute("value", doc.id);
+            removeUser.setAttribute("value", doc.id);
 
             verifyUser.textContent = "Verify";
             viewUser.textContent = "View Details";
@@ -72,14 +91,54 @@
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
-            tr.appendChild(td3);
-            tr.appendChild(td3);
 
             listUsers.appendChild(tr);
+
+            var docID = doc.id;
+            var rID = document.getElementById(autoRemoveID);
+            var vwID = document.getElementById(autoViewID);
+            var vrID = document.getElementById(autoVerifyID);
+
+            viewUser.addEventListener("click", function () {
+                localStorage.setItem("userName", fullName.textContent);
+                localStorage.setItem("phoneNumber", phoneNumber.textContent);
+                localStorage.setItem("verified", verified.textContent);
+                localStorage.setItem("birthDate", dateOfBirth.textContent);
+                localStorage.setItem("docID", docID);
+                window.location.replace("view_user.html");
+            });
+
+            removeUser.addEventListener("click", function () {
+                db.collection("test_users").doc(rID.value).delete()
+                    .then(function () {
+                        document.getElementById('removeSuccess').innerHTML =
+                            "User was successfully removed";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById('removeFailure').innerHTML = "User could not be removed";
+                        console.log("Error", error);
+                    })
+            });
+
+            verifyUser.addEventListener("click", function () {
+                db.collection("test_users").doc(vrID.value).update({
+                        verified: "verified",
+                    })
+                    .then(function () {
+                        document.getElementById('verifySuccess').innerHTML =
+                            "User was successfully verified";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById('verifyFailure').innerHTML = "User could not be verified";
+                        console.log("Error", error);
+                    });
+            });
         }
 
         function users() {
-            db.collection("users").get().then((snapshot) => {
+            db.collection("test_users").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     renderUsers(doc);
                 })
@@ -111,6 +170,11 @@
                             <h5 class="my-auto text-black-50 font-weight-bold">All Users</h5>
 
                             <!--Success/Failure Messages-->
+                            <p class="text-success" id="removeSuccess" role="alert"></p>
+                            <p class="text-danger" id="removeFailure" role="alert"></p>
+
+                            <p class="text-success" id="verifySuccess" role="alert"></p>
+                            <p class="text-danger" id="verifyFailure" role="alert"></p>
 
                             <div class="table-responsive">
                                 <table class="table table-hover text-center" id="userTable">
