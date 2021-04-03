@@ -55,11 +55,12 @@
         function renderBillingDetails(doc) {
             var cardNumber = doc.data().card_number;
             var date = doc.data().date;
+
             var cardNo = document.getElementById("cardNo");
             var subCardNo = cardNumber.substring(12, 16);
             cardNo.textContent = "**** **** **** " + subCardNo;
             var cardDate = document.getElementById("cardDate");
-            cardDate.textContent = "Card Expiry Date: " + date;
+            cardDate.textContent = date;
         }
 
         function bookingHistory() {
@@ -125,7 +126,7 @@
 
             var verify = document.getElementById("verify");
             verify.innerHTML = localStorage.getItem("verified");
-            verify.className = "text-success";
+            verify.className = "font-weight-bold text-success";
 
             var birthDate = document.getElementById("birth");
             birthDate.innerHTML = localStorage.getItem("birthDate");
@@ -138,7 +139,7 @@
             if (verify.textContent == "unverified") {
                 billing.style.display = "none";
                 history.style.display = "none";
-                verify.className = "text-danger";
+                verify.className = "font-weight-bold text-danger";
             }
         }
 
