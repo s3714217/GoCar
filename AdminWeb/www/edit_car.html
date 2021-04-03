@@ -105,8 +105,8 @@
 
             var rateNum = parseInt(carRate);
 
-            if (rateNum < 10 || rateNum > 20) {
-                document.getElementById('rateNumError').innerHTML = "Please enter a rate between 10 and 20";
+            if (rateNum < 100 || rateNum > 500) {
+                document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
                 return
             }
 
@@ -217,7 +217,7 @@
                                     <div class="form-group col-md-6">
                                         <label>Rate</label>
                                         <input type="number" class="form-control" name="updateRate" id="updateRate"
-                                            min="10" max="20"></select>
+                                            min="100" max="500"></select>
 
                                         <!--Error Message for Wrong Rate Number-->
                                         <p id="rateNumError" class="text-danger" role="alert">
