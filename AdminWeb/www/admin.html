@@ -29,6 +29,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 
     <script>
         $(function () {
@@ -45,47 +46,32 @@
             var td1 = document.createElement("td");
             var td2 = document.createElement("td");
 
-            var usernameSU = document.createElement("span");
-            var viewAdmin = document.createElement("button");
-            var removeAdmin = document.createElement("button");
+            var username = document.createElement("span");
+            var changePassword = document.createElement("button");
 
-            viewAdmin.className = "btn btn-secondary";
-            removeAdmin.className = "btn btn-secondary";
+            username.textContent = doc.id;
 
-            usernameSU.textContent = doc.data().usernameSU;
+            var autoEditID = Math.floor(Math.random() * 300);
 
-            var autoRemoveID = Math.floor(Math.random() * 300);
+            changePassword.setAttribute("id", autoEditID);
+            changePassword.setAttribute("value", doc.id);
+            changePassword.textContent = "Change Password";
+            changePassword.className = "btn btn-secondary";
 
-            removeAdmin.setAttribute("id", autoRemoveID);
-
-            removeAdmin.setAttribute("value", doc.id);
-
-            viewAdmin.textContent = "View Details";
-            removeAdmin.textContent = "Remove Admin";
-
-            td1.appendChild(usernameSU);
-            td2.appendChild(viewAdmin);
-            td2.appendChild(removeAdmin);
+            td1.appendChild(username);
+            td2.appendChild(changePassword);
 
             tr.appendChild(td1);
             tr.appendChild(td2);
 
             listAdmins.appendChild(tr);
 
-            var rID = document.getElementById(autoRemoveID);
+            var eID = document.getElementById(autoEditID);
 
-            removeAdmin.addEventListener("click", function () {
-                db.collection("admins").doc(rID.value).delete()
-                    .then(function () {
-                        document.getElementById("removeAdminSuccess").innerHTML =
-                            "Admin was successfully removed";
-                        document.location.reload(true);
-                    })
-                    .catch(function (error) {
-                        document.getElementById("removeAdminFailure").innerHTML =
-                            "Admin could not be removed";
-                    });
-            });
+            changePassword.addEventListener("click", function () {
+                localStorage.setItem("storageName", doc.id);
+                window.location.replace("change_password.html");
+            })
         }
 
         function admins() {
@@ -94,10 +80,6 @@
                     renderAdmins(doc);
                 })
             })
-        }
-
-        function addAdminButton() {
-            window.location.replace("add_admin.html");
         }
     </script>
 </head>
@@ -116,11 +98,6 @@
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Admin Management</h1>
                         </div>
-
-                        <!--Add Admin Button-->
-                        <div class="col-3 my-auto">
-                            <button class="btn" onclick="addAdminButton()"><img src="" alt="Add Admin Button"></button>
-                        </div>
                     </div>
 
                     <!--Admin Table-->
@@ -128,13 +105,11 @@
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">All Admins</h5>
 
-                            <!--Success/Failure Messages-->
-
                             <div class="table-responsive">
                                 <table class="table table-hover text-center" id="adminTable">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">Username</th>
                                             <th scope="col" class="align-middle">More Action</th>
                                         </tr>
                                     </thead>
