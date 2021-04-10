@@ -48,24 +48,41 @@
                 return
             }
 
+            if (txtPasswordSU.length < 8) {
+                document.getElementById("passwordLengthError").innerHTML = "Password must be minimum 8 characters long";
+                return;
+            }
+
+            var usernameRE = /^.+@gocar\.com$/;
+            if (txtUsernameSU.match(usernameRE)) {
+
+            } else {
+                document.getElementById("adminUsernameInvalid").innerHTML = "Please enter a valid email address";
+                return;
+            }
+
             db.collection("admins").doc(txtUsernameSU).get()
                 .then(function (doc) {
                     if (doc.exists) {
                         document.getElementById('adminUsernameExist').innerHTML = "Admin username already exists";
                     } else {
                         db.collection("admins").doc(txtUsernameSU).set({
-                            password: txtPasswordSU
-                        })
-                        document.getElementById('adminAddedSuccess').innerHTML = "Admin was added successfully";
+                                password: txtPasswordSU
+                            })
+                            .then(function () {
+                                document.getElementById('adminAddedSuccess').innerHTML =
+                                    "Admin was added successfully";
+                                window.location.replace("admin_master.html");
+                            })
                     }
                 })
-                .catch(function (error) {
-                    console.log("error", error);
+                .catch((error) => {
+                    document.getElementById("adminUsernameError").innerHTML = "Please enter a valid username";
                 });
         }
 
         function adminCancel() {
-            window.location.replace("admin.html");
+            window.location.replace("admin_master.html");
         }
     </script>
 </head>
@@ -95,10 +112,14 @@
                                     <div class="form-group col-md-6">
                                         <label for="adminUsername">Username</label>
 
-                                        <input type="text" class="form-control" id="adminUsername" name="adminUsername">
+                                        <input type="text" class="form-control" id="adminUsername" name="adminUsername"
+                                            placeholder="Enter a username">
 
                                         <!--Error Message for Empty Admin Username-->
                                         <p id="adminUsernameEmpty" class="text-danger" role="alert"></p>
+
+                                        <!--Error Message for Invalid Admin Username-->
+                                        <p id="adminUsernameInvalid" class="text-danger" role="alert"></p>
 
                                         <!--Error Message if Admin Username Exists-->
                                         <p id="adminUsernameExist" class="text-danger" role="alert"></p>
@@ -108,10 +129,13 @@
                                         <label for="adminPassword">Password</label>
 
                                         <input type="password" class="form-control" id="adminPassword"
-                                            name="adminPassword">
+                                            name="adminPassword" placeholder="Enter a password">
 
                                         <!--Error Message for Empty Password-->
                                         <p id="adminPasswordEmpty" class="text-danger" role="alert"></p>
+
+                                        <!--Error Message for Password Length-->
+                                        <p id="passwordLengthError" class="text-danger" role="alert"></p>
                                     </div>
                                 </div>
 
@@ -129,7 +153,9 @@
                                     </div>
                                 </div>
 
-                                <p id="adminAddedSuccess" class="text-success"></p>
+                                <p id="adminAddedSuccess" class="text-success" role="alert"></p>
+
+                                <p id="adminUsernameError" class="text-danger" role="alert"></p>
                             </form>
                         </div>
                     </div>
