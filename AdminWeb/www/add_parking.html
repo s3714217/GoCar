@@ -39,12 +39,49 @@
 
     <script>
         function parkingAdd() {
-            var txtAddress = document.getElementById("parkingAddress").value;
+            var address = document.getElementById("parkingAddress").value;
+            var latitude = document.getElementById("parkingLatitude").value;
+            var longitude = document.getElementById("parkingLongitude").value;
 
-            if (txtAddress === "") {
-                document.getElementById('parkingAddressEmpty').innerHTML = "Please enter an address";
+            var latitudeNum = parseInt(latitude);
+            var longitudeNum = parseInt(longitude);
+
+            if (latitudeNum < -90 || latitudeNum > 90) {
+                document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
                 return
             }
+
+            if (longitudeNum < -180 || longitudeNum > 180) {
+                document.getElementById("longitudeNumError").innerHTML =
+                    "Please enter a longitude between -180 and 180";
+                return
+            }
+
+            if (address === "" || latitude === "" || longitude === "") {
+                document.getElementById('parkingAddressEmpty').innerHTML = "Please enter an address";
+                document.getElementById('parkingLatitudeEmpty').innerHTML = "Please enter a latitude";
+                document.getElementById('parkingLongitudeEmpty').innerHTML = "Please enter a longitude";
+                return
+            }
+
+            var geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
+
+            db.collection("parking_location").doc().get()
+                .then(function (doc) {
+                    if (doc.exists) {
+                        document.getElementById("addFailure").innerHTML = "Parking location already exists";
+                    } else {
+                        db.collection("parking_location").doc().set({
+                            Address: address,
+                            Location: geo,
+                            Number_cars: 0
+                        })
+                        document.getElementById("addSuccess").innerHTML = "Parking location was added successfully";
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error", error);
+                });
         }
 
         function parkingCancel() {
@@ -64,7 +101,8 @@
                 <div class="container-fluid my-3 footer-align-bottom">
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
-                            <h1 class="text-left font-weight-bold ml-15">Parking Management <img src="" alt=""></h1>
+                            <h1 class="text-left font-weight-bold ml-15">Parking Management <img
+                                    src="style/parking_available.svg" alt="Parking Available Icon"></h1>
                         </div>
                     </div>
 
@@ -79,14 +117,40 @@
                                         <label for="parkingAddress">Address</label>
 
                                         <input type="text" class="form-control" id="parkingAddress"
-                                            name="parkingAddress">
+                                            name="parkingAddress" placeholder="Enter an Address">
 
                                         <!--Error Message for Empty Parking Address-->
                                         <p id="parkingAddressEmpty" class="text-danger" role="alert"></p>
                                     </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="form-group col-md-6">
+                                        <label for="parkingLatitude">Latitude</label>
+
+                                        <input type="number" class="form-control" id="parkingLatitude"
+                                            name="parkingLatitude" min="-90" max="90" step="0.000001"
+                                            placeholder="Enter a Latitude">
+
+                                        <!--Error Message for Wrong Parking Latitude-->
+                                        <p id="latitudeNumError" class="text-danger" role="alert"></p>
+
+                                        <!--Error Message for Empty Parking Latitude-->
+                                        <p id="parkingLatitudeEmpty" class="text-danger" role="alert"></p>
+                                    </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="parkingLocation">Location</label>
+                                        <label for="parkingLongitude">Longitude</label>
+
+                                        <input type="number" class="form-control" id="parkingLongitude"
+                                            name="parkingLongitude" min="-180" max="180" step="0.000001"
+                                            placeholder="Enter a Longitude">
+
+                                        <!--Error Message for Wrong Parking Longitude-->
+                                        <p id="longitudeNumError" class="text-danger" role="alert"></p>
+
+                                        <!--Error Message for Empty Parking Longitude-->
+                                        <p id="parkingLongitudeEmpty" class="text-danger" role="alert"></p>
                                     </div>
                                 </div>
 
@@ -103,6 +167,12 @@
                                             onclick="parkingAdd()">Save</button>
                                     </div>
                                 </div>
+
+                                <!--Confirmation Message if Parking Location Added Successfully-->
+                                <p id="addSuccess" class="text-success"></p>
+
+                                <!--Failure Message if Parking Location Add Failed-->
+                                <p id="addFailure" class="text-danger"></p>
                             </form>
                         </div>
                     </div>
