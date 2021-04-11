@@ -1,8 +1,0 @@
-How to compile:
-
-1. Unzip gcloud.zip
-2. Enter the following in Google Cloud SDK Shell (ensure you are in directory with app.yaml):
-	gcloud config set project gocarrmit
-	gcloud app deploy
-	y
-3. After file has been uploaded, open https://gocarrmit.ts.r.appspot.com/

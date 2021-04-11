@@ -1,23 +1,12 @@
 /*Portal Login*/
 #portalLogin {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background-size: cover;
-    background-position: center;
     background: linear-gradient(180deg, #FEFEFF -14.26%, #ADA4C9 57.45%, #ADA4C9 57.47%, #54428E 133.79%);
 }
 
 #loginCard {
-    position: absolute;
     width: 550px;
-    height: 847px;
-    left: 446px;
-    top: 70px;
     max-width: 100%;
-
     background: #F3F2F4;
-    border-radius: 15px;
 }
 
 .card-title {
@@ -51,6 +40,47 @@
     height: 50px;
 }
 
+.footer-align-bottom {
+    min-height: calc(100vh - 114px);
+}
+
 .text-logo {
     color: #05386b !important;
+}
+
+h1 {
+    color: #54428e !important;
+    font-size: 30px !important;
+}
+
+.ml-15 {
+    margin-left: -15px !important;
+}
+
+.mr-15 {
+    margin-right: -15px !important;
+}
+
+.form-control:focus {
+    border-color: #54428e !important;
+}
+
+@media (max-width: 767px) {
+    .table-responsive .dropdown-menu {
+        position: static !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow: visible;
+    }
+}
+
+.btn-primary {
+    background-color: #54428E !important;
+}
+
+.btn-secondary {
+    background-color: #989898 !important;
 }

@@ -36,7 +36,8 @@
 			var txtPassword = document.getElementById("password").value;
 
 			if (txtUsername === "" || txtPassword === "") {
-				alert("Please enter a username and password");
+				document.getElementById('usernameEmpty').innerHTML = "Please enter a username";
+				document.getElementById('passwordEmpty').innerHTML = "Please enter a password";
 				return
 			}
 
@@ -51,11 +52,11 @@
 						if (password == getPassword) {
 							window.location.replace("dashboard.html");
 						} else {
-							alert("Please enter a valid password");
+							document.getElementById('passwordError').innerHTML = "Please enter a valid password";
 						}
 					} else {
-						alert("Please enter a valid username");
-					}
+						document.getElementById('usernameError').innerHTML = "Please enter a valid username";
+          }
 				})
 				.catch(function (error) {
 					console.log("error", error);
@@ -80,6 +81,9 @@
 							<input type="text" class="form-control form-control-lg border-0" id="username"
 								placeholder="Username">
 						</div>
+            
+						<p id="usernameEmpty" class="text-danger" role="alert"></p>
+						<p id="usernameError" class="text-danger" role="alert"></p>
 					</div>
 
 					<div class="col-auto mt-4 p-0">
@@ -89,6 +93,9 @@
 							<input type="password" class="form-control form-control-lg border-0" id="password"
 								placeholder="Password">
 						</div>
+
+						<p id="passwordEmpty" class="text-danger" role="alert"></p>
+						<p id="passwordError" class="text-danger" role="alert"></p>
 					</div>
 
 					<button type="button" id="login" class="btn btn-primary btn-block btn-lg mt-5 border-0"
