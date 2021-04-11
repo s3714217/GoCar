@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>New Car | GoCar</title>
+    <title>Add New Car | GoCar</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,26 +42,17 @@
             db.collection("parking_location").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     var listParkings1 = document.querySelector("#parkingLocation");
-                    var listParkings2 = document.querySelector("#updateLocation");
 
                     var option1 = document.createElement("option");
                     var address1 = document.createElement("span");
-                    var option2 = document.createElement("option");
-                    var address2 = document.createElement("span");
 
                     option1.setAttribute("data-id", doc.id);
                     address1.textContent = doc.data().Address;
                     option1.setAttribute("value", doc.data().Address);
 
-                    option2.setAttribute("data-id", doc.id);
-                    address2.textContent = doc.data().Address;
-                    option2.setAttribute("value", doc.data().Address);
-
                     option1.appendChild(address1);
-                    option2.appendChild(address2);
 
                     listParkings1.appendChild(option1);
-                    listParkings2.appendChild(option2);
                 })
             })
         }
@@ -70,83 +61,56 @@
             var txtModel = document.getElementById("carModel").value;
             var optCondtion = document.getElementById("carCondition").value;
             var optlocation = document.getElementById("parkingLocation").value;
-            var optLeased = document.getElementById("leased").value;
             var optType = document.getElementById("carType").value;
             var txtRate = document.getElementById("carRate").value;
             var txtCarID = document.getElementById("carID").value;
 
             var rateNum = parseInt(txtRate);
 
-            if (rateNum < 10 || rateNum > 20) {
-                alert("Please enter a rate between 10 and 20");
+            if (rateNum < 100 || rateNum > 500) {
+                document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
                 return
             }
 
-            var isTrue;
-            if (optLeased == "1") {
-                isTrue = true;
-            } else if (optLeased == "0") {
-                isTrue = false;
-            }
+            var carleased = false;
 
             if (txtCarID === "" || txtModel === "" || txtRate === "") {
-                alert("Please enter a CarID, Model and Rate");
+                document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
+                document.getElementById('carModelEmpty').innerHTML = "Please enter a car model";
+                document.getElementById('carRateEmpty').innerHTML = "Please enter a car rate";
                 return
             }
 
-            db.collection("test_cars").doc(txtCarID).get()
+            db.collection("cars").doc(txtCarID).get()
                 .then(function (doc) {
                     if (doc.exists) {
-                        alert("Car ID already exists");
+                        document.getElementById('carIDExist').innerHTML = "Car registration number already exists";
                     } else {
-                        db.collection("test_cars").doc(txtCarID).set({
+                        db.collection("cars").doc(txtCarID).set({
                             condition: optCondtion,
-                            leased: isTrue,
+                            leased: carleased,
                             model: txtModel,
                             parking_location: optlocation,
                             rate: rateNum,
                             vehicle_type: optType
                         })
-                        alert("Car added sucessfully");
+                        document.getElementById('carAddedSuccess').innerHTML = "Car was added successfully";
                     }
                 })
                 .catch(function (error) {
+                    document.getElementById('carAddedFailure').innerHTML = "Car could not be added";
                     console.log("error", error);
                 });
         }
-
-        function cars() {
-            db.collection("test_cars").get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    var listCars1 = document.querySelector("#carsToRemove");
-                    var listCars2 = document.querySelector("#carsToUpdate");
-
-                    var option1 = document.createElement("option");
-                    var cars1 = document.createElement("span");
-                    var option2 = document.createElement("option");
-                    var cars2 = document.createElement("span");
-
-                    option1.setAttribute("data-id", doc.id);
-                    cars1.textContent = doc.id;
-                    option1.setAttribute("value", doc.id);
-
-                    option2.setAttribute("data-id", doc.id);
-                    cars2.textContent = doc.id;
-                    option2.setAttribute("value", doc.id);
-
-                    option1.appendChild(cars1);
-                    option2.appendChild(cars2);
-
-                    listCars1.appendChild(option1);
-                    listCars2.appendChild(option2);
-                })
-            })
+      
+        function carCancel() {
+            window.location.replace("car.html");
         }
     </script>
 </head>
 
-<body onload="getValues(); parking(); cars()">
-    <!--Add Car-->
+<body onload="parking()">
+    <!--Add Car Form-->
     <div class="container-fluid">
         <div class="row">
 
@@ -154,21 +118,28 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">Car Management <img
-                            src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">Car Management <img
+                                    src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
+                        </div>
+                    </div>
 
                     <!--Add Car Form-->
                     <div class="row mt-5">
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">Add New Car</h5>
 
-                            <form class="mt-5" action="" method="post">
+                            <form class="mt-5" action="">
                                 <div class="row mt-4">
                                     <div class="form-group col-md-6">
                                         <label for="carModel">Model</label>
 
-                                        <input type="text" class="form-control" id="carModel" name="carModel">
+                                        <input type="text" class="form-control" id="carModel" name="carModel"
+                                            placeholder="Enter a Car Model">
+
+                                        <!--Error Message for Empty Car Model-->
+                                        <p id="carModelEmpty" class="text-danger" role="alert"></p>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -193,17 +164,6 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="leased">Leased</label>
-
-                                        <select class="form-control" id="leased" name="leased">
-                                            <option value="1">True</option>
-                                            <option value="0">False</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-2">
-                                    <div class="form-group col-md-6">
                                         <label for="carType">Car Type</label>
 
                                         <select class="form-control" id="carType" name="carType">
@@ -212,28 +172,57 @@
                                             <option value="minivan">Minivan</option>
                                         </select>
                                     </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="carRate">Rate</label>
-
-                                        <input type="number" class="form-control" id="carRate" name="carRate" min="10"
-                                            max="20">
-                                    </div>
                                 </div>
 
                                 <div class="row mt-2">
                                     <div class="form-group col-md-6">
-                                        <label for="carID">Car ID</label>
+                                        <label for="carRate">Rate</label>
 
-                                        <input type="text" class="form-control" id="carID" name="carID" maxlength="7">
+                                        <input type="number" class="form-control" id="carRate" name="carRate" min="100"
+                                            max="500" placeholder="Enter a Rate">
+
+                                        <!--Error Message for Wrong Rate Number-->
+                                        <p id="rateNumError" class="text-danger" role="alert">
+                                        </p>
+
+                                        <!--Error Message for Empty Rate Number-->
+                                        <p id="carRateEmpty" class="text-danger" role="alert">
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="carID">Car Registration No.</label>
+
+                                        <input type="text" class="form-control" id="carID" name="carID" maxlength="7"
+                                            placeholder="Enter a Car Registration No.">
+
+                                        <!--Error Message for Empty Car ID-->
+                                        <p id="carIDEmpty" class="text-danger" role="alert">
+                                        </p>
+
+                                        <!--Error Message if Car ID Exists-->
+                                        <p id="carIDExist" class="text-danger" role="alert">
+                                        </p>
                                     </div>
                                 </div>
 
-                                <div class="col-2">
-                                    <button id="addCarButton" type="button"
-                                        class="btn btn-primary btn-block mt-5 border-0" onclick="carAdd()">Add
-                                        Car</button>
+                                <div class="row mt-2">
+                                    <div class="col-2">
+                                        <button id="cancelButton" type="button"
+                                            class="btn btn-secondary btn-block mt-5 border-0"
+                                            onclick="carCancel()">Cancel</button>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <button id="addCarButton" type="button"
+                                            class="btn btn-primary btn-block mt-5 border-0"
+                                            onclick="carAdd()">Save</button>
+                                    </div>
+
                                 </div>
+
+                                <p id="carAddedSuccess" class="text-success"></p>
+                                <p id="carAddedFailure" class="text-danger"></p>
                             </form>
                         </div>
                     </div>
@@ -242,6 +231,7 @@
                 <div id="footer"></div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
