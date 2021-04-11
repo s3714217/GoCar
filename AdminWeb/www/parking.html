@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Parking Management | GoCar</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--CSS from Bootstrap v4.5.2-->
+    <link rel="stylesheet" type="text/css" href="../style/bootstrap.css">
+
+    <!--Self-defined CSS-->
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
+
+    <!--Jquery links-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!--Javascript from Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/global.js"></script>
+
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+    </script>
+
+    <script>
+        function renderLocations(doc) {
+            var listLocations = document.querySelector("#locationsTable");
+
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            var td4 = document.createElement("td");
+
+            var address = document.createElement("span");
+            var location = document.createElement("span");
+            var numCars = document.createElement("span");
+            var removeLocation = document.createElement("button");
+
+            removeLocation.className = "btn btn-secondary";
+
+            address.textContent = doc.data().Address;
+            location.textContent = doc.data().Location.latitude + " " + doc.data().Location.longitude;
+            numCars.textContent = doc.data().Number_cars;
+
+            var autoRemoveID = Math.floor(Math.random() * 300);
+
+            removeLocation.setAttribute("id", autoRemoveID);
+            removeLocation.setAttribute("value", doc.id);
+
+            removeLocation.textContent = "Remove Location";
+
+            td1.appendChild(address);
+            td2.appendChild(location);
+            td3.appendChild(numCars);
+            td4.appendChild(removeLocation);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+
+            listLocations.appendChild(tr);
+
+            var rID = document.getElementById(autoRemoveID);
+
+            removeLocation.addEventListener("click", function () {
+                db.collection("parking_location").doc(rID.value).delete()
+                    .then(function () {
+                        document.getElementById("removeSuccess").innerHTML =
+                            "Parking location was successfully removed";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById("removeFailure").innerHTML =
+                            "Parking location could not be removed";
+                        console.log("Error", error);
+                    });
+            });
+        }
+
+        function locations() {
+            db.collection("parking_location").get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    renderLocations(doc);
+                })
+            })
+        }
+
+        function addParkingButton() {
+            window.location.replace("add_parking.html");
+        }
+    </script>
+</head>
+
+<body onload="locations()">
+    <!--Parking Dashboard-->
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-3" id="header">
+            </div>
+
+            <div class="col-9">
+                <div class="container-fluid my-3 footer-align-bottom">
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">Parking Management<img
+                                    src="style/parking_available.svg" alt="Parking Available Icon"></h1>
+                        </div>
+
+                        <!--Add Parking Button-->
+                        <div class="col-3 my-auto">
+                            <button class="btn" onclick="addParkingButton()"><img src="style/add_new_parking.svg"
+                                    alt="Add New Parking Button"></button>
+                        </div>
+                    </div>
+
+                    <!--Parking Management Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Parking Locations</h5>
+
+                            <!--Success/Failure Messages-->
+                            <p class="text-success" id="removeSuccess" role="alert"></p>
+                            <p class="text-danger" id="removeFailure" role="alert"></p>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="locationsTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Address</th>
+                                            <th scope="col" class="align-middle">Location</th>
+                                            <th scope="col" class="align-middle">Number of Cars</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="footer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

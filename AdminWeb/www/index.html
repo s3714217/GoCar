@@ -36,7 +36,6 @@
 			var txtPassword = document.getElementById("password").value;
 
 			if (txtUsername === "" || txtPassword === "") {
-				// alert("Please enter a username and password");
 				document.getElementById('usernameEmpty').innerHTML = "Please enter a username";
 				document.getElementById('passwordEmpty').innerHTML = "Please enter a password";
 				return
@@ -53,13 +52,11 @@
 						if (password == getPassword) {
 							window.location.replace("dashboard.html");
 						} else {
-							// alert("Please enter a valid password");
 							document.getElementById('passwordError').innerHTML = "Please enter a valid password";
 						}
 					} else {
-						// alert("Please enter a valid username");
 						document.getElementById('usernameError').innerHTML = "Please enter a valid username";
-					}
+          }
 				})
 				.catch(function (error) {
 					console.log("error", error);
@@ -84,7 +81,7 @@
 							<input type="text" class="form-control form-control-lg border-0" id="username"
 								placeholder="Username">
 						</div>
-
+            
 						<p id="usernameEmpty" class="text-danger" role="alert"></p>
 						<p id="usernameError" class="text-danger" role="alert"></p>
 					</div>
