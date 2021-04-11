@@ -50,23 +50,24 @@
             var address = document.createElement("span");
             var location = document.createElement("span");
             var numCars = document.createElement("span");
-            var editLocation = document.createElement("button");
             var removeLocation = document.createElement("button");
 
-            editLocation.className = "btn btn-secondary";
             removeLocation.className = "btn btn-secondary";
 
             address.textContent = doc.data().Address;
             location.textContent = doc.data().Location.latitude + " " + doc.data().Location.longitude;
             numCars.textContent = doc.data().Number_cars;
 
-            editLocation.textContent = "Edit Location";
+            var autoRemoveID = Math.floor(Math.random() * 300);
+
+            removeLocation.setAttribute("id", autoRemoveID);
+            removeLocation.setAttribute("value", doc.id);
+
             removeLocation.textContent = "Remove Location";
 
             td1.appendChild(address);
             td2.appendChild(location);
             td3.appendChild(numCars);
-            td4.appendChild(editLocation);
             td4.appendChild(removeLocation);
 
             tr.appendChild(td1);
@@ -75,6 +76,22 @@
             tr.appendChild(td4);
 
             listLocations.appendChild(tr);
+
+            var rID = document.getElementById(autoRemoveID);
+
+            removeLocation.addEventListener("click", function () {
+                db.collection("parking_location").doc(rID.value).delete()
+                    .then(function () {
+                        document.getElementById("removeSuccess").innerHTML =
+                            "Parking location was successfully removed";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById("removeFailure").innerHTML =
+                            "Parking location could not be removed";
+                        console.log("Error", error);
+                    });
+            });
         }
 
         function locations() {
@@ -109,7 +126,7 @@
 
                         <!--Add Parking Button-->
                         <div class="col-3 my-auto">
-                            <button class="btn" onclick="addParkingButton()"><img src=""
+                            <button class="btn" onclick="addParkingButton()"><img src="style/add_new_parking.svg"
                                     alt="Add New Parking Button"></button>
                         </div>
                     </div>
@@ -120,6 +137,8 @@
                             <h5 class="my-auto text-black-50 font-weight-bold">All Parking Locations</h5>
 
                             <!--Success/Failure Messages-->
+                            <p class="text-success" id="removeSuccess" role="alert"></p>
+                            <p class="text-danger" id="removeFailure" role="alert"></p>
 
                             <div class="table-responsive">
                                 <table class="table table-hover text-center" id="locationsTable">
