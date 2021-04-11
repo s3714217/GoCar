@@ -45,7 +45,7 @@
 
     <script>
         function billingDetails() {
-            db.collection("test_users/" + localStorage.getItem("docID") + "/card").get().then((snapshot) => {
+            db.collection("users/" + localStorage.getItem("docID") + "/card").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     renderBillingDetails(doc);
                 })
@@ -64,9 +64,7 @@
         }
 
         function bookingHistory() {
-            var historyTitle = document.getElementById("historyTitle");
-            historyTitle.textContent = "Booking History";
-            db.collection("test_users/" + localStorage.getItem("docID") + "/history").get().then((snapshot) => {
+            db.collection("users/" + localStorage.getItem("docID") + "/history").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     renderHistoryDetails(doc);
                 })
@@ -130,6 +128,13 @@
 
             var birthDate = document.getElementById("birth");
             birthDate.innerHTML = localStorage.getItem("birthDate");
+
+            var image = document.getElementById("licence");
+            var ID = "37ATzokkKVdcJKDKDhy3c5k8VMD3";
+            localStorage.setItem("URL", ID);
+            var fixedImageURL = "https://storage.googleapis.com/gocarrmit.appspot.com/verification/" + localStorage
+                .getItem("URL") + "/licence";
+            image.setAttribute("src", fixedImageURL);
         }
 
         function checkVerify() {
@@ -224,15 +229,21 @@
 
                                 <div class="row mt-2">
                                     <div class="form-group col-md-6">
-                                        <label for="driverLicense">Driver License</label>
-                                        <img src="" alt="User's Driver License" id="license">
+                                        <label for="driverLicence">Driver License</label>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-1">
+                                    <div class="form-group col-md-6">
+                                        <img alt="User's Driver Licence" id="licence" width="200" height="200"
+                                            class="rounded d-block">
                                     </div>
                                 </div>
                             </form>
                         </div>
 
                         <div class="col-3 border shadow bg-white rounded-lg p-3">
-                            <h8 class="my-auto text-black-50 font-weight-bold" id="historyTitle"></h8>
+                            <h8 class="my-auto text-black-50 font-weight-bold">Booking History</h8>
 
                             <hr class="my-2">
 
