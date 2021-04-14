@@ -36,15 +36,17 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     private var current_user_long : Double = 0
     private var car_data_at_location = [InputCarData]()
     private var pickerData : [String] = []
-    
+    private var typePickerData : [String] = []
     @IBOutlet var popUp: UIView!
     @IBOutlet weak var doneBtn: UIButton!
     @IBOutlet weak var modelPicker: UIPickerView!
+    @IBOutlet weak var typePickerView: UIPickerView!
     @IBOutlet weak var smallView: UIView!
     @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var mapKit: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var filterBtn: UIButton!
     
     
     //____________________________________Setup____________________________________
@@ -66,7 +68,8 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         self.locationManager = CLLocationManager()
         self.locationManager.requestAlwaysAuthorization()
         self.getUserLocation()
-        databaseService.retrievingCars()
+        self.filterBtn.isEnabled = false
+        databaseService.retrievingAvailableCars()
         databaseService.retrievingLocation()
         _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true){ timer in
             if self.databaseService.getCars().count > 0 && self.databaseService.getLocation().count > 0{
@@ -84,12 +87,20 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                 self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
                 self.collectionView.isHidden = true
                 self.displayMarker()
+                self.filterBtn.isEnabled = true
+                self.mapKit.showsCompass = false
                 super.viewDidLoad()
                 
             }
            
         }
         
+    }
+    @IBAction func refresh(_ sender: Any) {
+        self.all_cars = self.databaseService.getCars()
+        self.all_locations = self.databaseService.getLocation()
+        self.displayable_location = self.all_locations
+        self.displayMarker()
     }
     
     //____________________________________MapView____________________________________
@@ -122,25 +133,41 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         for l in self.all_locations {
             if l.address ==  view.annotation?.title as! String{
                 self.selected_address_toView = l
+                self.car_data_at_location = []
+                for c in l.cars{
+                    var contained = false
+                   
+                    for d in self.car_data_at_location{
+                        if d.title.lowercased().trimmingCharacters(in: .whitespaces) == c.model.lowercased().trimmingCharacters(in: .whitespaces){
+                            contained = true
+                        }
+                    }
+                    if !contained{
+                        self.car_data_at_location.append(InputCarData(title: c.model, image: UIImage(imageLiteralResourceName: c.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(c.rate)/hr $\(c.rate * 9)/day"))
+                    }
+                }
                 break
             }
         }
-        self.car_data_at_location = []
-        for car in self.all_cars{
-            let location = view.annotation?.title as! String
-            if car.parking_location.lowercased() == location.lowercased(){
-                var contained = false
-               
-                for d in self.car_data_at_location{
-                    if d.title.lowercased().trimmingCharacters(in: .whitespaces) == car.model.lowercased().trimmingCharacters(in: .whitespaces){
-                        contained = true
-                    }
-                }
-                if !contained{
-                    self.car_data_at_location.append(InputCarData(title: car.model, image: UIImage(imageLiteralResourceName: car.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(car.rate)/hr $\(car.rate * 9)/day"))
-                }
-            }
-        }
+        
+//        self.car_data_at_location = []
+//        for car in self.all_cars{
+//            let location = view.annotation?.title as! String
+//            if car.parking_location.lowercased() == location.lowercased(){
+//                var contained = false
+//
+//                for d in self.car_data_at_location{
+//                    if d.title.lowercased().trimmingCharacters(in: .whitespaces) == car.model.lowercased().trimmingCharacters(in: .whitespaces){
+//                        contained = true
+//                    }
+//                }
+//                if !contained{
+//                    self.car_data_at_location.append(InputCarData(title: car.model, image: UIImage(imageLiteralResourceName: car.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(car.rate)/hr $\(car.rate * 9)/day"))
+//                }
+//            }
+//        }
+        
+        
         self.collectionView.reloadData()
         self.collectionView.isHidden = false
         self.smallView.isHidden = false
@@ -236,12 +263,25 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return pickerData.count
+        
+        if pickerView == self.modelPicker{
+            return pickerData.count
+        }
+        else{
+            return typePickerData.count
+        }
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        if pickerView == self.modelPicker{
+            return pickerData[row]
+        }
+        else{
+            return typePickerData[row]
+        }
     }
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        if pickerView == self.modelPicker{
+            
             var label = UILabel()
             if let v = view {
                 label = v as! UILabel
@@ -251,11 +291,58 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
             label.textAlignment = .center
             return label
         }
+        else{
+            var label = UILabel()
+            if let v = view {
+                label = v as! UILabel
+            }
+            label.font = UIFont (name: "Helvetica Neue", size: 15)
+            label.text =  self.typePickerData[row].capitalized
+            label.textAlignment = .center
+            return label
+        }
+    }
     
-    private var selectedIndex = 0
+    
+    
+    private var selectedIndexModel = 0
+    private var selectedIndexType = 0
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedIndex = row
+        if pickerView == self.modelPicker{
+            selectedIndexModel = row
+        }
+        else{
+            selectedIndexType = row
+            self.pickerData = []
+            if selectedIndexType == 0{
+                self.pickerData.append("All Model")
+            }
+           
+            for car in self.all_cars{
+               
+                var contained = false
+                for d in self.pickerData{
+                    if car.model.lowercased().trimmingCharacters(in: .whitespaces) == d.lowercased().trimmingCharacters(in: .whitespaces){
+                        contained = true
+                    }
+                    
+                }
+                
+                if !contained && selectedIndexType != 0{
+                    if car.vehicle_type.lowercased().trimmingCharacters(in: .whitespaces) == typePickerData[selectedIndexType].lowercased().trimmingCharacters(in: .whitespaces){
+                        self.pickerData.append(car.model )
+                    }
+                }
+                else if !contained && selectedIndexType == 0{
+                    self.pickerData.append(car.model )
+                }
+                
+            }
+            self.modelPicker.selectRow(0, inComponent: 0, animated: true)
+            self.modelPicker.reloadAllComponents()
+        }
+       
     }
     //____________________________________Action____________________________________
     
@@ -270,6 +357,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         
     }
     
+    @IBOutlet weak var slider: UISlider!
     @IBAction func showFilter(_ sender: Any) {
         blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -278,30 +366,47 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         blurEffectView.backgroundColor = .clear
         self.view.addSubview(blurEffectView)
         self.pickerData = []
+        self.typePickerData = []
         self.smallView.isHidden = true
         self.collectionView.isHidden = true
         self.popUp.center = self.view.center
         self.popUp.layer.cornerRadius = 30
         self.doneBtn.layer.cornerRadius = 12
         self.pickerData.append("All Model")
+        self.typePickerData.append("All Type")
+        slider.value = slider.maximumValue
+        distanceLabel.text = "\(String(Int(slider.value))) m"
         for car in self.all_cars{
             var contained = false
             for d in self.pickerData{
                 if car.model.lowercased().trimmingCharacters(in: .whitespaces) == d.lowercased().trimmingCharacters(in: .whitespaces){
                     contained = true
                 }
+                
             }
             if !contained{
-                
                 self.pickerData.append(car.model )
             }
+            
+            var contained2 = false
+            for t in self.typePickerData{
+                if car.vehicle_type.lowercased().trimmingCharacters(in: .whitespaces) == t.lowercased().trimmingCharacters(in: .whitespaces){
+                    contained2 = true
+                }
+            }
+            if !contained2{
+                self.typePickerData.append(car.vehicle_type)
+            }
+            
         }
+        self.typePickerView.delegate = self
         self.modelPicker.delegate = self
+        self.typePickerView.selectRow(0, inComponent: 0, animated: true)
         self.view.addSubview(self.popUp)
         
     }
     @IBOutlet weak var distanceLabel: UILabel!
-    private var filterRange = 0
+    private var filterRange = 5000
     @IBAction func sliding(_ sender: UISlider) {
         
         let newValue = Int(sender.value/100) * 100
@@ -312,13 +417,13 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     @IBAction func closeFilter(_ sender: Any) {
         self.displayable_location = self.all_locations
-        if selectedIndex != 0
+        if selectedIndexModel != 0
         {
             self.displayable_location = []
             for location in self.all_locations {
                 for car in location.cars{
                     
-                    if car.model.lowercased().trimmingCharacters(in: .whitespaces) == pickerData[selectedIndex].lowercased().trimmingCharacters(in: .whitespaces){
+                    if car.model.lowercased().trimmingCharacters(in: .whitespaces) == pickerData[selectedIndexModel].lowercased().trimmingCharacters(in: .whitespaces){
                         self.displayable_location.append(location)
                     }
                 }
@@ -348,7 +453,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if item.title == "Trips"{
+        if item.title == "Trip"{
             self.performSegue(withIdentifier: "toTrips", sender: self)
         }
         else if item.title == "Account"{
@@ -363,12 +468,17 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     func displayMarker() {
         self.mapKit.removeAnnotations(self.mapKit.annotations)
         for l in self.displayable_location{
-            let annotation = MKPointAnnotation()
-            annotation.title = l.address
-            annotation.subtitle = "\(String(Int(CLLocation(latitude: self.current_user_lat, longitude: self.current_user_long).distance(from: CLLocation(latitude: l.lat, longitude: l.long)))))m away"
-            annotation.coordinate = .init(latitude: l.lat, longitude: l.long)
-            self.mapKit.addAnnotation(annotation)
+            if l.car_count > 0{
+                let annotation = MKPointAnnotation()
+                annotation.title = l.address
+                annotation.subtitle = "\(String(Int(CLLocation(latitude: self.current_user_lat, longitude: self.current_user_long).distance(from: CLLocation(latitude: l.lat, longitude: l.long)))))m away"
+                annotation.coordinate = .init(latitude: l.lat, longitude: l.long)
+                self.mapKit.addAnnotation(annotation)
+            }
+            
         }
+        
+        
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
 
@@ -392,6 +502,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                  locationManager.startUpdatingLocation()
              }
     }
+   
     
 }
 

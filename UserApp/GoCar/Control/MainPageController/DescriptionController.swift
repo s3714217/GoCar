@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class DescriptionController: UIViewController {
 
@@ -14,6 +15,7 @@ class DescriptionController: UIViewController {
     var selectedCar: Car = Car()
     var carLocation: parking_location = parking_location()
     var distanceFromUser = 0
+    var db = Firestore.firestore()
     @IBOutlet weak var carAddress: UILabel!
     @IBOutlet weak var distanceAway: UILabel!
     @IBOutlet weak var bookBtn: UIButton!
@@ -21,6 +23,17 @@ class DescriptionController: UIViewController {
     
     @IBOutlet weak var carType: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
+    
+    @IBOutlet weak var small_hatch: UILabel!
+    @IBOutlet weak var seater: UILabel!
+    @IBOutlet weak var child_seat: UILabel!
+    @IBOutlet weak var fuel: UILabel!
+    @IBOutlet weak var pet: UILabel!
+    @IBOutlet weak var apple: UILabel!
+    @IBOutlet weak var wheelchair: UILabel!
+    @IBOutlet weak var re_camera: UILabel!
+    @IBOutlet weak var nav_sys: UILabel!
+    @IBOutlet weak var bike: UILabel!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toBooking"{
@@ -33,7 +46,7 @@ class DescriptionController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.rateLabel.text = "$\(selectedCar.rate)/hr $\(selectedCar.rate * 9)/day"
+        self.rateLabel.text = "Rate: $\(selectedCar.rate)/day"
         self.descriptionView.layer.cornerRadius = 12
         self.descriptionView.layer.shadowColor = UIColor.black.cgColor
         self.descriptionView.layer.shadowOffset = CGSize(width: 2, height: 2)
@@ -46,6 +59,8 @@ class DescriptionController: UIViewController {
         self.carModel.text = "Model: \(selectedCar.model)"
         self.carType.text = "Type: \(selectedCar.vehicle_type.capitalized)"
         self.carImg.image = UIImage(imageLiteralResourceName: selectedCar.model.lowercased().trimmingCharacters(in: .whitespaces))
+        
+        self.loading_detail()
     }
     
     @IBAction func toBooking(_ sender: Any) {
@@ -57,14 +72,43 @@ class DescriptionController: UIViewController {
         self.performSegue(withIdentifier: "toDashboard", sender: self)
         
     }
-    /*
-    // MARK: - Navigation
+    
+    func loading_detail(){
+        let docRef = db.collection("car_description").document(selectedCar.model.trimmingCharacters(in: .whitespaces))
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                if !(document.get("apple_carplay") as! Bool){
+                    self.apple.isHidden = true
+                }
+                if !(document.get("bike_rack") as! Bool){
+                    self.bike.isHidden = true
+                }
+                if !(document.get("child_seat") as! Bool){
+                    self.child_seat.isHidden = true
+                }
+                if !(document.get("nav_system") as! Bool){
+                    self.nav_sys.isHidden = true
+                }
+                if !(document.get("pet_friendly") as! Bool){
+                    self.pet.isHidden = true
+                }
+                
+                self.re_camera.text = (document.get("camera") as? String)?.capitalized
+                self.fuel.text = (document.get("petrol") as? String)?.capitalized
+                let number = document.get("seat_number") as? Int
+                self.seater.text = "\(number ?? 1) Seaters"
+                
+                
+                
+            } else {
+                print("data does not exist")
+            }
+        }
+        
     }
-    */
-
+ 
+   
+    
+    
 }

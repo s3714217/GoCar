@@ -10,6 +10,7 @@
 		2C997E4DAA7BBB8EFE6BC14E /* Pods_GoCarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C26A350C86A123C0522D889 /* Pods_GoCarTests.framework */; };
 		38280439FAE359580E982786 /* Pods_GoCar_GoCarUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6025565330CE39B30D42954A /* Pods_GoCar_GoCarUITests.framework */; };
 		406C4BBDDBA8D670E39BD41B /* Pods_GoCar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C16936D261D8B6E8CF0A592 /* Pods_GoCar.framework */; };
+		962A29B02612B762001CC1AD /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962A29AF2612B762001CC1AD /* UIExtension.swift */; };
 		9642C97A260E1B5B0069DFA9 /* audi a3 cabriolet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9642C976260E1B5A0069DFA9 /* audi a3 cabriolet.jpg */; };
 		9642C97B260E1B5B0069DFA9 /* honda cr-v.png in Resources */ = {isa = PBXBuildFile; fileRef = 9642C977260E1B5A0069DFA9 /* honda cr-v.png */; };
 		9642C97C260E1B5B0069DFA9 /* huyndai genesis.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9642C978260E1B5A0069DFA9 /* huyndai genesis.jpg */; };
@@ -17,6 +18,7 @@
 		9642C99B260EFB050069DFA9 /* Booking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9642C99A260EFB050069DFA9 /* Booking.storyboard */; };
 		9642C9AA260F031A0069DFA9 /* BookingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9642C9A9260F031A0069DFA9 /* BookingController.swift */; };
 		9642C9AF260F429D0069DFA9 /* VerificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9642C9AE260F429D0069DFA9 /* VerificationController.swift */; };
+		964C852E26116A0F004D09AC /* PaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964C852D26116A0F004D09AC /* PaymentController.swift */; };
 		96560CAA25F8EFDF00662DF0 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96560CA925F8EFDF00662DF0 /* ProfileController.swift */; };
 		96569C9F25FB8B6300DA094A /* DescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96569C9E25FB8B6300DA094A /* DescriptionController.swift */; };
 		965F3C4725F512E400CE1100 /* start-img.png in Resources */ = {isa = PBXBuildFile; fileRef = 965F3C4625F512E400CE1100 /* start-img.png */; };
@@ -38,7 +40,6 @@
 		96AEC752260A1D9C00E80AA1 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AEC751260A1D9C00E80AA1 /* HelpController.swift */; };
 		96AEC757260A1DDA00E80AA1 /* TripController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AEC756260A1DDA00E80AA1 /* TripController.swift */; };
 		96F2E2A625F2155C00044F56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2A525F2155C00044F56 /* AppDelegate.swift */; };
-		96F2E2AA25F2155C00044F56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2A925F2155C00044F56 /* ViewController.swift */; };
 		96F2E2AD25F2155C00044F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2AB25F2155C00044F56 /* Main.storyboard */; };
 		96F2E2B025F2155C00044F56 /* GoCar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96F2E2AE25F2155C00044F56 /* GoCar.xcdatamodeld */; };
 		96F2E2B225F2155F00044F56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96F2E2B125F2155F00044F56 /* Assets.xcassets */; };
@@ -75,6 +76,7 @@
 		6025565330CE39B30D42954A /* Pods_GoCar_GoCarUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCar_GoCarUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C8AD7B4FF8C2F50ADC5F4CC /* Pods-GoCar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoCar.release.xcconfig"; path = "Target Support Files/Pods-GoCar/Pods-GoCar.release.xcconfig"; sourceTree = "<group>"; };
 		7C26A350C86A123C0522D889 /* Pods_GoCarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoCarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		962A29AF2612B762001CC1AD /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 		9642C976260E1B5A0069DFA9 /* audi a3 cabriolet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "audi a3 cabriolet.jpg"; sourceTree = "<group>"; };
 		9642C977260E1B5A0069DFA9 /* honda cr-v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "honda cr-v.png"; sourceTree = "<group>"; };
 		9642C978260E1B5A0069DFA9 /* huyndai genesis.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "huyndai genesis.jpg"; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		9642C99A260EFB050069DFA9 /* Booking.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Booking.storyboard; sourceTree = "<group>"; };
 		9642C9A9260F031A0069DFA9 /* BookingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingController.swift; sourceTree = "<group>"; };
 		9642C9AE260F429D0069DFA9 /* VerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationController.swift; sourceTree = "<group>"; };
+		964C852D26116A0F004D09AC /* PaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentController.swift; sourceTree = "<group>"; };
 		96560CA925F8EFDF00662DF0 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		96569C9E25FB8B6300DA094A /* DescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionController.swift; sourceTree = "<group>"; };
 		965F3C4625F512E400CE1100 /* start-img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-img.png"; sourceTree = "<group>"; };
@@ -104,7 +107,6 @@
 		96AEC756260A1DDA00E80AA1 /* TripController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripController.swift; sourceTree = "<group>"; };
 		96F2E2A225F2155C00044F56 /* GoCar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoCar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96F2E2A525F2155C00044F56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		96F2E2A925F2155C00044F56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		96F2E2AC25F2155C00044F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		96F2E2AF25F2155C00044F56 /* GoCar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GoCar.xcdatamodel; sourceTree = "<group>"; };
 		96F2E2B125F2155F00044F56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,6 +163,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		962A29A22612B6BA001CC1AD /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				962A29AF2612B762001CC1AD /* UIExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		9642C992260EF5740069DFA9 /* AuthController */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +198,7 @@
 			children = (
 				9642C9A9260F031A0069DFA9 /* BookingController.swift */,
 				9642C9AE260F429D0069DFA9 /* VerificationController.swift */,
+				964C852D26116A0F004D09AC /* PaymentController.swift */,
 			);
 			path = BookingController;
 			sourceTree = "<group>";
@@ -267,8 +278,8 @@
 		96F2E2F125F217E000044F56 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				962A29A22612B6BA001CC1AD /* Extension */,
 				9642C99F260EFC220069DFA9 /* BookingController */,
-				96F2E2A925F2155C00044F56 /* ViewController.swift */,
 				9642C996260EF60F0069DFA9 /* MainPageController */,
 				9642C992260EF5740069DFA9 /* AuthController */,
 				966FFF2E2604D68D007BB7C5 /* CustomCell */,
@@ -583,13 +594,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96F2E2AA25F2155C00044F56 /* ViewController.swift in Sources */,
 				96AEC752260A1D9C00E80AA1 /* HelpController.swift in Sources */,
 				96AEC757260A1DDA00E80AA1 /* TripController.swift in Sources */,
 				965F3CB625F6855700CE1100 /* EntryController.swift in Sources */,
 				965F3C5B25F62D6D00CE1100 /* DBservice.swift in Sources */,
+				962A29B02612B762001CC1AD /* UIExtension.swift in Sources */,
 				96569C9F25FB8B6300DA094A /* DescriptionController.swift in Sources */,
 				9642C9AF260F429D0069DFA9 /* VerificationController.swift in Sources */,
+				964C852E26116A0F004D09AC /* PaymentController.swift in Sources */,
 				966FFF2726039757007BB7C5 /* Car.swift in Sources */,
 				96F2E2A625F2155C00044F56 /* AppDelegate.swift in Sources */,
 				96F2E2B025F2155C00044F56 /* GoCar.xcdatamodeld in Sources */,
