@@ -22,20 +22,16 @@ class BookingController: UIViewController{
     @IBOutlet weak var PickUpDatePicker: UIDatePicker!
     
     @IBOutlet weak var ReturnDatePicker: UIDatePicker!
-    
-    @IBOutlet weak var PlanNo: UIButton!
-    @IBOutlet weak var PlanYes: UIButton!
-    @IBOutlet weak var PayNo: UIButton!
-    @IBOutlet weak var PayYes: UIButton!
-    
-    @IBOutlet weak var PayPicker: UIDatePicker!
+   
     @IBOutlet weak var lbl1: UILabel!
     @IBOutlet weak var lbl2: UILabel!
-    @IBOutlet weak var lbl3: UILabel!
-    @IBOutlet weak var lbl4: UILabel!
+   
     @IBOutlet weak var lbl5: UILabel!
     
+    @IBOutlet weak var continueBtn: UIButton!
+    @IBOutlet weak var lbl6: UILabel!
     var selectedCar: Car!
+    var numberOfDate = 1
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toVerification"{
@@ -43,6 +39,14 @@ class BookingController: UIViewController{
             controller.currentUser = self.currentUser
         }
         else if segue.identifier == "toPayment"{
+            let controller = segue.destination as! PaymentController
+            controller.currentUser = self.currentUser
+            controller.selectedCar = self.selectedCar
+            var trans = Transaction()
+            trans.startDate = self.PickUpDatePicker.date
+            trans.returnDate = self.ReturnDatePicker.date
+            trans.numberOfDate = numberOfDate
+            controller.currentTransaction = trans
             
         }
     }
@@ -51,12 +55,10 @@ class BookingController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.userID = (Auth.auth().currentUser?.uid)!
-        self.closePay()
-        self.PlanNo.isHidden = true
-        self.PayYes.isHidden = true
+        self.currentUser.userID = userID
+        self.continueBtn.layer.cornerRadius = 12
         self.PickUpDatePicker.minimumDate = NSDate() as Date
         self.ReturnDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())
-        self.PayPicker.minimumDate = NSDate() as Date
         databaseService.retrieveUserInformation(userID: userID)
         _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true){ timer in
             if self.databaseService.getUser().fullName.count > 1{
@@ -76,9 +78,9 @@ class BookingController: UIViewController{
             }
            
         }
-        self.lbl5.text = "\(self.lbl5.text!) $\(selectedCar.rate*9)"
-        self.lbl4.text = "\(self.lbl4.text!) $\(selectedCar.rate)"
-       
+         self.lbl6.text = self.selectedCar.parking_location
+          self.lbl5.text = "\(self.lbl5.text!) $\(selectedCar.rate)"
+         
     }
     
     
@@ -96,62 +98,18 @@ class BookingController: UIViewController{
         self.popUp.layer.cornerRadius = 30
     }
     
-    @IBAction func PlanYesClicked(_ sender: Any) {
-        self.PlanNo.isHidden = false
-        self.PlanYes.isHidden = true
-        self.closePlan()
-    }
-    
-    @IBAction func PlanNoClicked(_ sender: Any) {
-        self.PlanNo.isHidden = true
-        self.PlanYes.isHidden = false
-        self.PayNo.isHidden = false
-        self.openPlan()
-        self.closePay()
-    }
-    
-    @IBAction func PayNoClicked(_ sender: Any) {
-        self.PayYes.isHidden = false
-        self.PayNo.isHidden = true
-        self.PlanNo.isHidden = false
-        self.openPay()
-        self.closePlan()
-    }
-    @IBAction func PayYesClicked(_ sender: Any) {
-        self.PayYes.isHidden = true
-        self.PayNo.isHidden = false
-        self.closePay()
-    }
-    
-    func closePlan(){
-        lbl1.isEnabled = false
-        lbl2.isEnabled = false
-        lbl5.isEnabled = false
-        self.PickUpDatePicker.isEnabled = false
-        self.ReturnDatePicker.isEnabled = false
-    }
-    func openPlan(){
-        lbl1.isEnabled = true
-        lbl2.isEnabled = true
-        lbl5.isEnabled = true
-        self.PickUpDatePicker.isEnabled = true
-        self.ReturnDatePicker.isEnabled = true
-        self.PayYes.isHidden = true
-    }
-    func openPay(){
-        lbl3.isEnabled = true
-        lbl4.isEnabled = true
-        self.PayPicker.isEnabled = true
-        
-        self.PlanYes.isHidden = true
-    }
-    func closePay(){
-        lbl3.isEnabled = false
-        lbl4.isEnabled = false
-        self.PayPicker.isEnabled = false
-    }
     @IBAction func toPayment(_ sender: Any) {
-        self.performSegue(withIdentifier: "toPayment", sender: self)
+        
+        if currentUser.renting{
+            showNotification()
+            self.verifyBtn.isHidden = true
+            self.notification.text = "Return your car before booking"
+        }
+        else{
+            self.performSegue(withIdentifier: "toPayment", sender: self)
+        }
+        
+        
     }
     
     @IBAction func finishPickUpDate(_ sender: Any) {
@@ -161,9 +119,11 @@ class BookingController: UIViewController{
     @IBAction func finishReturnDate(_ sender: Any) {
         let numberOfDate = Calendar.current.dateComponents([.day], from: self.PickUpDatePicker.date, to: self.ReturnDatePicker.date)
         let number = numberOfDate.day!
-        self.lbl5.text = "Total Cost: $\(self.selectedCar.rate*9*number)"
+        self.numberOfDate = number
+        self.lbl5.text = "Total Cost: $\(self.selectedCar.rate*number)"
     }
     
+   
     /*
     // MARK: - Navigation
 
@@ -176,12 +136,6 @@ class BookingController: UIViewController{
 
 }
 
-extension Calendar {
-    func numberOfDaysBetween(_ from: Date, and to: Date) -> Int {
-        let fromDate = startOfDay(for: from)
-        let toDate = startOfDay(for: to)
-        let numberOfDays = dateComponents([.day], from: fromDate, to: toDate)
-        
-        return numberOfDays.day! + 1 // <1>
-    }
-}
+
+
+

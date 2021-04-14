@@ -39,7 +39,7 @@ class ProfileController: UIViewController, UITabBarDelegate {
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if item.title == "Trips"{
+        if item.title == "Trip"{
             self.performSegue(withIdentifier: "toTrips", sender: self)
         }
         else if item.title == "Explore"{
