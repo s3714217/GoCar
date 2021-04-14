@@ -39,7 +39,6 @@
 
     <script>
         $(function () {
-            $("#header").load("header.html");
             $("#footer").load("footer.html");
         });
     </script>
@@ -57,15 +56,14 @@
 
             var fullName = document.createElement("span");
             var verified = document.createElement("span");
-            var verifyUser = document.createElement("button");
-            var viewUser = document.createElement("button");
-            var removeUser = document.createElement("button");
             var phoneNumber = document.createElement("span");
             var dateOfBirth = document.createElement("span");
 
+            var verifyUser = document.createElement("button");
+            var viewUser = document.createElement("button");
+
             verifyUser.className = "btn btn-secondary";
             viewUser.className = "btn btn-secondary";
-            removeUser.className = "btn btn-secondary";
 
             fullName.textContent = doc.data().fullName;
             verified.textContent = doc.data().verified;
@@ -74,25 +72,20 @@
 
             var autoVerifyID = Math.floor(Math.random() * 300);
             var autoViewID = Math.floor(Math.random() * 300);
-            var autoRemoveID = Math.floor(Math.random() * 300);
 
             verifyUser.setAttribute("id", autoVerifyID);
             viewUser.setAttribute("id", autoViewID);
-            removeUser.setAttribute("id", autoRemoveID);
 
             verifyUser.setAttribute("value", doc.id);
             viewUser.setAttribute("value", doc.id);
-            removeUser.setAttribute("value", doc.id);
 
             verifyUser.textContent = "Verify";
             viewUser.textContent = "View Details";
-            removeUser.textContent = "Remove User";
 
             td1.appendChild(fullName);
             td2.appendChild(verified);
             td3.appendChild(verifyUser);
             td3.appendChild(viewUser);
-            td3.appendChild(removeUser);
 
             tr.appendChild(td1);
             tr.appendChild(td2);
@@ -100,8 +93,12 @@
 
             listUsers.appendChild(tr);
 
+            if (verified.textContent === "verified") {
+                verifyUser.disabled = true;
+                verifyUser.className = "btn invisible";
+            }
+
             var docID = doc.id;
-            var rID = document.getElementById(autoRemoveID);
             var vwID = document.getElementById(autoViewID);
             var vrID = document.getElementById(autoVerifyID);
 
@@ -112,19 +109,6 @@
                 localStorage.setItem("birthDate", dateOfBirth.textContent);
                 localStorage.setItem("docID", docID);
                 window.location.replace("view_user.html");
-            });
-
-            removeUser.addEventListener("click", function () {
-                db.collection("users").doc(rID.value).delete()
-                    .then(function () {
-                        document.getElementById('removeSuccess').innerHTML =
-                            "User was successfully removed";
-                        document.location.reload(true);
-                    })
-                    .catch(function (error) {
-                        document.getElementById('removeFailure').innerHTML = "User could not be removed";
-                        console.log("Error", error);
-                    })
             });
 
             verifyUser.addEventListener("click", function () {
@@ -158,10 +142,55 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-3" id="header">
+            <div class="col-3 pl-2" id="header">
+                <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mt-5">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard_logo.svg" alt="gocarIcon">
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="car.html">
+                                <img src="style/drive_eta-24px 1.svg" alt="carIcon">
+                                Car
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="parking.html">
+                                <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
+                                Parking
+                            </a>
+                        </li>
+                        <li class="nav-item my-3 border shadow selected">
+                            <a class="nav-link" onclick="userPage()">
+                                <img src="style/people-24px 1.svg" alt="userIcon">
+                                User Central
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="adminPage()">
+                                <img src="style/perm_identity-24px 1.svg" alt="adminIcon">
+                                Admin
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="logOut()">
+                                <img src="style/logout-24px 1.svg" alt="logoutIcon">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
-            <div class="col-9">
+            <div class="col-9 pr-4">
                 <div class="container-fluid my-3 footer-align-bottom">
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
