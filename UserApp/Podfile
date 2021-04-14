@@ -3,12 +3,14 @@ target 'GoCar' do
   use_frameworks!
 
   # Pods for GoCar
-	
-    pod 'Charts', '~>3.4.0'
 
     pod 'Firebase/Firestore'
 
     pod 'Firebase/Auth'
+    
+    pod 'Firebase/Storage'
+
+    pod 'CreditCardValidator'
 
   target 'GoCarTests' do
     inherit! :search_paths
