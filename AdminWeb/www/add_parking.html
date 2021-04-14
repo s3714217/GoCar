@@ -32,7 +32,6 @@
 
     <script>
         $(function () {
-            $("#header").load("header.html");
             $("#footer").load("footer.html");
         });
     </script>
@@ -43,8 +42,8 @@
             var latitude = document.getElementById("parkingLatitude").value;
             var longitude = document.getElementById("parkingLongitude").value;
 
-            var latitudeNum = parseInt(latitude);
-            var longitudeNum = parseInt(longitude);
+            var latitudeNum = parseFloat(latitude);
+            var longitudeNum = parseFloat(longitude);
 
             if (latitudeNum < -90 || latitudeNum > 90) {
                 document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
@@ -57,9 +56,17 @@
                 return
             }
 
-            if (address === "" || latitude === "" || longitude === "") {
+            if (address === "") {
                 document.getElementById('parkingAddressEmpty').innerHTML = "Please enter an address";
+                return
+            }
+
+            if (latitude === "") {
                 document.getElementById('parkingLatitudeEmpty').innerHTML = "Please enter a latitude";
+                return
+            }
+
+            if (longitude === "") {
                 document.getElementById('parkingLongitudeEmpty').innerHTML = "Please enter a longitude";
                 return
             }
@@ -72,11 +79,15 @@
                         document.getElementById("addFailure").innerHTML = "Parking location already exists";
                     } else {
                         db.collection("parking_location").doc().set({
-                            Address: address,
-                            Location: geo,
-                            Number_cars: 0
-                        })
-                        document.getElementById("addSuccess").innerHTML = "Parking location was added successfully";
+                                Address: address,
+                                Location: geo,
+                                Number_cars: 0
+                            })
+                            .then(function () {
+                                document.getElementById("addSuccess").innerHTML =
+                                    "Parking location was added successfully";
+                                window.location.replace("parking.html");
+                            })
                     }
                 })
                 .catch(function (error) {
@@ -95,9 +106,55 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-3" id="header"></div>
+            <div class="col-3 pl-2" id="header">
+                <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mt-5">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard_logo.svg" alt="gocarIcon">
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="car.html">
+                                <img src="style/drive_eta-24px 1.svg" alt="carIcon">
+                                Car
+                            </a>
+                        </li>
+                        <li class="nav-item my-3 border shadow selected">
+                            <a class="nav-link" href="parking.html">
+                                <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
+                                Parking
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="userPage()">
+                                <img src="style/people-24px 1.svg" alt="userIcon">
+                                User Central
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="adminPage()">
+                                <img src="style/perm_identity-24px 1.svg" alt="adminIcon">
+                                Admin
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="logOut()">
+                                <img src="style/logout-24px 1.svg" alt="logoutIcon">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
-            <div class="col-9">
+            <div class="col-9 pr-4">
                 <div class="container-fluid my-3 footer-align-bottom">
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
