@@ -38,7 +38,6 @@
 
     <script>
         $(function () {
-            $("#header").load("header.html");
             $("#footer").load("footer.html");
         });
     </script>
@@ -114,6 +113,11 @@
             historyList.appendChild(br);
         }
 
+        function displayDetails() {
+            billingDetails();
+            bookingHistory();
+        }
+
         function sendUserDetails() {
             var name = document.getElementById("name");
             name.innerHTML = localStorage.getItem("userName");
@@ -141,26 +145,82 @@
             var verify = document.getElementById("verify");
             var billing = document.getElementById("billing");
             var history = document.getElementById("history");
-            if (verify.textContent == "unverified") {
+            var cardNo = document.getElementById("cardNo");
+            var cardDate = document.getElementById("cardDate");
+            var historyList = document.getElementById("historyList");
+            if (verify.textContent == "unverified" || verify.textContent == "pending") {
+                verify.className = "font-weight-bold text-danger";
                 billing.style.display = "none";
                 history.style.display = "none";
-                verify.className = "font-weight-bold text-danger";
+                cardNo.style.display = "none";
+                cardDate.style.display = "none";
+                historyList.style.display = "none";
             }
         }
 
         function userBack() {
-            window.location.replace("user_central.html");
+            if (localStorage.getItem("storageName") === "admin_master@gocar.com") {
+                window.location.replace("user_central_master.html");
+            } else {
+                window.location.replace("user_central.html");
+            }
         }
     </script>
 </head>
 
-<body onload="sendUserDetails(); checkVerify(); billingDetails()">
+<body onload="sendUserDetails(); displayDetails(); checkVerify()">
     <!--View User-->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3" id="header"></div>
+            <div class="col-3 pl-2" id="header">
+                <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mt-5">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard_logo.svg" alt="gocarIcon">
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="car.html">
+                                <img src="style/drive_eta-24px 1.svg" alt="carIcon">
+                                Car
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="parking.html">
+                                <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
+                                Parking
+                            </a>
+                        </li>
+                        <li class="nav-item my-3 border shadow selected">
+                            <a class="nav-link" onclick="userPage()">
+                                <img src="style/people-24px 1.svg" alt="userIcon">
+                                User Central
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="adminPage()">
+                                <img src="style/perm_identity-24px 1.svg" alt="adminIcon">
+                                Admin
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="logOut()">
+                                <img src="style/logout-24px 1.svg" alt="logoutIcon">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
-            <div class="col-9">
+            <div class="col-9 pr-4">
                 <div class="container-fluid my-3 footer-align-bottom">
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
@@ -248,13 +308,6 @@
                             <hr class="my-2">
 
                             <ul id="historyList"></ul>
-
-                            <div class="row mt-2">
-                                <div class="col-6">
-                                    <button id="historyButton" onclick="bookingHistory()"
-                                        class="btn btn-primary btn-block mt-5 border-0">View Booking History</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
