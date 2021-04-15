@@ -63,6 +63,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     
     override func viewDidLoad() {
+        
         self.smallView.isHidden = true
         self.smallView.layer.cornerRadius = 30
         self.locationManager = CLLocationManager()

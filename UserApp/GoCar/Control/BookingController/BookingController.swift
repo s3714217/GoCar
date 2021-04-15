@@ -13,7 +13,7 @@ class BookingController: UIViewController{
 
     private var userID = ""
     private let databaseService = DBService()
-    private var currentUser = User(fullName: "", userID: "")
+    var currentUser = User()
     private var blurEffect : UIBlurEffect = .init()
     private var blurEffectView : UIVisualEffectView = .init()
     @IBOutlet var popUp: UIView!

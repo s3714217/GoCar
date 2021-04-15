@@ -32,18 +32,19 @@ class PaymentController: UIViewController {
     @IBOutlet weak var expDateTF: UITextField!
     @IBOutlet weak var expYearTF: UITextField!
     @IBOutlet weak var cvvTF: UITextField!
+    private let db = DBService()
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if segue.identifier == "toBooking"{
             let controller = segue.destination as! BookingController
             controller.selectedCar = self.selectedCar
-            
+            controller.currentUser = self.currentUser
         }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(self.currentUser.email)
         setUp()
         sumView.layer.shadowColor = UIColor.black.cgColor
         sumView.layer.shadowOffset = CGSize(width: 0.5, height: 1)
@@ -121,7 +122,9 @@ class PaymentController: UIViewController {
     }
     
     @IBAction func payclicked(_ sender: Any) {
-    
+        
+        
+        
         if isValidCard(){
             let card = cardNumber.text!
             let cvv = cvvTF.text!
@@ -132,12 +135,23 @@ class PaymentController: UIViewController {
             self.currentUser.card.cvv = cvv
             self.currentUser.card.date = date
             currentUser.userID = (Auth.auth().currentUser?.uid)!
-            if self.saveCard{
-                DBService().addPayment(user: self.currentUser)
+            
+            if DBService().processPayment(card: self.currentUser.card, amount: self.currentTransaction.amount)
+            {
+                if self.saveCard{
+                    DBService().addPayment(user: self.currentUser)
+                }
+                self.PayNowBtn.isEnabled = false
+                DBService().addTransaction(user: currentUser, car: selectedCar, transaction: currentTransaction)
+                
+                showPopUp()
             }
-            self.PayNowBtn.isEnabled = false
-            DBService().addTransaction(user: currentUser, car: selectedCar, transaction: currentTransaction)
-            showPopUp()
+            else{
+                self.notificationLbl.text = "Fail to process payment!"
+                self.notificationLbl.textColor = .red
+            }
+            
+           
         }
         else{
             self.notificationLbl.text = "Invalid Credit Card!"
@@ -155,6 +169,8 @@ class PaymentController: UIViewController {
     private var blurEffect : UIBlurEffect = .init()
     private var blurEffectView : UIVisualEffectView = .init()
     private func showPopUp(){
+        
+        db.sendEmailConfirmation(user: self.currentUser, trans: self.currentTransaction, selectedCar: selectedCar)
         blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.bounds
