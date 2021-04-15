@@ -32,12 +32,14 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var status: UIStackView!
     @IBOutlet weak var status_text: UILabel!
     @IBOutlet weak var general_stack: UIStackView!
+    private var overdue_cost = 0
     override func viewDidLoad() {
         
        
         self.returnBtn.layer.cornerRadius = 12
         self.CompleteBtn.layer.cornerRadius = 12
         self.tabBar.delegate = self
+        databaseService.retrieveUserInformation(userID: Auth.auth().currentUser!.uid)
         databaseService.retreivingAllCars()
         databaseService.retrieveTransaction(userID: Auth.auth().currentUser!.uid)
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ timer in
@@ -141,6 +143,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                 self.due_date.text = "Car Overdue!"
                 let date_overdue = Calendar.current.dateComponents([.day], from: self.current_transaction.returnDate, to: Date())
                 if date_overdue.day! > 0 {
+                    self.overdue_cost = self.current_car.rate * date_overdue.day!
                     self.total.text = "$\(String( self.current_car.rate * date_overdue.day!))"
                     self.total_lbl.text = "Overdue Cost: "
                     
@@ -185,6 +188,21 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
             }
           
         }
+    }
+    
+    @IBOutlet var payPop: UIView!
+    func payPopUp(){
+        blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.backgroundColor = .clear
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(self.payPop)
+        self.payPop.isHidden = false
+        self.payPop.center = self.view.center
+        self.payPop.layer.cornerRadius = 30
+       
     }
     
     func popUp(){
@@ -318,18 +336,51 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         }
         
         if photoUploaded == 1{
-            databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
-            self.performSegue(withIdentifier: "toExplore", sender: self)
+            
+            if self.overdue_cost > 0{
+                self.payPopUp()
+            }
+            else{
+                databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+                self.performSegue(withIdentifier: "toExplore", sender: self)
+                databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+            }
+               
+           
         }
         
     }
     
     @IBAction func complete_trip(_ sender: Any) {
+        
         imagePicker.sourceType = .camera
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
         
+    }
+    
+    @IBAction func cancelPay(_ sender: Any) {
+        self.popUpView.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        
+    }
+    
+    @IBOutlet weak var payBtn: UIButton!
+    @IBOutlet weak var notification: UILabel!
+    @IBAction func payNow(_ sender: Any) {
+        
+        if databaseService.processPayment(card: databaseService.getUser().card, amount: self.current_transaction.amount){
+            databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+            self.performSegue(withIdentifier: "toExplore", sender: self)
+            databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+        }
+        else{
+            notification.text! = "Failed to process payment"
+            notification.textColor = .red
+            payBtn.setTitle("Retry", for: .normal)
+        }
+       
     }
     
 }
