@@ -25,20 +25,16 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
 
+    <!--Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+    <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
 
-    <style type="text/css">
-        li {
-            list-style-type: none;
-        }
-    </style>
-
     <script>
         $(function () {
-            $("#header").load("header.html");
             $("#footer").load("footer.html");
         });
     </script>
@@ -78,89 +74,190 @@
             var li2 = document.createElement("li");
             var li3 = document.createElement("li");
             var li4 = document.createElement("li");
+            var li5 = document.createElement("li");
+            var li6 = document.createElement("li");
 
             var br = document.createElement("br");
 
             var carRef = document.createElement("span");
-            var returnDate = document.createElement("span");
+            var carModel = document.createElement("span");
             var startDate = document.createElement("span");
+            var returnDate = document.createElement("span");
+            var returnAddress = document.createElement("span");
             var totalCost = document.createElement("span");
 
-            carRef.textContent = "Car Reference: " + doc.data().carRef;
+            carRef.textContent = "Car Registration No: " + doc.data().carID;
+            carModel.textContent = "Car Model: " + doc.data().carModel;
 
-            var dateStart = doc.data().startDate;
+            var dateStart = doc.data().start_date;
             var dateStartFormat = dateStart.toDate();
             var startString = dateStartFormat.toString();
             var dateStartSub = startString.substring(0, 25);
             startDate.textContent = "Pickup: " + dateStartSub;
 
-            var dateReturn = doc.data().returnDate;
+            var dateReturn = doc.data().return_date;
             var dateReturnFormat = dateReturn.toDate();
             var returnString = dateReturnFormat.toString();
             var dateReturnSub = returnString.substring(0, 25);
             returnDate.textContent = "Return: " + dateReturnSub;
 
-            totalCost.textContent = "Total Cost: $" + doc.data().totalCost;
+            returnAddress.textContent = "Return Address: " + doc.data().return_address;
+            totalCost.textContent = "Total Cost: $" + doc.data().amount;
 
             li1.appendChild(carRef);
-            li2.appendChild(startDate);
-            li3.appendChild(returnDate);
-            li4.appendChild(totalCost);
+            li2.appendChild(carModel);
+            li3.appendChild(startDate);
+            li4.appendChild(returnDate);
+            li5.appendChild(returnAddress);
+            li6.appendChild(totalCost);
 
             historyList.appendChild(li1);
             historyList.appendChild(li2);
             historyList.appendChild(li3);
             historyList.appendChild(li4);
+            historyList.appendChild(li5);
             historyList.appendChild(br);
         }
 
         function sendUserDetails() {
             var name = document.getElementById("name");
-            name.innerHTML = localStorage.getItem("userName");
+            name.innerHTML = localStorage.getItem("fullName");
             name.setAttribute("value", localStorage.getItem("docID"));
 
             var phone = document.getElementById("phone");
             phone.innerHTML = localStorage.getItem("phoneNumber");
 
+            var userEmail = document.getElementById("email");
+            userEmail.innerHTML = localStorage.getItem("contactEmail");
+
             var verify = document.getElementById("verify");
             verify.innerHTML = localStorage.getItem("verified");
             verify.className = "font-weight-bold text-success";
 
-            var birthDate = document.getElementById("birth");
-            birthDate.innerHTML = localStorage.getItem("birthDate");
-
             var image = document.getElementById("licence");
-            var ID = "37ATzokkKVdcJKDKDhy3c5k8VMD3";
-            localStorage.setItem("URL", ID);
-            var fixedImageURL = "https://storage.googleapis.com/gocarrmit.appspot.com/verification/" + localStorage
-                .getItem("URL") + "/licence";
-            image.setAttribute("src", fixedImageURL);
+            var dynamicImageURL = "https://storage.googleapis.com/gocarrmit.appspot.com/verification/" + localStorage
+                .getItem(
+                    "docID") + "/licence";
+            image.setAttribute("src", dynamicImageURL);
         }
 
         function checkVerify() {
             var verify = document.getElementById("verify");
-            var billing = document.getElementById("billing");
-            var history = document.getElementById("history");
-            if (verify.textContent == "unverified") {
-                billing.style.display = "none";
-                history.style.display = "none";
+            var cardNo = document.getElementById("cardNo");
+            var cardDate = document.getElementById("cardDate");
+            var historyList = document.getElementById("historyList");
+            if (verify.textContent == "unverified" || verify.textContent == "pending") {
                 verify.className = "font-weight-bold text-danger";
+                cardNo.style.display = "none";
+                cardDate.style.display = "none";
+                historyList.style.display = "none";
             }
         }
 
+        function billing() {
+            db.collection("users").doc(localStorage.getItem("docID")).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        db.collection("users").doc(localStorage.getItem("docID")).collection("card").get()
+                            .then(sub => {
+                                if (sub.docs.length > 0) {
+                                    billingDetails();
+                                } else {
+                                    var cardNo = document.getElementById("cardNo");
+                                    var cardDate = document.getElementById("cardDate");
+                                    cardNo.style.display = "none";
+                                    cardDate.style.display = "none";
+                                }
+                            })
+                    }
+                })
+        }
+
+        function booking() {
+            db.collection("users").doc(localStorage.getItem("docID")).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        db.collection("users").doc(localStorage.getItem("docID")).collection("history").get()
+                            .then(sub => {
+                                if (sub.docs.length > 0) {
+                                    bookingHistory();
+                                } else {
+                                    var history = document.getElementById("historyList");
+                                    history.style.display = "none";
+                                }
+                            });
+                    }
+                });
+        }
+
+        function displayDetails() {
+            billing();
+            booking();
+        }
+
         function userBack() {
-            window.location.replace("user_central.html");
+            if (localStorage.getItem("storageName") === "admin_master@gocar.com") {
+                window.location.replace("user_central_master.html");
+            } else {
+                window.location.replace("user_central.html");
+            }
         }
     </script>
 </head>
 
-<body onload="sendUserDetails(); checkVerify(); billingDetails()">
+<body onload="sendUserDetails(); displayDetails(); checkVerify()">
     <!--View User-->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3" id="header"></div>
+            <div class="col-3 pl-2" id="header">
+                <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
+                    <ul class="nav flex-column">
+                        <li class="nav-item mt-5">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard_logo.svg" alt="gocarIcon">
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="dashboard.html">
+                                <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="car.html">
+                                <img src="style/drive_eta-24px 1.svg" alt="carIcon">
+                                Car
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" href="parking.html">
+                                <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
+                                Parking
+                            </a>
+                        </li>
+                        <li class="nav-item my-3 border shadow selected">
+                            <a class="nav-link" onclick="userPage()">
+                                <img src="style/people-24px 1.svg" alt="userIcon">
+                                User Central
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="adminPage()">
+                                <img src="style/perm_identity-24px 1.svg" alt="adminIcon">
+                                Admin
+                            </a>
+                        </li>
+                        <li class="nav-item my-3">
+                            <a class="nav-link" onclick="logOut()">
+                                <img src="style/logout-24px 1.svg" alt="logoutIcon">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
-            <div class="col-9">
+            <div class="col-9 pr-4">
                 <div class="container-fluid my-3 footer-align-bottom">
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
@@ -195,8 +292,8 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="userDOB">User's Date of Birth</label>
-                                        <label class="font-weight-bold" id="birth"></label>
+                                        <label for="userEmailContact">Contact Email</label>
+                                        <label class="font-weight-bold" id="email"></label>
                                     </div>
                                 </div>
 
@@ -235,7 +332,7 @@
 
                                 <div class="row mt-1">
                                     <div class="form-group col-md-6">
-                                        <img alt="User's Driver Licence" id="licence" width="200" height="200"
+                                        <img alt="No Driver License" id="licence" width="200" height="200"
                                             class="rounded d-block">
                                     </div>
                                 </div>
@@ -248,13 +345,6 @@
                             <hr class="my-2">
 
                             <ul id="historyList"></ul>
-
-                            <div class="row mt-2">
-                                <div class="col-6">
-                                    <button id="historyButton" onclick="bookingHistory()"
-                                        class="btn btn-primary btn-block mt-5 border-0">View Booking History</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
