@@ -29,6 +29,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+
+    <style>
+        .btn {
+            margin-left: 10px;
+        }
+    </style>
 
     <script>
         $(function () {
@@ -38,69 +45,115 @@
     </script>
 
     <script>
-        function createAdmin() {
-            var txtUsernameSU = document.getElementById("usernameSU").value;
-            var txtPasswordSU = document.getElementById("passwordSU").value;
+        function renderUsers(doc) {
+            var listUsers = document.querySelector("#userTable");
 
-            if (txtUsernameSU === "" || txtPasswordSU === "") {
-                alert("Please enter a username and password");
-                return
-            }
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            var td4 = document.createElement("td");
+            var td5 = document.createElement("td");
 
-            db.collection("admins").doc(txtUsernameSU).set({
-                    password: txtPasswordSU
-                })
-                .then(() => {
-                    alert("Sign up successful");
-                })
-                .catch((error) => {
-                    alert("Please enter a valid username");
-                });
+            var fullName = document.createElement("span");
+            var verified = document.createElement("span");
+            var verifyUser = document.createElement("button");
+            var viewUser = document.createElement("button");
+            var removeUser = document.createElement("button");
+            var phoneNumber = document.createElement("span");
+            var dateOfBirth = document.createElement("span");
+
+            verifyUser.className = "btn btn-secondary";
+            viewUser.className = "btn btn-secondary";
+            removeUser.className = "btn btn-secondary";
+
+            fullName.textContent = doc.data().fullName;
+            verified.textContent = doc.data().verified;
+            phoneNumber.textContent = doc.data().phoneNumber;
+            dateOfBirth.textContent = doc.data().date_of_birth;
+
+            var autoVerifyID = Math.floor(Math.random() * 300);
+            var autoViewID = Math.floor(Math.random() * 300);
+            var autoRemoveID = Math.floor(Math.random() * 300);
+
+            verifyUser.setAttribute("id", autoVerifyID);
+            viewUser.setAttribute("id", autoViewID);
+            removeUser.setAttribute("id", autoRemoveID);
+
+            verifyUser.setAttribute("value", doc.id);
+            viewUser.setAttribute("value", doc.id);
+            removeUser.setAttribute("value", doc.id);
+
+            verifyUser.textContent = "Verify";
+            viewUser.textContent = "View Details";
+            removeUser.textContent = "Remove User";
+
+            td1.appendChild(fullName);
+            td2.appendChild(verified);
+            td3.appendChild(verifyUser);
+            td3.appendChild(viewUser);
+            td3.appendChild(removeUser);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            listUsers.appendChild(tr);
+
+            var docID = doc.id;
+            var rID = document.getElementById(autoRemoveID);
+            var vwID = document.getElementById(autoViewID);
+            var vrID = document.getElementById(autoVerifyID);
+
+            viewUser.addEventListener("click", function () {
+                localStorage.setItem("userName", fullName.textContent);
+                localStorage.setItem("phoneNumber", phoneNumber.textContent);
+                localStorage.setItem("verified", verified.textContent);
+                localStorage.setItem("birthDate", dateOfBirth.textContent);
+                localStorage.setItem("docID", docID);
+                window.location.replace("view_user.html");
+            });
+
+            removeUser.addEventListener("click", function () {
+                db.collection("users").doc(rID.value).delete()
+                    .then(function () {
+                        document.getElementById('removeSuccess').innerHTML =
+                            "User was successfully removed";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById('removeFailure').innerHTML = "User could not be removed";
+                        console.log("Error", error);
+                    })
+            });
+
+            verifyUser.addEventListener("click", function () {
+                db.collection("users").doc(vrID.value).update({
+                        verified: "verified",
+                    })
+                    .then(function () {
+                        document.getElementById('verifySuccess').innerHTML =
+                            "User was successfully verified";
+                        document.location.reload(true);
+                    })
+                    .catch(function (error) {
+                        document.getElementById('verifyFailure').innerHTML = "User could not be verified";
+                        console.log("Error", error);
+                    });
+            });
         }
 
-        function renderCars(doc) {
-            var listCars = document.querySelector("#listCars");
-
-            var li = document.createElement("li");
-            var carID = document.createElement("span")
-            var condition = document.createElement("span");
-            var leased = document.createElement("span");
-            var model = document.createElement("span");
-            var parking_location = document.createElement("span");
-            var rate = document.createElement("span");
-            var vehicle_type = document.createElement("span");
-
-            li.setAttribute("data-id", doc.id);
-            carID.textContent = doc.id;
-            condition.textContent = doc.data().condition;
-            leased.textContent = doc.data().leased;
-            model.textContent = doc.data().model;
-            parking_location.textContent = doc.data().parking_location;
-            rate.textContent = doc.data().rate;
-            vehicle_type.textContent = doc.data().vehicle_type;
-
-            li.appendChild(carID);
-            li.appendChild(condition);
-            li.appendChild(leased);
-            li.appendChild(model);
-            li.appendChild(parking_location);
-            li.appendChild(rate);
-            li.appendChild(vehicle_type);
-
-            listCars.appendChild(li);
-        }
-
-        function cars() {
-            db.collection("cars").get().then((snapshot) => {
+        function users() {
+            db.collection("users").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
-                    renderCars(doc);
+                    renderUsers(doc);
                 })
             })
         }
     </script>
 </head>
 
-<body onload="displayUser()">
+<body onload="users()">
     <!--User Central Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -110,8 +163,38 @@
 
             <div class="col-9">
                 <div class="container-fluid my-3 footer-align-bottom">
-                    <h1 class="text-left font-weight-bold ml-15">User Central</h1>
-                    <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+                    <div class="row mt-5">
+                        <div class="col-9 my-auto">
+                            <h1 class="text-left font-weight-bold ml-15">User Central <img src="style/total_users.svg"
+                                    alt="Total Users Icon"></h1>
+                        </div>
+                    </div>
+
+                    <!--User Central Table-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <h5 class="my-auto text-black-50 font-weight-bold">All Users</h5>
+
+                            <!--Success/Failure Messages-->
+                            <p class="text-success" id="removeSuccess" role="alert"></p>
+                            <p class="text-danger" id="removeFailure" role="alert"></p>
+
+                            <p class="text-success" id="verifySuccess" role="alert"></p>
+                            <p class="text-danger" id="verifyFailure" role="alert"></p>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="userTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle">Name</th>
+                                            <th scope="col" class="align-middle">Status</th>
+                                            <th scope="col" class="align-middle">More Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="footer"></div>
