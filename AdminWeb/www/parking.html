@@ -25,8 +25,11 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
 
+    <!--Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+    <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
 
@@ -78,6 +81,7 @@
 
             var rID = document.getElementById(autoRemoveID);
 
+            // Validates if it can remove the parking location
             removeLocation.addEventListener("click", function () {
                 db.collection("parking_location").doc(rID.value).delete()
                     .then(function () {
