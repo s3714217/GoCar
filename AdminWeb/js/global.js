@@ -30,9 +30,17 @@ function getValues(){
 
 function adminPage() {
 	if (localStorage.getItem("storageName") == "admin_master@gocar.com") {
-		window.location.replace("admin_master.html")
+		window.location.replace("admin_master.html");
 	} else {
 		window.location.replace("admin.html");
+	}
+}
+
+function userPage() {
+	if (localStorage.getItem("storageName") === "admin_master@gocar.com") {
+		window.location.replace("user_central_master.html");
+	} else {
+		window.location.replace("user_central.html");
 	}
 }
 
