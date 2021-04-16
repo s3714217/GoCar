@@ -25,39 +25,13 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
 
+    <!--Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+    <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
-
-    <style type="text/css">
-        #carsService,
-        #verify {
-            list-style-type: none;
-            display: inline-block;
-        }
-
-        .attention_icon {
-            background-image: url("style/error_outline-24px 1.svg");
-            background-repeat: no-repeat;
-            background-position: left;
-            margin-left: -30px;
-            margin-top: 15px;
-        }
-
-        #verify li {
-            margin-top: 26px;
-        }
-
-        #verify li span {
-            margin-left: 32px;
-        }
-
-        #carsService li button {
-            margin-left: 20px;
-            margin-top: 0px;
-        }
-    </style>
 
     <script>
         $(function () {
@@ -83,6 +57,7 @@
             var fullName = doc.data().fullName;
             var verified = doc.data().verified;
 
+            // Show list of users with pending status
             if (verified === "pending") {
                 verifyStatus.textContent = fullName + " status is pending";
                 li.classList.add("attention_icon");
@@ -108,6 +83,7 @@
             var carID = doc.id;
             var condition = doc.data().condition;
 
+            // Show list of cars that require service
             if (condition === "need_service") {
                 carService.textContent = carID + " needs a service";
                 li.classList.add("attention_icon");
