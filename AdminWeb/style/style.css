@@ -102,6 +102,7 @@ h1 {
     list-style-type: none;
 }
 
+
 .form-control:focus {
     border-color: #54428e !important;
 }
