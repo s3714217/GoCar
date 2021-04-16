@@ -25,8 +25,11 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
 
+    <!--Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+    <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
     <script src="../js/jquery-3.5.1.min.js"></script>
@@ -51,6 +54,7 @@
         }
 
         function parking() {
+            // Provides select option from parking location collection
             db.collection("parking_location").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     var listParkings1 = document.querySelector("#updateLocation");
@@ -118,6 +122,7 @@
 
             var rateNum = parseInt(carRate);
 
+            // Validates for editing existing car
             if (rateNum < 100 || rateNum > 500) {
                 document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
                 return
@@ -135,6 +140,7 @@
                 return
             }
 
+            // Checks onto Cloud Firestore (database), validates the edited car details
             db.collection("cars").doc(localStorage.getItem("carID")).update({
                     parking_location: carLocation,
                     condition: carCondition,
@@ -333,6 +339,7 @@
                                             onclick="main()">Save</button>
                                     </div>
 
+                                    <!--Success/Error Messages-->
                                     <p id="updateSuccess" class="text-success" role="alert"></p>
                                     <p id="updateError" class="text-danger" role="alert"></p>
                                     <p id="updateParking1Error" class="text-danger" role="alert"></p>
@@ -342,7 +349,11 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="footer"></div>
             </div>
         </div>
     </div>
 </body>
+
+</html>
