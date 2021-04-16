@@ -25,8 +25,11 @@
 		integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
 	</script>
 
+	<!--Firebase and Cloud Firestore libraries-->
 	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+	<!--Self-defined JS-->
 	<script src="../js/config.js"></script>
 	<script src="../js/global.js"></script>
 
@@ -35,9 +38,22 @@
 			var txtUsername = document.getElementById("username").value;
 			var txtPassword = document.getElementById("password").value;
 
-			if (txtUsername === "" || txtPassword === "") {
+			// Validation for login credentials
+			if (txtUsername === "") {
 				document.getElementById('usernameEmpty').innerHTML = "Please enter a username";
+				return
+			}
+
+			if (txtPassword === "") {
 				document.getElementById('passwordEmpty').innerHTML = "Please enter a password";
+				return
+			}
+
+			var emailRE = /^.+@gocar\.com$/;
+			if (txtUsername.match(emailRE)) {
+
+			} else {
+				document.getElementById('usernameInvalid').innerHTML = "Please enter a valid username";
 				return
 			}
 
@@ -45,6 +61,7 @@
 			localStorage.setItem("storageName", username);
 			var password = txtPassword;
 
+			// Checks onto Cloud Firestore (database) and validate the login credentials
 			db.collection("admins").doc(username).get()
 				.then(function (doc) {
 					if (doc.exists) {
@@ -55,8 +72,8 @@
 							document.getElementById('passwordError').innerHTML = "Please enter a valid password";
 						}
 					} else {
-						document.getElementById('usernameError').innerHTML = "Please enter a valid username";
-          }
+						document.getElementById('usernameError').innerHTML = "Please enter an existing username";
+					}
 				})
 				.catch(function (error) {
 					console.log("error", error);
@@ -81,9 +98,11 @@
 							<input type="text" class="form-control form-control-lg border-0" id="username"
 								placeholder="Username">
 						</div>
-            
+
+						<!--Error Messages for Username-->
 						<p id="usernameEmpty" class="text-danger" role="alert"></p>
 						<p id="usernameError" class="text-danger" role="alert"></p>
+						<p id="usernameInvalid" class="text-danger" role="alert"></p>
 					</div>
 
 					<div class="col-auto mt-4 p-0">
@@ -94,6 +113,7 @@
 								placeholder="Password">
 						</div>
 
+						<!--Error Messages for Password-->
 						<p id="passwordEmpty" class="text-danger" role="alert"></p>
 						<p id="passwordError" class="text-danger" role="alert"></p>
 					</div>
