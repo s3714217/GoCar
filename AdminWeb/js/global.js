@@ -28,6 +28,14 @@ function getValues(){
 
 }
 
+function adminPage() {
+	if (localStorage.getItem("storageName") == "admin_master@gocar.com") {
+		window.location.replace("admin_master.html")
+	} else {
+		window.location.replace("admin.html");
+	}
+}
+
 function logOut() {
 	username = null;
 	localStorage.setItem("storageName", username);
