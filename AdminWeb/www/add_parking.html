@@ -25,8 +25,11 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
 
+    <!--Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+
+    <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
 
@@ -45,6 +48,7 @@
             var latitudeNum = parseFloat(latitude);
             var longitudeNum = parseFloat(longitude);
 
+            // Validation for adding new parking
             if (latitudeNum < -90 || latitudeNum > 90) {
                 document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
                 return
@@ -73,6 +77,7 @@
 
             var geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
 
+            // Checks onto Cloud Firestore (database), validate if parking details exist
             db.collection("parking_location").doc().get()
                 .then(function (doc) {
                     if (doc.exists) {
@@ -225,10 +230,8 @@
                                     </div>
                                 </div>
 
-                                <!--Confirmation Message if Parking Location Added Successfully-->
+                                <!--Success/Error Messages-->
                                 <p id="addSuccess" class="text-success"></p>
-
-                                <!--Failure Message if Parking Location Add Failed-->
                                 <p id="addFailure" class="text-danger"></p>
                             </form>
                         </div>
