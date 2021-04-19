@@ -144,7 +144,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                         }
                     }
                     if !contained{
-                        self.car_data_at_location.append(InputCarData(title: c.model, image: UIImage(imageLiteralResourceName: c.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(c.rate)/hr $\(c.rate * 9)/day"))
+                        self.car_data_at_location.append(InputCarData(title: c.model, image: UIImage(imageLiteralResourceName: c.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(c.rate)/day"))
                     }
                 }
                 break
