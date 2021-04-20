@@ -24,6 +24,7 @@ class EntryController: UIViewController {
         super.viewDidLoad()
         self.joinbtn.isHidden = true
         self.loginbtn.isHidden = true
+        self.joinbtn.layer.cornerRadius = 12
         self.spinner.startAnimating()
         let cd = CDService()
         let usr = cd.load()
@@ -45,5 +46,3 @@ class EntryController: UIViewController {
                 }
             }
 }
-   
-    

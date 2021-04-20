@@ -14,8 +14,9 @@ class LoginController: UIViewController , UITextFieldDelegate{
     @IBOutlet private weak var email: UITextField!
     @IBOutlet private weak var password: UITextField!
     @IBOutlet private weak var notification: UILabel!
-    
+    @IBOutlet weak var logIn: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.spinner.isHidden = true
@@ -24,12 +25,16 @@ class LoginController: UIViewController , UITextFieldDelegate{
         self.password.textContentType = .password
         self.password.isSecureTextEntry = true
         self.email.textContentType = .emailAddress
-        self.email.text = "thien@gmail.com" ; self.password.text = "123456"
+        self.logIn.layer.cornerRadius = 12
     }
     
     @IBAction func login(_ sender: Any) {
+        
+        self.logIn.isEnabled = false
         if email.text!.count < 1 || password.text!.count < 1{
             self.displayNoti(noti: "* Email and password cannot be empty")
+            self.logIn.isEnabled = true
+            
             return
         }
         self.spinner.isHidden = false
@@ -40,15 +45,23 @@ class LoginController: UIViewController , UITextFieldDelegate{
                 let e = error!.localizedDescription
                 if e == "The email address is badly formatted."{
                     self.displayNoti(noti: "* Invalid email")
+                    self.logIn.isEnabled = true
+                    self.spinner.stopAnimating()
                 }
                 else if e == "There is no user record corresponding to this identifier. The user may have been deleted."{
                     self.displayNoti(noti: "* User doesn't exist")
+                    self.logIn.isEnabled = true
+                    self.spinner.stopAnimating()
                 }
                 else if e == "The password is invalid or the user does not have a password."{
                     self.displayNoti(noti: "* Wrong password")
+                    self.logIn.isEnabled = true
+                    self.spinner.stopAnimating()
                 }
                 else if e == "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."{
                     self.displayNoti(noti: "* Too many failed attempts. Try again later")
+                    self.logIn.isEnabled = true
+                    self.spinner.stopAnimating()
                 }
             }
             else{

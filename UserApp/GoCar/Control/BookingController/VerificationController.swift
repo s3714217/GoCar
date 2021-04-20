@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class VerificationController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var currentUser = User(fullName: "", userID: "")
+    var currentUser = User()
     let imagePicker = UIImagePickerController()
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet var statusImg: UIImageView!
@@ -39,10 +39,6 @@ class VerificationController: UIViewController, UIImagePickerControllerDelegate,
     
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        super.touchesBegan(touches, with: event)
-    }
     @IBAction func takePhoto(_ sender: Any) {
         imagePicker.sourceType = .camera
         imagePicker.allowsEditing = true
