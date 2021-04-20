@@ -568,7 +568,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="Ka5-6n-sph"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="cc-number"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES" textContentType="cc-number"/>
                                             </textField>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-Zc-0eg">
                                                 <rect key="frame" x="0.0" y="80" width="315" height="1"/>
@@ -593,7 +593,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="7Js-ts-eCd"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="cc-number"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4XI-bS-CtI">
                                                         <rect key="frame" x="80" y="0.0" width="5" height="30"/>
@@ -610,7 +610,7 @@
                                                             <constraint firstAttribute="width" constant="70" id="3Q6-x4-4WO"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="cc-number"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-FA-drA">
                                                         <rect key="frame" x="175" y="0.0" width="30" height="30"/>
@@ -624,7 +624,7 @@
                                                             <constraint firstAttribute="width" constant="100" id="nhM-Tq-3aO"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -960,7 +960,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="849" y="899"/>
+            <point key="canvasLocation" x="849" y="958"/>
         </scene>
         <!--Newsfeed-->
         <scene sceneID="wp4-wb-8vu">

@@ -20,7 +20,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var no_trip: UIStackView!
     @IBOutlet weak var CompleteBtn: UIButton!
     @IBOutlet weak var tabBar: UITabBar!
-    private var databaseService = DBService()
+    
     var current_transaction = Transaction()
     var current_car = Car()
     var db = Firestore.firestore()
@@ -33,6 +33,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var status_text: UILabel!
     @IBOutlet weak var general_stack: UIStackView!
     private var overdue_cost = 0
+    private var databaseService = DBService()
     override func viewDidLoad() {
         
        
@@ -42,8 +43,15 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         databaseService.retrieveUserInformation(userID: Auth.auth().currentUser!.uid)
         databaseService.retreivingAllCars()
         databaseService.retrieveTransaction(userID: Auth.auth().currentUser!.uid)
+        var count = 5
+        
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ timer in
-            if self.databaseService.getTransaction().carID.count > 1 && self.databaseService.getCars().count > 1{
+            
+            if count == 0{
+                timer.invalidate()
+            }
+            
+            if self.databaseService.getTransaction().carID.count > 3 && self.databaseService.getCars().count > 3{
                 timer.invalidate()
                 self.current_transaction = self.databaseService.getTransaction()
                 let cars = self.databaseService.getCars()
@@ -55,18 +63,13 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                     }
                   
                 }
-                
+                self.no_trip.isHidden = true
                 self.setup()
-             
+                
                 super.viewDidLoad()
                 
             }
-            if self.databaseService.getTransaction().carID.count == 0{
-                timer.invalidate()
-                self.no_trip.isHidden = false
-                super.viewDidLoad()
-                
-            }
+            count -= 1
            
         }
         
@@ -88,6 +91,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     }
     
     func setup(){
+        //print("setup")
         self.image.image = UIImage(imageLiteralResourceName: self.current_car.model.lowercased().trimmingCharacters(in: .whitespaces))
         self.model.text = self.current_car.model
         let dateFormatter = DateFormatter()

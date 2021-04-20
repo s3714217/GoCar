@@ -90,6 +90,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                 self.displayMarker()
                 self.filterBtn.isEnabled = true
                 self.mapKit.showsCompass = false
+        
                 super.viewDidLoad()
                 
             }
@@ -150,24 +151,6 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                 break
             }
         }
-        
-//        self.car_data_at_location = []
-//        for car in self.all_cars{
-//            let location = view.annotation?.title as! String
-//            if car.parking_location.lowercased() == location.lowercased(){
-//                var contained = false
-//
-//                for d in self.car_data_at_location{
-//                    if d.title.lowercased().trimmingCharacters(in: .whitespaces) == car.model.lowercased().trimmingCharacters(in: .whitespaces){
-//                        contained = true
-//                    }
-//                }
-//                if !contained{
-//                    self.car_data_at_location.append(InputCarData(title: car.model, image: UIImage(imageLiteralResourceName: car.model.lowercased().trimmingCharacters(in: .whitespaces) ), info: "$\(car.rate)/hr $\(car.rate * 9)/day"))
-//                }
-//            }
-//        }
-        
         
         self.collectionView.reloadData()
         self.collectionView.isHidden = false

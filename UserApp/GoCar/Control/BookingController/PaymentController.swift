@@ -13,10 +13,6 @@ class PaymentController: UIViewController {
 
     @IBOutlet weak var PayNowBtn: UIButton!
     @IBOutlet weak var sumView: UIView!
-    var selectedCar: Car!
-    var currentUser: User!
-    var currentTransaction: Transaction!
-    private var saveCard = true
     @IBOutlet weak var carModelLbl: UILabel!
     @IBOutlet weak var totalBeforeTax: UILabel!
     @IBOutlet weak var startLbl: UILabel!
@@ -32,7 +28,14 @@ class PaymentController: UIViewController {
     @IBOutlet weak var expDateTF: UITextField!
     @IBOutlet weak var expYearTF: UITextField!
     @IBOutlet weak var cvvTF: UITextField!
+    
+    private var saveCard = true
     private let db = DBService()
+    
+    var selectedCar: Car!
+    var currentUser: User!
+    var currentTransaction: Transaction!
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if segue.identifier == "toBooking"{
             let controller = segue.destination as! BookingController

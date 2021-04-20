@@ -357,7 +357,6 @@ class DBService{
                         let numberOfDate = Calendar.current.dateComponents([.day], from: self.transaction.startDate, to: self.transaction.returnDate)
                         self.transaction.numberOfDate = numberOfDate.day!
                     
-                        
                     } else {
                         
                         print("data does not exist")
@@ -373,66 +372,66 @@ class DBService{
     
     public func sendEmailConfirmation(user: User, trans: Transaction, selectedCar: Car){
         
-//         self.db.collection("mail").document().setData([
-//            "to": user.email,
-//            "message": [
-//                "subject": "Booking Confirmation",
-//                "text": "Hi \(user.fullName),\n \nThis is the confirmation for your booked vehicle below \n\n Car Model: \(selectedCar.model) \n\n Registration No: \(selectedCar.rego) \n\n Address:  \(selectedCar.parking_location) \n \nThank you your booking \n \nGoCar Team"
-//            ]
-//            
-//         ])
-//         { err in
-//             if let err = err {
-//                 print("THERE IS AN ERROR \(err)")
-//             }
-//             else{
-//                 
-//             }
-//         }
-//     
+         self.db.collection("mail").document().setData([
+            "to": user.email,
+            "message": [
+                "subject": "Booking Confirmation",
+                "text": "Hi \(user.fullName),\n \nThis is the confirmation for your booked vehicle below \n\n Car Model: \(selectedCar.model) \n\n Registration No: \(selectedCar.rego) \n\n Address:  \(selectedCar.parking_location) \n \nThank you your booking \n \nGoCar Team"
+            ]
+
+         ])
+         { err in
+             if let err = err {
+                 print("THERE IS AN ERROR \(err)")
+             }
+             else{
+
+             }
+         }
+
     }
     
     public func sendFinishTrip(user: User, trans: Transaction, overdueCost: Int){
         
-//        if overdueCost > 0 {
-//            self.db.collection("mail").document().setData([
-//               "to": user.email,
-//               "message": [
-//                   "subject": "Trip Receipt",
-//                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nOverdue Fee: \(overdueCost) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
-//
-//               ]
-//
-//            ])
-//            { err in
-//                if let err = err {
-//                    print("THERE IS AN ERROR \(err)")
-//                }
-//                else{
-//                    print("SUCCESSFULLY adding transaction")
-//                }
-//            }
-//        }
-//        else{
-//            self.db.collection("mail").document().setData([
-//               "to": user.email,
-//               "message": [
-//                   "subject": "Trip Receipt",
-//                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
-//
-//               ]
-//
-//            ])
-//            { err in
-//                if let err = err {
-//                    print("THERE IS AN ERROR \(err)")
-//                }
-//                else{
-//                    print("SUCCESSFULLY adding transaction")
-//                }
-//            }
-//
-//        }
+        if overdueCost > 0 {
+            self.db.collection("mail").document().setData([
+               "to": user.email,
+               "message": [
+                   "subject": "Trip Receipt",
+                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nOverdue Fee: \(overdueCost) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
+
+               ]
+
+            ])
+            { err in
+                if let err = err {
+                    print("THERE IS AN ERROR \(err)")
+                }
+                else{
+                    print("SUCCESSFULLY adding transaction")
+                }
+            }
+        }
+        else{
+            self.db.collection("mail").document().setData([
+               "to": user.email,
+               "message": [
+                   "subject": "Trip Receipt",
+                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
+
+               ]
+
+            ])
+            { err in
+                if let err = err {
+                    print("THERE IS AN ERROR \(err)")
+                }
+                else{
+                    print("SUCCESSFULLY adding transaction")
+                }
+            }
+
+        }
     }
     
     public func sendVerificationCode(email: String, code: String){
@@ -467,6 +466,7 @@ class DBService{
     
     public func getUser() -> User{
         return self.user
+        
     }
     
     public func getTransaction() -> Transaction{

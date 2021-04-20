@@ -145,7 +145,7 @@ class SignUpController: UIViewController, UITextFieldDelegate {
         
         
         if self.isValidEmail(email: self.email.text!){
-            self.notification.textColor = .green
+            self.notification.textColor = .systemGreen
             self.notification.font = UIFont(name: "Arial", size: 13)
             self.notification.text! = "* The Verification Code has been sent to your email!"
             self.verifyBtn.setTitle("Retry", for: .normal)

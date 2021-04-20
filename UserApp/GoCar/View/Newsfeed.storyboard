@@ -63,7 +63,7 @@
                                     <action selector="complete_trip:" destination="fWU-7H-7XY" eventType="touchUpInside" id="ffa-CZ-KQz"/>
                                 </connections>
                             </button>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kU2-KG-HJM">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kU2-KG-HJM">
                                 <rect key="frame" x="68.000000000000014" y="377.66666666666669" width="239.33333333333337" height="57"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tuQ-4v-1Pa">
@@ -1830,10 +1830,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6dT-hm-fDd"/>
-        <segue reference="CyA-5b-QR2"/>
-        <segue reference="fmz-Hr-P0J"/>
-        <segue reference="pM6-rm-OvF"/>
+        <segue reference="IyD-jv-AUD"/>
+        <segue reference="fde-M1-M2D"/>
+        <segue reference="XYX-Ap-UIM"/>
+        <segue reference="Yql-cc-BUR"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

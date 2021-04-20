@@ -130,7 +130,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Full Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HuQ-P9-dNp">
                                         <rect key="frame" x="0.0" y="180" width="315" height="45"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7t-Gh-klf">
                                         <rect key="frame" x="0.0" y="240" width="315" height="45"/>
@@ -168,7 +168,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Verification Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XSS-iD-wO5">
                                         <rect key="frame" x="0.0" y="420" width="315" height="45"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vK6-Vr-AE3">
                                         <rect key="frame" x="0.0" y="480" width="315" height="45"/>
@@ -332,7 +332,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eBi-hO-gYy"/>
+        <segue reference="7tC-B3-LaP"/>
         <segue reference="0Kh-go-EMs"/>
     </inferredMetricsTieBreakers>
     <resources>
