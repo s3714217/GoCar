@@ -21,6 +21,7 @@
 		964C852E26116A0F004D09AC /* PaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964C852D26116A0F004D09AC /* PaymentController.swift */; };
 		96560CAA25F8EFDF00662DF0 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96560CA925F8EFDF00662DF0 /* ProfileController.swift */; };
 		96569C9F25FB8B6300DA094A /* DescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96569C9E25FB8B6300DA094A /* DescriptionController.swift */; };
+		9659FA94262EE56500E11E18 /* NotificationPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9659FA93262EE56500E11E18 /* NotificationPopUp.swift */; };
 		965F3C4725F512E400CE1100 /* start-img.png in Resources */ = {isa = PBXBuildFile; fileRef = 965F3C4625F512E400CE1100 /* start-img.png */; };
 		965F3C4C25F6169E00CE1100 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C4B25F6169E00CE1100 /* LoginController.swift */; };
 		965F3C5125F616BF00CE1100 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F3C5025F616BF00CE1100 /* SignUpController.swift */; };
@@ -90,6 +91,7 @@
 		964C852D26116A0F004D09AC /* PaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentController.swift; sourceTree = "<group>"; };
 		96560CA925F8EFDF00662DF0 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		96569C9E25FB8B6300DA094A /* DescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionController.swift; sourceTree = "<group>"; };
+		9659FA93262EE56500E11E18 /* NotificationPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPopUp.swift; sourceTree = "<group>"; };
 		965F3C4625F512E400CE1100 /* start-img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-img.png"; sourceTree = "<group>"; };
 		965F3C4B25F6169E00CE1100 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		965F3C5025F616BF00CE1100 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				966FFF2F2604D6BC007BB7C5 /* CollectionViewCell.swift */,
 				9683A82F262841D0007CD3D0 /* TableViewCell.swift */,
+				9659FA93262EE56500E11E18 /* NotificationPopUp.swift */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				96569C9F25FB8B6300DA094A /* DescriptionController.swift in Sources */,
 				9642C9AF260F429D0069DFA9 /* VerificationController.swift in Sources */,
 				964C852E26116A0F004D09AC /* PaymentController.swift in Sources */,
+				9659FA94262EE56500E11E18 /* NotificationPopUp.swift in Sources */,
 				966FFF2726039757007BB7C5 /* Car.swift in Sources */,
 				96F2E2A625F2155C00044F56 /* AppDelegate.swift in Sources */,
 				96F2E2B025F2155C00044F56 /* GoCar.xcdatamodeld in Sources */,
@@ -730,7 +734,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -785,7 +789,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -802,8 +806,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_STYLE[sdk=iphoneos*]" = Automatic;
 				DEVELOPMENT_TEAM = 84T7K6Z4JS;
 				INFOPLIST_FILE = GoCar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -822,8 +828,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_STYLE[sdk=iphoneos*]" = Automatic;
 				DEVELOPMENT_TEAM = 84T7K6Z4JS;
 				INFOPLIST_FILE = GoCar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
