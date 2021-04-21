@@ -11,11 +11,13 @@ import CoreLocation
 import FirebaseAuth
 import FirebaseFirestore
 import MapKit
+import Braintree
 
 class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
    
     
     
+    var braintreeClient: BTAPIClient?
     @IBOutlet weak var returnBtn: UIButton!
     @IBOutlet weak var no_trip: UIStackView!
     @IBOutlet weak var CompleteBtn: UIButton!
@@ -227,9 +229,9 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
          
         }
         self.nearest_address.text = self.current_car.parking_location
-       
+        self.selected_address = self.current_car.parking_location
         self.pickerView.delegate = self
-        
+        self.selectNear()
     }
     
     
@@ -240,6 +242,8 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         self.returningDisplay()
         if nearest{
             self.selected_address = self.current_car.parking_location
+        }
+        if self.selected_address == "" {
         }
         self.address_stack.isHidden = false
         self.address.text = self.selected_address
@@ -303,9 +307,13 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         yesNear.isHidden = false
         noNear.isHidden = true
         self.nearest_address.textColor = .black
+        
+
     
     }
     func selectCustom(){
+        self.selected_address = self.pickerData[0]
+        self.pickerView.selectRow(0, inComponent: 0, animated: true)
         self.nearest = false
         self.nearest_address.textColor = .lightGray
         noCustom.isHidden = true
@@ -374,16 +382,44 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var notification: UILabel!
     @IBAction func payNow(_ sender: Any) {
         
-        if databaseService.processPayment(card: databaseService.getUser().card, amount: self.current_transaction.amount){
+        if overdue_cost > 0 {
+            
+            braintreeClient = BTAPIClient(authorization: "sandbox_csnw7dwr_ppkg4hc5zs9d3wb5")!
+            let payPalDriver = BTPayPalDriver(apiClient: braintreeClient!)
+           
+            let request = BTPayPalCheckoutRequest(amount: String(self.overdue_cost))
+            request.currencyCode = "AUD" // Optional; see BTPayPalCheckoutRequest.h for more
+
+            payPalDriver.tokenizePayPalAccount(with: request) { (tokenizedPayPalAccount, error) in
+                if let tokenizedPayPalAccount = tokenizedPayPalAccount {
+                    print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
+                    self.databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+                    self.performSegue(withIdentifier: "toExplore", sender: self)
+                    self.databaseService.sendFinishTrip(user: self.databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+                  
+                } else if error != nil {
+                    print(error)
+                    
+                    self.notification.text! = "Failed to process payment"
+                    self.notification.textColor = .red
+                    self.payBtn.setTitle("Retry", for: .normal)
+                } else {
+                    
+                    self.notification.text! = "Failed to process payment"
+                    self.notification.textColor = .red
+                    self.payBtn.setTitle("Retry", for: .normal)
+                }
+            }
+        
+            
+        }
+        else{
             databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
             self.performSegue(withIdentifier: "toExplore", sender: self)
             databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
         }
-        else{
-            notification.text! = "Failed to process payment"
-            notification.textColor = .red
-            payBtn.setTitle("Retry", for: .normal)
-        }
+       
+        
        
     }
     

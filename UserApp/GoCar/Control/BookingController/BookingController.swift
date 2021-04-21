@@ -63,6 +63,7 @@ class BookingController: UIViewController{
             if self.databaseService.getUser().fullName.count > 1{
                 timer.invalidate()
                 self.currentUser = self.databaseService.getUser()
+                
                 if self.currentUser.verified == "unverified"{
                     self.showNotification()
                     self.notification.text = "Please verify before booking"

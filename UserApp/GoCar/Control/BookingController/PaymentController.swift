@@ -7,7 +7,7 @@
 
 import UIKit
 import FirebaseAuth
-import CreditCardValidator
+import Braintree
 
 class PaymentController: UIViewController {
 
@@ -22,16 +22,11 @@ class PaymentController: UIViewController {
     @IBOutlet weak var taxLbl: UILabel!
     @IBOutlet weak var payFeeLbl: UILabel!
     @IBOutlet var popUp: UIView!
-    @IBOutlet weak var notificationLbl: UILabel!
-    @IBOutlet weak var customerName: UILabel!
-    @IBOutlet weak var cardNumber: UITextField!
-    @IBOutlet weak var expDateTF: UITextField!
-    @IBOutlet weak var expYearTF: UITextField!
-    @IBOutlet weak var cvvTF: UITextField!
-    
+    var braintreeClient: BTAPIClient?
     private var saveCard = true
     private let db = DBService()
     
+    @IBOutlet weak var notificationLbl: UILabel!
     var selectedCar: Car!
     var currentUser: User!
     var currentTransaction: Transaction!
@@ -47,7 +42,6 @@ class PaymentController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self.currentUser.email)
         setUp()
         sumView.layer.shadowColor = UIColor.black.cgColor
         sumView.layer.shadowOffset = CGSize(width: 0.5, height: 1)
@@ -64,37 +58,8 @@ class PaymentController: UIViewController {
     
     func setUp(){
         
-        self.customerName.text = self.currentUser.fullName
-        self.cardNumber.text = self.currentUser.card.cardNumber
-        
-        self.cvvTF.text = self.currentUser.card.cvv
-        
-        var tempmonth = ""
-        var tempyear = ""
-        
-        for s in self.currentUser.card.date{
-            if s != "/"{
-                if tempmonth.count < 2{
-                    tempmonth.append(s)
-                }
-                else if tempyear.count < 2{
-                    tempyear.append(s)
-                }
-            }
-           
-        }
-        self.expDateTF.text = tempmonth
-        self.expYearTF.text = tempyear
-        
-        if  self.currentUser.card.cardNumber.count > 1 {
-            self.noBtn.isHidden = true
-            self.yesBtn.isHidden = false
-        }
-        else{
-            self.noBtn.isHidden = false
-            self.yesBtn.isHidden = true
-            
-        }
+       
+       
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         carModelLbl.text = self.selectedCar.model
@@ -107,59 +72,36 @@ class PaymentController: UIViewController {
         taxLbl.text = "$\(total/10)"
         payFeeLbl.text = "$\(total/10 + total)"
     }
-    @IBOutlet weak var yesBtn: UIButton!
-    @IBOutlet weak var noBtn: UIButton!
-    
    
-    @IBAction func yesClicked(_ sender: Any) {
-        yesBtn.isHidden = true
-        noBtn.isHidden = false
-        self.saveCard = false
-    }
-    
-    @IBAction func noClicked(_ sender: Any) {
-        noBtn.isHidden = true
-        yesBtn.isHidden = false
-        self.saveCard = true
-        
-    }
     
     @IBAction func payclicked(_ sender: Any) {
-        
-        
-        
-        if isValidCard(){
-            let card = cardNumber.text!
-            let cvv = cvvTF.text!
-            var date = self.expDateTF.text!
-            date += "/"
-            date += self.expYearTF.text!
-            self.currentUser.card.cardNumber = card
-            self.currentUser.card.cvv = cvv
-            self.currentUser.card.date = date
-            currentUser.userID = (Auth.auth().currentUser?.uid)!
-            
-            if DBService().processPayment(card: self.currentUser.card, amount: self.currentTransaction.amount)
-            {
-                if self.saveCard{
-                    DBService().addPayment(user: self.currentUser)
+        self.PayNowBtn.isEnabled = false
+            braintreeClient = BTAPIClient(authorization: "sandbox_csnw7dwr_ppkg4hc5zs9d3wb5")!
+            let payPalDriver = BTPayPalDriver(apiClient: braintreeClient!)
+            var fee = self.selectedCar.rate * self.currentTransaction.numberOfDate
+            fee += fee/10
+            let request = BTPayPalCheckoutRequest(amount: String(fee))
+            request.currencyCode = "AUD" // Optional; see BTPayPalCheckoutRequest.h for more
+
+            payPalDriver.tokenizePayPalAccount(with: request) { (tokenizedPayPalAccount, error) in
+                if let tokenizedPayPalAccount = tokenizedPayPalAccount {
+                    print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
+
+                    self.PayNowBtn.isEnabled = false
+                    DBService().addTransaction(user: self.currentUser, car: self.selectedCar, transaction: self.currentTransaction)
+
+                    self.showPopUp()
+                } else if error != nil {
+                    print(error)
+                    self.notificationLbl.text = "Fail to process payment!"
+                    self.notificationLbl.textColor = .red
+                    self.PayNowBtn.isEnabled = true
+                } else {
+                    self.notificationLbl.text = "Fail to process payment!"
+                    self.notificationLbl.textColor = .red
+                    self.PayNowBtn.isEnabled = true
                 }
-                self.PayNowBtn.isEnabled = false
-                DBService().addTransaction(user: currentUser, car: selectedCar, transaction: currentTransaction)
-                
-                showPopUp()
             }
-            else{
-                self.notificationLbl.text = "Fail to process payment!"
-                self.notificationLbl.textColor = .red
-            }
-            
-           
-        }
-        else{
-            self.notificationLbl.text = "Invalid Credit Card!"
-            self.notificationLbl.textColor = .red
-        }
         
     }
     
@@ -193,31 +135,7 @@ class PaymentController: UIViewController {
         returnDate.text = dateFormatter.string(from: self.currentTransaction.returnDate)
     }
     
-    private func isValidCard() -> Bool{
-        
-        if CreditCardValidator().validate(string: cardNumber.text!){
-            let cvvSynx = "^[0-9]{3}$"
-            let cvvPred = NSPredicate(format:"SELF MATCHES %@", cvvSynx)
-            if cvvPred.evaluate(with: self.cvvTF.text!){
-                let dateSynx = "^[0-9]{2}$"
-                let datePred = NSPredicate(format:"SELF MATCHES %@", dateSynx)
-                if datePred.evaluate(with: self.expDateTF.text!) && datePred.evaluate(with: self.expYearTF.text!){
-                    return true
-                }
-                else{
-                    return false
-                }
-                
-            }
-            else{
-                return false
-            }
-        }
-        else{
-           return false
-        }
-      
-    }
+    
     
  
 }

@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+
 class DBService{
     
     var db = Firestore.firestore()
@@ -16,6 +17,8 @@ class DBService{
     private var locations : [parking_location] = []
     private var user: User = User()
     private var transaction = Transaction()
+    
+    
     public init(){
     
     }
@@ -154,6 +157,8 @@ class DBService{
             }
         }
         
+        self.user.userID = userID
+        
         docRef = db.collection("users").document(userID).collection("card").document("payment")
         
         docRef.getDocument { (document, error) in
@@ -236,7 +241,7 @@ class DBService{
         
         self.db.collection("cars").document(car.rego).updateData(["leased" : true])
         
-        self.db.collection("users").document(user.userID).updateData(["renting": true, "current_transaction": doc.documentID])
+        self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData(["renting": true, "current_transaction": doc.documentID])
     }
     
     
