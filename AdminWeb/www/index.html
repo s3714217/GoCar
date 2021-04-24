@@ -57,8 +57,8 @@
 				return
 			}
 
-			username = txtUsername;
-			localStorage.setItem("storageName", username);
+			var username = txtUsername;
+			localStorage.setItem("username", username);
 			var password = txtPassword;
 
 			// Checks onto Cloud Firestore (database) and validate the login credentials
@@ -79,10 +79,15 @@
 					console.log("error", error);
 				});
 		}
+
+		function resetUsername() {
+			var username;
+			localStorage.setItem("username", username);
+		}
 	</script>
 </head>
 
-<body id="portalLogin" class="d-flex m-0 p-0 vh-100">
+<body id="portalLogin" class="d-flex m-0 p-0 vh-100" onload="resetUsername()">
 	<div class="container m-auto text-center">
 		<div id="loginCard" class="card bg-secondary mx-auto rounded-lg">
 			<img src="style/login_logo.svg" id="logo" class="card-img-top w-50 mx-auto mt-4" alt="GoCar Logo">
