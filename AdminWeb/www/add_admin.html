@@ -95,7 +95,7 @@
     </script>
 </head>
 
-<body>
+<body onload="checkLogin(); checkLoginMaster()">
     <!--Add Admin-->
     <div class="container-fluid">
         <div class="row">
@@ -104,24 +104,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -153,6 +153,12 @@
                     <div class="row mt-5">
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Admin Management</h1>
+
+                            <!--Error message if admin is not logged in-->
+                            <p class="text-danger" id="userNullLogin" role="alert"></p>
+
+                            <!--Error message if non master admin account attempts access-->
+                            <p class="text-danger" id="userAccessDenied" role="alert"></p>
                         </div>
                     </div>
 
