@@ -1,29 +1,18 @@
 /*Portal Login*/
 #portalLogin {
-    position: relative;
-    width: 1440px;
-    height: 1024px;
-    background-size: cover;
-    background-position: center;
     background: linear-gradient(180deg, #FEFEFF -14.26%, #ADA4C9 57.45%, #ADA4C9 57.47%, #54428E 133.79%);
 }
 
 #loginCard {
-    position: absolute;
     width: 550px;
-    height: 847px;
-    left: 446px;
-    top: 70px;
     max-width: 100%;
-
     background: #F3F2F4;
-    border-radius: 15px;
 }
 
 .card-title {
-    font-family: Lato;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-style: normal;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 30px;
     line-height: 36px;
     color: #000000;
@@ -36,9 +25,10 @@
     border-radius: 10px;
 }
 
-#loginSubmitButton {
-    background: #54428E;
-    border-radius: 10px;
+#login {
+    margin-left: 1px;
+    background-color: #54428E !important;
+    border-color: #FFFFFF;
 }
 
 /* Landing Page*/
@@ -51,6 +41,143 @@
     height: 50px;
 }
 
+.footer-align-bottom {
+    min-height: calc(100vh - 114px);
+}
+
 .text-logo {
     color: #05386b !important;
+}
+
+h1 {
+    color: #54428e !important;
+    font-size: 30px !important;
+}
+
+.ml-15 {
+    margin-left: -15px !important;
+}
+
+.mr-15 {
+    margin-right: -15px !important;
+}
+
+/*Notification Card*/
+#carsService,
+#verify {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.attention_icon {
+    background-image: url("error_outline-24px 1.svg");
+    background-repeat: no-repeat;
+    background-position: left;
+    margin-left: -30px;
+    margin-top: 15px;
+}
+
+#verify li {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#verify li span {
+    margin-left: 32px;
+}
+
+#carsService li button {
+    margin-left: 20px;
+    margin-top: 1px;
+    margin-bottom: -1px;
+}
+
+
+/* Navbar */
+.selected {
+    background-color: rgba(232, 224, 255, 0.74);
+    border-radius: 60px;
+}
+
+/* Dashboard */
+#thUser:hover,
+#thCarNo:hover,
+#thBooking:hover,
+#thReturn:hover,
+#thReturnAddress:hover,
+#thCost:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* Car Page */
+.capital {
+    text-transform: capitalize;
+}
+
+#thModel:hover,
+#thLocation:hover,
+#thType:hover,
+#thStatus:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* Parking Page */
+#thAddress:hover,
+#thLocation:hover,
+#thNoCars:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* User Central */
+#thUser:hover,
+#thName:hover,
+#thStatus:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* View User */
+#historyList {
+    list-style-type: none;
+}
+
+.form-control:focus {
+    border-color: #54428e !important;
+}
+
+.form-control:placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: normal;
+}
+
+@media (max-width: 767px) {
+    .table-responsive .dropdown-menu {
+        position: static !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow: visible;
+    }
+}
+
+.btn-primary {
+    background-color: #54428E;
+    border-color: #FFFFFF;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: rgba(106, 76, 193, 0.74);
+    border-color: #FFFFFF;
+}
+
+.btn-secondary {
+    background-color: #989898 !important;
+}
+
+.btn {
+    margin-left: 10px;
 }

@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:GoCar/Model/LocalUser+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:GoCar/Model/LocalUser+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:GoCar.xcodeproj">
    </FileRef>
    <FileRef
