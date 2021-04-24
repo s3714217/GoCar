@@ -10,6 +10,9 @@
     <!--CSS from Bootstrap v4.5.2-->
     <link rel="stylesheet" type="text/css" href="../style/bootstrap.css">
 
+    <!--CSS from Sortable v0.8.0-->
+    <link rel="stylesheet" href="../style/sortable-theme-bootstrap.css">
+
     <!--Self-defined CSS-->
     <link rel="stylesheet" type="text/css" href="../style/style.css">
 
@@ -32,6 +35,7 @@
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script src="../js/sortable.min.js"></script>
 
     <script>
         $(function () {
@@ -40,6 +44,16 @@
     </script>
 
     <script>
+        // Sorts the search bar functions
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#carTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         function renderCars(doc) {
             var listCars = document.querySelector("#carTable");
 
@@ -61,6 +75,7 @@
 
             editCar.className = "btn btn-primary";
             removeCar.className = "btn btn-secondary";
+            vehicle_type.className = "capital";
 
             var condition = document.createElement("span");
             var rate = document.createElement("span");
@@ -82,8 +97,17 @@
             editCar.setAttribute("value", doc.id);
             removeCar.setAttribute("value", doc.id);
 
-            editCar.textContent = "Edit Details";
-            removeCar.textContent = "Remove Car";
+            editCar.textContent = "Edit";
+            removeCar.textContent = "Remove";
+
+            // Change colour of status if available or leased
+            if (leased.textContent === "true") {
+                leased.textContent = "Leased";
+                leased.className = "text-danger";
+            } else if (leased.textContent === "false") {
+                leased.textContent = "Available"
+                leased.className = "text-success";
+            }
 
             td1.appendChild(model);
             td2.appendChild(parking_location);
@@ -142,7 +166,7 @@
     </script>
 </head>
 
-<body onload="cars()">
+<body onload="checkLogin(); cars()">
     <!--Car Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -151,24 +175,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3 border shadow selected">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -201,6 +225,9 @@
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Car Management <img
                                     src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
+
+                            <!--Error message if admin is not logged in-->
+                            <p id="userNullLogin" class="text-danger" role="alert"></p>
                         </div>
 
                         <!--Add Car Button-->
@@ -215,21 +242,29 @@
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">All Cars</h5>
 
+                            <!--Search Bar-->
+                            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                                <input id="searchInput" type="text" placeholder="Search for cars"
+                                    class="form-control border-0 bg-light">
+                            </div>
+
                             <!--Success/Failure Messages-->
                             <p class="text-success" id="removeSuccess" role="alert"></p>
                             <p class="text-danger" id="removeFailure" role="alert"></p>
 
                             <div class="table-responsive">
-                                <table class="table table-hover text-center" id="carTable">
+                                <table class="table table-hover text-center" id="carTableSort" data-sortable>
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="align-middle">Model</th>
-                                            <th scope="col" class="align-middle">Location</th>
-                                            <th scope="col" class="align-middle">Car Type</th>
-                                            <th scope="col" class="align-middle">Status</th>
-                                            <th scope="col" class="align-middle">More Action</th>
+                                            <th scope="col" class="align-middle" id="thModel">Model</th>
+                                            <th scope="col" class="align-middle" id="thLocation">Location</th>
+                                            <th scope="col" class="align-middle" id="thType">Car Type</th>
+                                            <th scope="col" class="align-middle" id="thStatus">Status</th>
+                                            <th scope="col" class="align-middle" data-sortable="false">More Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody id="carTable">
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
