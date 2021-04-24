@@ -18,9 +18,9 @@ public struct User{
     var email = ""
     var phone_number = ""
     
-    init(fullName: String, userID: String) {
-        self.fullName = fullName
-        self.userID = userID
+    init() {
+        self.fullName = ""
+        self.userID = ""
         self.card = CreditCard(cardNumber: "", cvv: "", date: "")
         self.history = []
         self.renting = false
@@ -74,8 +74,11 @@ public struct History{
     var amount: Int
     var carID: String
     var imageRef: String
+    var carModel : String
+    var id: String
     init() {
-     
+        self.id = ""
+        self.carModel = ""
         self.startDate = Date()
         self.returnDate = Date()
         self.amount = 0
@@ -96,6 +99,7 @@ public struct Transaction{
     var return_address: String
     
     init(){
+        
         self.id = ""
         self.startDate = Date()
         self.returnDate = Date()

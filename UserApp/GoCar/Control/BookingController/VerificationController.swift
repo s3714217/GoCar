@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class VerificationController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var currentUser = User(fullName: "", userID: "")
+    var currentUser = User()
     let imagePicker = UIImagePickerController()
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet var statusImg: UIImageView!

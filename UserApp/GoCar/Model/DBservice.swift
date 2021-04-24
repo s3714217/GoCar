@@ -9,23 +9,27 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+
 class DBService{
     
     var db = Firestore.firestore()
     private var cars : [Car] = []
     private var locations : [parking_location] = []
-    private var user: User = User(fullName: "", userID: "")
+    private var user: User = User()
     private var transaction = Transaction()
+    
+    
     public init(){
     
     }
     
-    public func addUserInfo(userID: String, fullName: String){
+    public func addUserInfo(userID: String, fullName: String, email: String){
         
         self.db.collection("users").document(userID).setData([
             "fullName": fullName,
             "verified": "unverified",
-            
+            "contactEmail": email,
+            "phoneNumber": "",
             "renting": false
         ])
         { err in
@@ -141,18 +145,19 @@ class DBService{
 
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let fullName = document.get("fullName") as! String
-                let verified = document.get("verified") as! String
-                let renting = document.get("renting") as! Bool
                 
-                self.user.fullName = fullName
-                self.user.verified = verified
-                self.user.renting = renting
+                self.user.email = document.get("contactEmail") as!String
+                self.user.fullName = document.get("fullName") as! String
+                self.user.verified = document.get("verified") as! String
+                self.user.renting = document.get("renting") as! Bool
+                self.user.phone_number = document.get("phoneNumber") as! String
                 
             } else {
                 print("User does not exist")
             }
         }
+        
+        self.user.userID = userID
         
         docRef = db.collection("users").document(userID).collection("card").document("payment")
         
@@ -181,13 +186,15 @@ class DBService{
             } else {
                 for document in querySnapshot!.documents {
                     var temp_hist = History()
+                    temp_hist.id = document.documentID
+                    temp_hist.carModel = document.get("carModel") as! String
                     temp_hist.amount = document.get("amount") as! Int
                     temp_hist.carID = document.get("carID") as! String
                     temp_hist.imageRef = document.get("imageRef") as! String
                     temp_hist.return_address = document.get("return_address") as! String
                     temp_hist.returnDate = (document.get("return_date") as! Timestamp).dateValue()
                     temp_hist.startDate = (document.get("start_date") as! Timestamp).dateValue()
-                   
+                    self.user.history.append(temp_hist)
                 }
                
             }
@@ -212,7 +219,7 @@ class DBService{
     }
 
     public func addTransaction(user: User, car: Car, transaction: Transaction){
-        let doc = self.db.collection("transaction").document()
+       let doc = self.db.collection("transaction").document()
        doc.setData([
             "carID": car.rego,
             "amount": transaction.numberOfDate * car.rate,
@@ -234,15 +241,12 @@ class DBService{
         
         self.db.collection("cars").document(car.rego).updateData(["leased" : true])
         
-        self.db.collection("users").document(user.userID).updateData(["renting": true, "current_transaction": doc.documentID])
+        self.db.collection("users").document(Auth.auth().currentUser!.uid).updateData(["renting": true, "current_transaction": doc.documentID])
     }
     
     
     
     public func submitVerificationForm(user: User, image: UIImage){
-        
-        print(user.userID)
-        
         
         self.db.collection("users").document(user.userID).setData([
             "fullName": user.fullName,
@@ -282,9 +286,10 @@ class DBService{
     public func finishReturning(userID: String, transaction: Transaction, car: Car, address: String, image:UIImage){
         
         self.db.collection("users").document(userID).collection("history").document(transaction.id).setData([
+            "carModel": car.model,
             "carID": transaction.carID,
             "start_date": transaction.startDate,
-            "return_date": transaction.returnDate,
+            "return_date": Date(),
             "return_address": transaction.return_address,
             "amount": transaction.amount,
             "imageRef": transaction.id
@@ -357,7 +362,6 @@ class DBService{
                         let numberOfDate = Calendar.current.dateComponents([.day], from: self.transaction.startDate, to: self.transaction.returnDate)
                         self.transaction.numberOfDate = numberOfDate.day!
                     
-                        
                     } else {
                         
                         print("data does not exist")
@@ -371,6 +375,92 @@ class DBService{
        
     }
     
+    public func sendEmailConfirmation(user: User, trans: Transaction, selectedCar: Car){
+        
+         self.db.collection("mail").document().setData([
+            "to": user.email,
+            "message": [
+                "subject": "Booking Confirmation",
+                "text": "Hi \(user.fullName),\n \nThis is the confirmation for your booked vehicle below \n\n Car Model: \(selectedCar.model) \n\n Registration No: \(selectedCar.rego) \n\n Address:  \(selectedCar.parking_location) \n \nThank you your booking \n \nGoCar Team"
+            ]
+
+         ])
+         { err in
+             if let err = err {
+                 print("THERE IS AN ERROR \(err)")
+             }
+             else{
+
+             }
+         }
+
+    }
+    
+    public func sendFinishTrip(user: User, trans: Transaction, overdueCost: Int){
+        
+        if overdueCost > 0 {
+            self.db.collection("mail").document().setData([
+               "to": user.email,
+               "message": [
+                   "subject": "Trip Receipt",
+                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nOverdue Fee: \(overdueCost) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
+
+               ]
+
+            ])
+            { err in
+                if let err = err {
+                    print("THERE IS AN ERROR \(err)")
+                }
+                else{
+                    print("SUCCESSFULLY adding transaction")
+                }
+            }
+        }
+        else{
+            self.db.collection("mail").document().setData([
+               "to": user.email,
+               "message": [
+                   "subject": "Trip Receipt",
+                "text": "Hi \(user.fullName), \n \nThank you for complete your trip with GoCar, please find your trip summary bellow \n\nTransaction ID: \(trans.id) \n\nCar ID: \(trans.carID) \n\nPaid Amount: \(trans.amount) \n\nPlease email us if there is any issue related to the transaction \n\nGoCar Team "
+
+               ]
+
+            ])
+            { err in
+                if let err = err {
+                    print("THERE IS AN ERROR \(err)")
+                }
+                else{
+                    print("SUCCESSFULLY adding transaction")
+                }
+            }
+
+        }
+    }
+    
+    public func sendVerificationCode(email: String, code: String){
+        self.db.collection("mail").document().setData([
+           "to": email,
+           "message": [
+               "subject": "Verification Code",
+               "text": "Your Verifcation Code is \(code) "
+           ]
+           
+        ])
+        { err in
+            if let err = err {
+                print("THERE IS AN ERROR \(err)")
+            }
+            else{
+               
+            }
+        }
+        
+    }
+    
+   
+    
     public func getCars() -> [Car]{
         
         return self.cars
@@ -381,6 +471,7 @@ class DBService{
     
     public func getUser() -> User{
         return self.user
+        
     }
     
     public func getTransaction() -> Transaction{
@@ -390,6 +481,10 @@ class DBService{
     public func retrievingAll(){
         retrievingLocation()
         retrievingAvailableCars()
+    }
+    
+    public func processPayment(card: CreditCard, amount: Int) -> Bool{
+        return true
     }
     
 }

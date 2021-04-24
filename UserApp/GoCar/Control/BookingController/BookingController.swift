@@ -11,25 +11,24 @@ import FirebaseAuth
 
 class BookingController: UIViewController{
 
-    private var userID = ""
-    private let databaseService = DBService()
-    private var currentUser = User(fullName: "", userID: "")
-    private var blurEffect : UIBlurEffect = .init()
-    private var blurEffectView : UIVisualEffectView = .init()
+   
     @IBOutlet var popUp: UIView!
     @IBOutlet weak var notification: UILabel!
     @IBOutlet weak var verifyBtn: UIButton!
     @IBOutlet weak var PickUpDatePicker: UIDatePicker!
-    
     @IBOutlet weak var ReturnDatePicker: UIDatePicker!
-   
     @IBOutlet weak var lbl1: UILabel!
     @IBOutlet weak var lbl2: UILabel!
-   
     @IBOutlet weak var lbl5: UILabel!
-    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var lbl6: UILabel!
+    
+    private var userID = ""
+    private let databaseService = DBService()
+    private var blurEffect : UIBlurEffect = .init()
+    private var blurEffectView : UIVisualEffectView = .init()
+    
+    var currentUser = User()
     var selectedCar: Car!
     var numberOfDate = 1
     
@@ -64,6 +63,7 @@ class BookingController: UIViewController{
             if self.databaseService.getUser().fullName.count > 1{
                 timer.invalidate()
                 self.currentUser = self.databaseService.getUser()
+                
                 if self.currentUser.verified == "unverified"{
                     self.showNotification()
                     self.notification.text = "Please verify before booking"

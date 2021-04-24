@@ -11,16 +11,18 @@ import CoreLocation
 import FirebaseAuth
 import FirebaseFirestore
 import MapKit
+import Braintree
 
 class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
    
     
     
+    var braintreeClient: BTAPIClient?
     @IBOutlet weak var returnBtn: UIButton!
     @IBOutlet weak var no_trip: UIStackView!
     @IBOutlet weak var CompleteBtn: UIButton!
     @IBOutlet weak var tabBar: UITabBar!
-    private var databaseService = DBService()
+    
     var current_transaction = Transaction()
     var current_car = Car()
     var db = Firestore.firestore()
@@ -32,16 +34,26 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var status: UIStackView!
     @IBOutlet weak var status_text: UILabel!
     @IBOutlet weak var general_stack: UIStackView!
+    private var overdue_cost = 0
+    private var databaseService = DBService()
     override func viewDidLoad() {
         
        
         self.returnBtn.layer.cornerRadius = 12
         self.CompleteBtn.layer.cornerRadius = 12
         self.tabBar.delegate = self
+        databaseService.retrieveUserInformation(userID: Auth.auth().currentUser!.uid)
         databaseService.retreivingAllCars()
         databaseService.retrieveTransaction(userID: Auth.auth().currentUser!.uid)
+        var count = 5
+        
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ timer in
-            if self.databaseService.getTransaction().carID.count > 1 && self.databaseService.getCars().count > 1{
+            
+            if count == 0{
+                timer.invalidate()
+            }
+            
+            if self.databaseService.getTransaction().carID.count > 3 && self.databaseService.getCars().count > 3{
                 timer.invalidate()
                 self.current_transaction = self.databaseService.getTransaction()
                 let cars = self.databaseService.getCars()
@@ -53,18 +65,13 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                     }
                   
                 }
-                
+                self.no_trip.isHidden = true
                 self.setup()
-             
+                
                 super.viewDidLoad()
                 
             }
-            if self.databaseService.getTransaction().carID.count == 0{
-                timer.invalidate()
-                self.no_trip.isHidden = false
-                super.viewDidLoad()
-                
-            }
+            count -= 1
            
         }
         
@@ -86,6 +93,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     }
     
     func setup(){
+        //print("setup")
         self.image.image = UIImage(imageLiteralResourceName: self.current_car.model.lowercased().trimmingCharacters(in: .whitespaces))
         self.model.text = self.current_car.model
         let dateFormatter = DateFormatter()
@@ -141,6 +149,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                 self.due_date.text = "Car Overdue!"
                 let date_overdue = Calendar.current.dateComponents([.day], from: self.current_transaction.returnDate, to: Date())
                 if date_overdue.day! > 0 {
+                    self.overdue_cost = self.current_car.rate * date_overdue.day!
                     self.total.text = "$\(String( self.current_car.rate * date_overdue.day!))"
                     self.total_lbl.text = "Overdue Cost: "
                     
@@ -187,6 +196,21 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         }
     }
     
+    @IBOutlet var payPop: UIView!
+    func payPopUp(){
+        blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.backgroundColor = .clear
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(self.payPop)
+        self.payPop.isHidden = false
+        self.payPop.center = self.view.center
+        self.payPop.layer.cornerRadius = 30
+       
+    }
+    
     func popUp(){
         blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -205,9 +229,9 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
          
         }
         self.nearest_address.text = self.current_car.parking_location
-       
+        self.selected_address = self.current_car.parking_location
         self.pickerView.delegate = self
-        
+        self.selectNear()
     }
     
     
@@ -218,6 +242,8 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         self.returningDisplay()
         if nearest{
             self.selected_address = self.current_car.parking_location
+        }
+        if self.selected_address == "" {
         }
         self.address_stack.isHidden = false
         self.address.text = self.selected_address
@@ -281,9 +307,13 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         yesNear.isHidden = false
         noNear.isHidden = true
         self.nearest_address.textColor = .black
+        
+
     
     }
     func selectCustom(){
+        self.selected_address = self.pickerData[0]
+        self.pickerView.selectRow(0, inComponent: 0, animated: true)
         self.nearest = false
         self.nearest_address.textColor = .lightGray
         noCustom.isHidden = true
@@ -318,18 +348,79 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         }
         
         if photoUploaded == 1{
-            databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
-            self.performSegue(withIdentifier: "toExplore", sender: self)
+            
+            if self.overdue_cost > 0{
+                self.payPopUp()
+            }
+            else{
+                databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+                self.performSegue(withIdentifier: "toExplore", sender: self)
+                databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+            }
+               
+           
         }
         
     }
     
     @IBAction func complete_trip(_ sender: Any) {
+        
         imagePicker.sourceType = .camera
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
         
+    }
+    
+    @IBAction func cancelPay(_ sender: Any) {
+        self.popUpView.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        
+    }
+    
+    @IBOutlet weak var payBtn: UIButton!
+    @IBOutlet weak var notification: UILabel!
+    @IBAction func payNow(_ sender: Any) {
+        
+        if overdue_cost > 0 {
+            
+            braintreeClient = BTAPIClient(authorization: "sandbox_csnw7dwr_ppkg4hc5zs9d3wb5")!
+            let payPalDriver = BTPayPalDriver(apiClient: braintreeClient!)
+           
+            let request = BTPayPalCheckoutRequest(amount: String(self.overdue_cost))
+            request.currencyCode = "AUD" // Optional; see BTPayPalCheckoutRequest.h for more
+
+            payPalDriver.tokenizePayPalAccount(with: request) { (tokenizedPayPalAccount, error) in
+                if let tokenizedPayPalAccount = tokenizedPayPalAccount {
+                    print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
+                    self.databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+                    self.performSegue(withIdentifier: "toExplore", sender: self)
+                    self.databaseService.sendFinishTrip(user: self.databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+                  
+                } else if error != nil {
+                    print(error)
+                    
+                    self.notification.text! = "Failed to process payment"
+                    self.notification.textColor = .red
+                    self.payBtn.setTitle("Retry", for: .normal)
+                } else {
+                    
+                    self.notification.text! = "Failed to process payment"
+                    self.notification.textColor = .red
+                    self.payBtn.setTitle("Retry", for: .normal)
+                }
+            }
+        
+            
+        }
+        else{
+            databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+            self.performSegue(withIdentifier: "toExplore", sender: self)
+            databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+        }
+       
+        
+       
     }
     
 }

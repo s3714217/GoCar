@@ -10,8 +10,7 @@ import FirebaseFirestore
 
 class DescriptionController: UIViewController {
 
-    @IBOutlet weak var carModel: UILabel!
-    @IBOutlet weak var carImg: UIImageView!
+   
     var selectedCar: Car = Car()
     var carLocation: parking_location = parking_location()
     var distanceFromUser = 0
@@ -20,10 +19,8 @@ class DescriptionController: UIViewController {
     @IBOutlet weak var distanceAway: UILabel!
     @IBOutlet weak var bookBtn: UIButton!
     @IBOutlet weak var descriptionView: UIView!
-    
     @IBOutlet weak var carType: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
-    
     @IBOutlet weak var small_hatch: UILabel!
     @IBOutlet weak var seater: UILabel!
     @IBOutlet weak var child_seat: UILabel!
@@ -34,6 +31,8 @@ class DescriptionController: UIViewController {
     @IBOutlet weak var re_camera: UILabel!
     @IBOutlet weak var nav_sys: UILabel!
     @IBOutlet weak var bike: UILabel!
+    @IBOutlet weak var carModel: UILabel!
+    @IBOutlet weak var carImg: UIImageView!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toBooking"{
