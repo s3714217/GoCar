@@ -25,9 +25,10 @@
     border-radius: 10px;
 }
 
-#loginSubmitButton {
-    background: #54428E;
-    border-radius: 10px;
+#login {
+    margin-left: 1px;
+    background-color: #54428E !important;
+    border-color: #FFFFFF;
 }
 
 /* Landing Page*/
@@ -77,7 +78,8 @@ h1 {
 }
 
 #verify li {
-    margin-top: 26px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 #verify li span {
@@ -97,14 +99,55 @@ h1 {
     border-radius: 60px;
 }
 
+/* Dashboard */
+#thUser:hover,
+#thCarNo:hover,
+#thBooking:hover,
+#thReturn:hover,
+#thReturnAddress:hover,
+#thCost:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* Car Page */
+.capital {
+    text-transform: capitalize;
+}
+
+#thModel:hover,
+#thLocation:hover,
+#thType:hover,
+#thStatus:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* Parking Page */
+#thAddress:hover,
+#thLocation:hover,
+#thNoCars:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
+/* User Central */
+#thUser:hover,
+#thName:hover,
+#thStatus:hover {
+    background-color: rgba(106, 76, 193, 0.74);
+}
+
 /* View User */
 #historyList {
     list-style-type: none;
 }
 
-
 .form-control:focus {
     border-color: #54428e !important;
+}
+
+.form-control:placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: normal;
 }
 
 @media (max-width: 767px) {
@@ -120,17 +163,19 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #54428E !important;
+    background-color: #54428E;
+    border-color: #FFFFFF;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: rgba(106, 76, 193, 0.74);
     border-color: #FFFFFF;
 }
 
 .btn-secondary {
     background-color: #989898 !important;
-}
-
-.btn-info {
-    background-color: rgba(106, 76, 193, 0.74) !important;
-    border-color: #FFFFFF;
 }
 
 .btn {
