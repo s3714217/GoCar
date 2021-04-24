@@ -10,6 +10,9 @@
     <!--CSS from Bootstrap v4.5.2-->
     <link rel="stylesheet" type="text/css" href="../style/bootstrap.css">
 
+    <!--CSS from Sortable v0.8.0-->
+    <link rel="stylesheet" href="../style/sortable-theme-bootstrap.css">
+
     <!--Self-defined CSS-->
     <link rel="stylesheet" type="text/css" href="../style/style.css">
 
@@ -32,6 +35,7 @@
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script src="../js/sortable.min.js"></script>
 
     <script>
         $(function () {
@@ -40,6 +44,37 @@
     </script>
 
     <script>
+        // Sorts the search bar functions
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#recentBookingsTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        function getValues() {
+            var userDiv = document.getElementById("user");
+            var countUserDIV = document.getElementById("countUsers");
+            var countCarDiv = document.getElementById("countCars");
+            var countParkingsDiv = document.getElementById("countParkings");
+            userDiv.innerHTML = "Welcome " + localStorage.getItem("username");
+            db.collection("users").get().then(snap => {
+                var size = snap.size; // will return the collection size
+                countUserDIV.innerHTML = size;
+            });
+            db.collection("cars").get().then(snap => {
+                var size = snap.size; // will return the collection size
+                countCarDiv.innerHTML = size;
+            });
+            db.collection("parking_location").get().then(snap => {
+                var size = snap.size; // will return the collection size
+                countParkingsDiv.innerHTML = size;
+            });
+
+        }
+
         function verifyList() {
             db.collection("users").get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {
@@ -110,10 +145,79 @@
             verifyList();
             carsService();
         }
+
+        function recent() {
+            db.collection("transaction").get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    renderTransactions(doc);
+                })
+            })
+        }
+
+        function renderTransactions(doc) {
+            var listTransactions = document.querySelector("#recentBookingsTable");
+
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
+            var td3 = document.createElement("td");
+            var td4 = document.createElement("td");
+            var userID = document.createElement("span");
+            var carRego = document.createElement("span");
+            var bookingDate = document.createElement("span");
+            var returnDate = document.createElement("span");
+
+            carRego.textContent = doc.data().carID;
+
+            // Showing first four characters of user ID
+            var uID = doc.data().userID;
+            var userIDString = uID.toString();
+            var userIDSub = userIDString.substring(0, 4);
+            userID.textContent = userIDSub + "...";
+
+            // Converting booking date format to string
+            var dateStart = doc.data().start_date;
+            var dateStartFormat = dateStart.toDate();
+            var startString = dateStartFormat.toString();
+            var dateStartSub = startString.substring(0, 16);
+            bookingDate.textContent = dateStartSub;
+
+            // Show most recent bookings from 1 month
+            var dateNow = new Date();
+            var dateMonth = new Date(dateStartFormat.setMonth(dateStartFormat.getMonth() + 1));
+
+            // Converting return date format to string
+            var dateReturn = doc.data().return_date;
+            var dateReturnFormat = dateReturn.toDate();
+            var returnString = dateReturnFormat.toString();
+            var dateReturnSub = returnString.substring(0, 16);
+            returnDate.textContent = dateReturnSub;
+
+            if (dateMonth > dateNow) {
+                td1.appendChild(userID);
+                td2.appendChild(carRego);
+                td3.appendChild(bookingDate);
+                td4.appendChild(returnDate);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+            }
+
+            listTransactions.appendChild(tr);
+        }
+
+        function moreArrow() {
+            if (localStorage.getItem("username") === "admin_master@gocar.com") {
+                window.location.replace("user_central_master.html");
+            } else {
+                window.location.replace("user_central.html");
+            }
+        }
     </script>
 </head>
 
-<body onload="getValues(); notifications()">
+<body onload="checkLogin(); getValues(); notifications(); recent()">
     <div class="container-fluid">
         <div class="row">
 
@@ -121,24 +225,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3 border shadow selected">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -169,6 +273,9 @@
                 <div class="container-fluid my-3 footer-align-bottom">
                     <h1 class="text-left font-weight-bold ml-15">Dashboard</h1>
                     <h5 class="text-left font-weight-bold ml-15" id="user"></h5>
+
+                    <!--Error message if admin is not logged in-->
+                    <p class="text-danger" id="userNullLogin" role="alert"></p>
 
                     <div class="row mt-5">
                         <div class="col-3 border shadow bg-white rounded-lg p-3">
@@ -227,6 +334,45 @@
                                 <div class="form-group col-md-6" id="notificationsCars">
                                     <ul id="carsService"></ul>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Recent Bookings Row-->
+                    <div class="row mt-5">
+                        <div class="col border shadow bg-white rounded-lg p-3">
+                            <div class="d-flex">
+                                <h5 class="my-auto text-black-50 font-weight-bold">Recent Bookings</h5>
+
+                                <span class="ml-auto">
+                                    <a onclick="moreArrow()" class="font-weight-bold">
+                                        More
+
+                                        <img src="style/arrow_right_alt-24px 1.svg" alt="Right Arrow Icon">
+                                    </a>
+                                </span>
+                            </div>
+
+                            <!--Search Bar-->
+                            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                                <input id="searchInput" type="text" placeholder="Search for bookings"
+                                    class="form-control border-0 bg-light">
+                            </div>
+
+                            <!--List All Bookings-->
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center" id="recentBookingsTableSort" data-sortable>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="align-middle" id="thUser">User ID</th>
+                                            <th scope="col" class="align-middle" id="thCarNo">Car Registration No</th>
+                                            <th scope="col" class="align-middle" id="thBooking">Booking Date</th>
+                                            <th scope="col" class="align-middle" id="thReturn">Return Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentBookingsTable">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
