@@ -116,6 +116,7 @@
             historyList.appendChild(li3);
             historyList.appendChild(li4);
             historyList.appendChild(li5);
+            historyList.appendChild(li6);
             historyList.appendChild(br);
         }
 
@@ -146,8 +147,13 @@
             var cardNo = document.getElementById("cardNo");
             var cardDate = document.getElementById("cardDate");
             var historyList = document.getElementById("historyList");
-            if (verify.textContent == "unverified" || verify.textContent == "pending") {
+            if (verify.textContent === "Unverified") {
                 verify.className = "font-weight-bold text-danger";
+                cardNo.style.display = "none";
+                cardDate.style.display = "none";
+                historyList.style.display = "none";
+            } else if (verify.textContent === "Pending") {
+                verify.className = "font-weight-bold text-warning";
                 cardNo.style.display = "none";
                 cardDate.style.display = "none";
                 historyList.style.display = "none";
@@ -196,7 +202,7 @@
         }
 
         function userBack() {
-            if (localStorage.getItem("storageName") === "admin_master@gocar.com") {
+            if (localStorage.getItem("username") === "admin_master@gocar.com") {
                 window.location.replace("user_central_master.html");
             } else {
                 window.location.replace("user_central.html");
@@ -205,7 +211,7 @@
     </script>
 </head>
 
-<body onload="sendUserDetails(); displayDetails(); checkVerify()">
+<body onload="checkLogin(); sendUserDetails(); displayDetails(); checkVerify()">
     <!--View User-->
     <div class="container-fluid">
         <div class="row">
@@ -213,24 +219,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -276,12 +282,15 @@
                         <div class="col-9 border shadow bg-white rounded-lg p-3">
                             <div class="d-flex">
                                 <h1 class="my-auto text-black-50 font-weight-bold" id="name"></h1>
+
+                                <!--Error message if admin is not logged in-->
+                                <p class="text-danger" id="userNullLogin" role="alert"></p>
                             </div>
 
                             <form class="mt-5" action="">
                                 <div class="row mt-4">
                                     <div class="form-group col-md-6">
-                                        <h8 class="my-auto text-black-50 font-weight-bold">General Information</h6>
+                                        <h8 class="my-auto text-black-50 font-weight-bold">General Information</h8>
                                     </div>
                                 </div>
 

@@ -1,43 +1,48 @@
 // Store global variables and functions
 
-var username;
-
-function getValues(){
-	if (localStorage.getItem("storageName") == null){
-		alert("Please enter a username and password");
+// Checks if admin is logged in
+function checkLogin(){
+	if (localStorage.getItem("username") === null || localStorage.getItem("username") === "undefined"){
+		document.getElementById("userNullLogin").innerHTML = "Please enter a username and password";
 		window.location.replace("index.html");
-	} else {
-		var userDiv = document.getElementById("user");
-		var countUserDIV = document.getElementById("countUsers");
-		var countCarDiv = document.getElementById("countCars");
-		var countParkingsDiv = document.getElementById("countParkings");
-		userDiv.innerHTML = "Welcome " + localStorage.getItem("storageName");
-		db.collection("users").get().then(snap => {
-			var size = snap.size; // will return the collection size
-			countUserDIV.innerHTML = size;
-		});
-		db.collection("cars").get().then(snap => {
-			var size = snap.size; // will return the collection size
-			countCarDiv.innerHTML = size;
-		});
-		db.collection("parking_location").get().then(snap => {
-			var size = snap.size; // will return the collection size
-			countParkingsDiv.innerHTML = size;
-		})
 	}
-
 }
 
+// Checks if master admin is logged in
+function checkLoginMaster(){
+	if (localStorage.getItem("username") != "admin_master@gocar.com"){
+		document.getElementById("userAccessDenied").innerHTML = "Access is denied";
+		window.location.replace("index.html");
+	}
+}
+
+// Redirect to dashboard page
+function dashboardPage() {
+	window.location.replace("dashboard.html");
+}
+
+// Redirect to car page
+function carPage() {
+	window.location.replace("car.html");
+}
+
+// Redirect to parking page
+function parkingPage() {
+	window.location.replace("parking.html");
+}
+
+// Redirect to respective admin page according to admin role
 function adminPage() {
-	if (localStorage.getItem("storageName") == "admin_master@gocar.com") {
+	if (localStorage.getItem("username") == "admin_master@gocar.com") {
 		window.location.replace("admin_master.html");
 	} else {
 		window.location.replace("admin.html");
 	}
 }
 
+// Redirect to respective user page according to admin role
 function userPage() {
-	if (localStorage.getItem("storageName") === "admin_master@gocar.com") {
+	if (localStorage.getItem("username") === "admin_master@gocar.com") {
 		window.location.replace("user_central_master.html");
 	} else {
 		window.location.replace("user_central.html");
@@ -45,7 +50,7 @@ function userPage() {
 }
 
 function logOut() {
-	username = null;
-	localStorage.setItem("storageName", username);
+	var username;
+	localStorage.setItem("username", username);
 	window.location.replace("index.html");
 }

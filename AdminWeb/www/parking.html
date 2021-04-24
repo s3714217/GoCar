@@ -10,6 +10,9 @@
     <!--CSS from Bootstrap v4.5.2-->
     <link rel="stylesheet" type="text/css" href="../style/bootstrap.css">
 
+    <!--CSS from Sortable v0.8.0-->
+    <link rel="stylesheet" href="../style/sortable-theme-bootstrap.css">
+
     <!--Self-defined CSS-->
     <link rel="stylesheet" type="text/css" href="../style/style.css">
 
@@ -32,6 +35,7 @@
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script src="../js/sortable.min.js"></script>
 
     <script>
         $(function () {
@@ -40,6 +44,16 @@
     </script>
 
     <script>
+        // Sorts the search bar functions
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#locationsTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         function renderLocations(doc) {
             var listLocations = document.querySelector("#locationsTable");
 
@@ -65,7 +79,7 @@
             removeLocation.setAttribute("id", autoRemoveID);
             removeLocation.setAttribute("value", doc.id);
 
-            removeLocation.textContent = "Remove Location";
+            removeLocation.textContent = "Remove";
 
             td1.appendChild(address);
             td2.appendChild(location);
@@ -111,7 +125,7 @@
     </script>
 </head>
 
-<body onload="locations()">
+<body onload="checkLogin(); locations()">
     <!--Parking Dashboard-->
     <div class="container-fluid">
         <div class="row">
@@ -120,24 +134,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3 border shadow selected">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -170,6 +184,9 @@
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Parking Management<img
                                     src="style/parking_available.svg" alt="Parking Available Icon"></h1>
+
+                            <!--Error message if admin is not logged in-->
+                            <p id="userNullLogin" class="text-danger" role="alert"></p>
                         </div>
 
                         <!--Add Parking Button-->
@@ -184,20 +201,28 @@
                         <div class="col border shadow bg-white rounded-lg p-3">
                             <h5 class="my-auto text-black-50 font-weight-bold">All Parking Locations</h5>
 
+                            <!--Search Bar-->
+                            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                                <input id="searchInput" type="text" placeholder="Search for parkings"
+                                    class="form-control border-0 bg-light">
+                            </div>
+
                             <!--Success/Failure Messages-->
                             <p class="text-success" id="removeSuccess" role="alert"></p>
                             <p class="text-danger" id="removeFailure" role="alert"></p>
 
                             <div class="table-responsive">
-                                <table class="table table-hover text-center" id="locationsTable">
+                                <table class="table table-hover text-center" id="locationsTableSort" data-sortable>
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="align-middle">Address</th>
-                                            <th scope="col" class="align-middle">Location</th>
-                                            <th scope="col" class="align-middle">Number of Cars</th>
-                                            <th scope="col" class="align-middle">More Action</th>
+                                            <th scope="col" class="align-middle" id="thAddress">Address</th>
+                                            <th scope="col" class="align-middle" id="thLocation">Location</th>
+                                            <th scope="col" class="align-middle" id="thNoCars">Number of Cars</th>
+                                            <th scope="col" class="align-middle" data-sortable="false">More Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody id="locationsTable">
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
