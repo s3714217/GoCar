@@ -40,6 +40,11 @@
     </script>
 
     <script>
+        function main() {
+            carAdd();
+            updateParking();
+        }
+
         function parking() {
             // Provides select option from parking location collection
             db.collection("parking_location").get().then((snapshot) => {
@@ -49,7 +54,7 @@
                     var option1 = document.createElement("option");
                     var address1 = document.createElement("span");
 
-                    option1.setAttribute("data-id", doc.id);
+                    option1.setAttribute("id", doc.id);
                     address1.textContent = doc.data().Address;
                     option1.setAttribute("value", doc.data().Address);
 
@@ -63,7 +68,8 @@
         function carAdd() {
             var txtModel = document.getElementById("carModel").value;
             var optCondtion = document.getElementById("carCondition").value;
-            var optlocation = document.getElementById("parkingLocation").value;
+            var optLocation = document.getElementById("parkingLocation").value;
+            var optLocationID = document.getElementById("parkingLocation");
             var optType = document.getElementById("carType").value;
             var txtRate = document.getElementById("carRate").value;
             var txtCarID = document.getElementById("carID").value;
@@ -76,11 +82,25 @@
                 return
             }
 
+            if (txtCarID < 0000000 || txtCarID > 9999999) {
+                document.getElementById('carIDError').innerHTML =
+                    "Please enter a car registration between 0000000 and 9999999";
+                return
+            }
+
             var carleased = false;
 
-            if (txtCarID === "" || txtModel === "" || txtRate === "") {
+            if (txtCarID === "") {
                 document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
+                return
+            }
+
+            if (txtModel === "") {
                 document.getElementById('carModelEmpty').innerHTML = "Please enter a car model";
+                return
+            }
+
+            if (txtRate === "") {
                 document.getElementById('carRateEmpty').innerHTML = "Please enter a car rate";
                 return
             }
@@ -95,7 +115,7 @@
                             condition: optCondtion,
                             leased: carleased,
                             model: txtModel,
-                            parking_location: optlocation,
+                            parking_location: optLocation,
                             rate: rateNum,
                             vehicle_type: optType
                         })
@@ -108,13 +128,34 @@
                 });
         }
 
+        var selectID;
+
+        $.getSelected = function () {
+            selectID = $('#parkingLocation :selected').attr('id');
+        }
+
+        function updateParking() {
+            $.getSelected();
+            var increment = firebase.firestore.FieldValue.increment(1);
+            db.collection("parking_location").doc(selectID).update({
+                    Number_cars: increment
+                })
+                .then(function () {
+                    console.log(selectID);
+                })
+                .catch(function (error) {
+                    console.log("Error: updating document " + error);
+                    document.getElementById("updateParkingError").innerHTML = "Could not update parking";
+                });
+        }
+
         function carCancel() {
             window.location.replace("car.html");
         }
     </script>
 </head>
 
-<body onload="parking()">
+<body onload="checkLogin(); parking()">
     <!--Add Car Form-->
     <div class="container-fluid">
         <div class="row">
@@ -123,31 +164,31 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3 border shadow selected">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
                         </li>
                         <li class="nav-item my-3">
                             <a class="nav-link" onclick="userPage()">
-                                <img src=" style/people-24px 1.svg" alt="userIcon">
+                                <img src="style/people-24px 1.svg" alt="userIcon">
                                 User Central
                             </a>
                         </li>
@@ -173,6 +214,9 @@
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Car Management <img
                                     src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
+
+                            <!--Error message if admin is not logged in-->
+                            <p id="userNullLogin" class="text-danger" role="alert"></p>
                         </div>
                     </div>
 
@@ -212,6 +256,9 @@
 
                                         <select class="form-control" id="parkingLocation"
                                             name="parkingLocation"></select>
+
+                                        <p id="updateParkingError" class="text-danger" role="alert">
+                                        </p>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -244,11 +291,15 @@
                                     <div class="form-group col-md-6">
                                         <label for="carID">Car Registration No.</label>
 
-                                        <input type="text" class="form-control" id="carID" name="carID" maxlength="7"
-                                            placeholder="Enter a Car Registration No.">
+                                        <input type="number" min="0000000" max="9999999" class="form-control" id="carID"
+                                            name="carID" placeholder="Enter a Car Registration No.">
 
                                         <!--Error Message for Empty Car ID-->
                                         <p id="carIDEmpty" class="text-danger" role="alert">
+                                        </p>
+
+                                        <!--Error Message for Wrong Car ID Number-->
+                                        <p id="carIDError" class="text-danger" role="alert">
                                         </p>
 
                                         <!--Error Message if Car ID Exists-->
@@ -267,7 +318,7 @@
                                     <div class="col-2">
                                         <button id="addCarButton" type="button"
                                             class="btn btn-primary btn-block mt-5 border-0"
-                                            onclick="carAdd()">Save</button>
+                                            onclick="main()">Save</button>
                                     </div>
 
                                 </div>
