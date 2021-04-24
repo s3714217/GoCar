@@ -32,7 +32,6 @@
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
-    <script src="../js/jquery-3.5.1.min.js"></script>
 
     <script>
         $(function () {
@@ -129,9 +128,9 @@
             }
 
             var isTrue;
-            if (carStatus == "false") {
+            if (carStatus === "Available") {
                 isTrue = false;
-            } else if (carStatus == "true") {
+            } else if (carStatus == "Leased") {
                 isTrue = true;
             }
 
@@ -197,7 +196,7 @@
     </script>
 </head>
 
-<body onload="parking(); sendCarDetails()">
+<body onload="checkLogin(); parking(); sendCarDetails()">
     <!--Edit Car-->
     <div class="container-fluid">
         <div class="row">
@@ -205,24 +204,24 @@
                 <nav id="sidebarMenu" class="d-md-block bg-light sidebar collapse h-100">
                     <ul class="nav flex-column">
                         <li class="nav-item mt-5">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard_logo.svg" alt="gocarIcon">
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" onclick="dashboardPage()">
                                 <img src="style/dashboard-24px 1.svg" alt="dashboardIcon">
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item my-3 border shadow selected">
-                            <a class="nav-link" href="car.html">
+                            <a class="nav-link" onclick="carPage()">
                                 <img src="style/drive_eta-24px 1.svg" alt="carIcon">
                                 Car
                             </a>
                         </li>
                         <li class="nav-item my-3">
-                            <a class="nav-link" href="parking.html">
+                            <a class="nav-link" onclick="parkingPage()">
                                 <img src="style/local_parking-24px 1.svg" alt="parkingIcon">
                                 Parking
                             </a>
@@ -255,6 +254,9 @@
                         <div class="col-9 my-auto">
                             <h1 class="text-left font-weight-bold ml-15">Car Management <img
                                     src="style/total_cars_available.svg" alt="Total Cars Icon"></h1>
+
+                            <!--Error message if admin is not logged in-->
+                            <p id="userNullLogin" class="text-danger" role="alert"></p>
                         </div>
                     </div>
 
@@ -306,8 +308,8 @@
                                     <div class="form-group col-md-6">
                                         <label>Status</label>
                                         <select class="form-control" name="updateStatus" id="updateStatus">
-                                            <option value="false">Available</option>
-                                            <option value="true">Leased</option>
+                                            <option value="Available">Available</option>
+                                            <option value="Leased">Leased</option>
                                         </select>
                                     </div>
 
