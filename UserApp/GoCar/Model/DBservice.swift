@@ -159,25 +159,6 @@ class DBService{
         
         self.user.userID = userID
         
-        docRef = db.collection("users").document(userID).collection("card").document("payment")
-        
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let card_number = document.get("card_number") as! String
-                let cvv = document.get("cvv") as! String
-                let date = document.get("date") as! String
-                
-                self.user.card.cardNumber = card_number
-                self.user.card.cvv = cvv
-                self.user.card.date = date
-               
-            } else {
-                self.user.card.cardNumber = ""
-                self.user.card.cvv = ""
-                self.user.card.date = ""
-                print("Card does not exist")
-            }
-        }
         
         db.collection("users").document(userID).collection("history").getDocuments() { (querySnapshot, err) in
             
@@ -202,21 +183,6 @@ class DBService{
         }
     }
     
-    public func addPayment(user:User){
-        self.db.collection("users").document(user.userID).collection("card").document("payment").setData([
-            "card_number": user.card.cardNumber,
-            "cvv": user.card.cvv,
-            "date": user.card.date
-        ])
-        { err in
-            if let err = err {
-                print("THERE IS AN ERROR \(err)")
-            }
-            else{
-                print("SUCCESSFULLY updating user")
-            }
-        }
-    }
 
     public func addTransaction(user: User, car: Car, transaction: Transaction){
        let doc = self.db.collection("transaction").document()

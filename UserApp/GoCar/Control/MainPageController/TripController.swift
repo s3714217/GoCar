@@ -34,11 +34,14 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     @IBOutlet weak var status: UIStackView!
     @IBOutlet weak var status_text: UILabel!
     @IBOutlet weak var general_stack: UIStackView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     private var overdue_cost = 0
     private var databaseService = DBService()
     override func viewDidLoad() {
         
-       
+        self.no_trip.isHidden = true
+        self.spinner.startAnimating()
+        
         self.returnBtn.layer.cornerRadius = 12
         self.CompleteBtn.layer.cornerRadius = 12
         self.tabBar.delegate = self
@@ -51,6 +54,9 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
             
             if count == 0{
                 timer.invalidate()
+                self.no_trip.isHidden = false
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
             }
             
             if self.databaseService.getTransaction().carID.count > 3 && self.databaseService.getCars().count > 3{
@@ -67,10 +73,12 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                 }
                 self.no_trip.isHidden = true
                 self.setup()
-                
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
                 super.viewDidLoad()
                 
             }
+            
             count -= 1
            
         }
@@ -380,10 +388,12 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     
     @IBOutlet weak var payBtn: UIButton!
     @IBOutlet weak var notification: UILabel!
+    
+    
     @IBAction func payNow(_ sender: Any) {
         
         if overdue_cost > 0 {
-            
+            self.payBtn.isEnabled = false
             braintreeClient = BTAPIClient(authorization: "sandbox_csnw7dwr_ppkg4hc5zs9d3wb5")!
             let payPalDriver = BTPayPalDriver(apiClient: braintreeClient!)
            
@@ -398,16 +408,15 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
                     self.databaseService.sendFinishTrip(user: self.databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
                   
                 } else if error != nil {
-                    print(error)
-                    
-                    self.notification.text! = "Failed to process payment"
-                    self.notification.textColor = .red
+                    print(error!)
+                    self.payBtn.isEnabled = true
                     self.payBtn.setTitle("Retry", for: .normal)
                 } else {
                     
                     self.notification.text! = "Failed to process payment"
                     self.notification.textColor = .red
                     self.payBtn.setTitle("Retry", for: .normal)
+                    self.payBtn.isEnabled = true
                 }
             }
         

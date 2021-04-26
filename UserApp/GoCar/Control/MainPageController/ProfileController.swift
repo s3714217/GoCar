@@ -70,7 +70,9 @@ class ProfileController: UIViewController, UITabBarDelegate , UITextFieldDelegat
         self.phone.delegate = self
         self.oldPassword.delegate = self
         self.newPassword.delegate = self
+        
         self.databaseService.retrieveUserInformation(userID: Auth.auth().currentUser!.uid)
+        
         _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true){ timer in
             if self.databaseService.getUser().fullName.count > 1{
                 timer.invalidate()
@@ -106,7 +108,7 @@ class ProfileController: UIViewController, UITabBarDelegate , UITextFieldDelegat
                     self.phone.borderStyle = .none
                     db.collection("users").document(Auth.auth().currentUser!.uid).updateData([
                         "phoneNumber" : self.phone.text!,
-                        "email" : self.email.text!
+                        "contactEmail" : self.email.text!
                     ])
                     self.notification.isHidden = true
                 }

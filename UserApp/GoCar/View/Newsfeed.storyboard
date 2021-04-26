@@ -228,6 +228,14 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2yv-6l-XJa">
+                                <rect key="frame" x="172.66666666666666" y="391" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="cwK-gK-WlB"/>
+                                    <constraint firstAttribute="height" constant="30" id="gCl-yK-vuI"/>
+                                </constraints>
+                                <color key="color" red="0.54547657699999996" green="0.30354645800000002" blue="0.94171316159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -238,6 +246,7 @@
                             <constraint firstItem="fSZ-Cg-BRT" firstAttribute="top" secondItem="RXL-gM-fwi" secondAttribute="bottom" constant="30" id="Ee3-cf-Onf"/>
                             <constraint firstItem="kU2-KG-HJM" firstAttribute="centerY" secondItem="ZuF-9K-Mu8" secondAttribute="centerY" id="Eyw-9q-G4t"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cO2-Ci-xfI" secondAttribute="trailing" constant="10" id="Fww-qW-B4J"/>
+                            <constraint firstItem="2yv-6l-XJa" firstAttribute="centerX" secondItem="ZuF-9K-Mu8" secondAttribute="centerX" id="GlE-fx-kcm"/>
                             <constraint firstItem="93F-UP-S4i" firstAttribute="leading" secondItem="ZuF-9K-Mu8" secondAttribute="leadingMargin" constant="40" id="J0L-07-fXP"/>
                             <constraint firstItem="fSZ-Cg-BRT" firstAttribute="top" secondItem="q1F-1r-Zkf" secondAttribute="bottom" constant="30" id="Jff-w0-HGG"/>
                             <constraint firstItem="q1F-1r-Zkf" firstAttribute="leading" secondItem="ZuF-9K-Mu8" secondAttribute="leading" constant="30" id="NgQ-ZG-UZ3"/>
@@ -248,6 +257,7 @@
                             <constraint firstItem="cO2-Ci-xfI" firstAttribute="leading" secondItem="ZuF-9K-Mu8" secondAttribute="leadingMargin" constant="10" id="npr-hp-D7Z"/>
                             <constraint firstItem="fSZ-Cg-BRT" firstAttribute="bottom" secondItem="Xgd-Eh-Enc" secondAttribute="top" id="nx3-2f-RTR"/>
                             <constraint firstItem="93F-UP-S4i" firstAttribute="top" secondItem="cO2-Ci-xfI" secondAttribute="bottom" constant="40" id="yQK-3a-3kU"/>
+                            <constraint firstItem="2yv-6l-XJa" firstAttribute="centerY" secondItem="ZuF-9K-Mu8" secondAttribute="centerY" id="zkM-hr-KnN"/>
                         </constraints>
                     </view>
                     <connections>
@@ -272,6 +282,7 @@
                         <outlet property="pickerView" destination="DJx-Ex-y66" id="OhO-sM-yKL"/>
                         <outlet property="popUpView" destination="7Mh-yF-Bhn" id="IIl-MY-E0s"/>
                         <outlet property="returnBtn" destination="q1F-1r-Zkf" id="ogq-ud-2mE"/>
+                        <outlet property="spinner" destination="2yv-6l-XJa" id="kb6-2q-LWD"/>
                         <outlet property="status" destination="cO2-Ci-xfI" id="tq2-ZA-qfw"/>
                         <outlet property="status_text" destination="yA2-ka-ZI5" id="Fjz-ZZ-gGJ"/>
                         <outlet property="tabBar" destination="fSZ-Cg-BRT" id="GuL-Tt-Bww"/>
@@ -1830,9 +1841,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IyD-jv-AUD"/>
-        <segue reference="fde-M1-M2D"/>
-        <segue reference="XYX-Ap-UIM"/>
+        <segue reference="krj-aU-03R"/>
+        <segue reference="mw5-3X-WDz"/>
+        <segue reference="SN1-pR-ae6"/>
         <segue reference="Yql-cc-BUR"/>
     </inferredMetricsTieBreakers>
     <resources>
