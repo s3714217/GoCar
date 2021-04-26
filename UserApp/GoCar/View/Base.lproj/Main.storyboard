@@ -244,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIf-uh-6A4">
-                                <rect key="frame" x="30" y="64" width="315" height="567"/>
+                                <rect key="frame" x="30" y="64" width="315" height="614"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VM6-cR-iEA">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="45"/>
@@ -260,30 +260,37 @@
                                             <segue destination="EJ0-BA-cF3" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="weN-WN-8gs"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="BtW-ZO-W1I">
+                                        <rect key="frame" x="0.0" y="62" width="315" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ZmZ-a7-f8f"/>
+                                        </constraints>
+                                        <color key="color" red="0.54547657699999996" green="0.30354645800000002" blue="0.94171316159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log In" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDy-fQ-FLU">
-                                        <rect key="frame" x="0.0" y="62" width="315" height="24"/>
+                                        <rect key="frame" x="0.0" y="109" width="315" height="24"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ocd-N5-DYi">
-                                        <rect key="frame" x="0.0" y="103" width="315" height="34"/>
+                                        <rect key="frame" x="0.0" y="150" width="315" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ml-40-vGM">
-                                        <rect key="frame" x="0.0" y="154" width="315" height="34"/>
+                                        <rect key="frame" x="0.0" y="201" width="315" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="start-img.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bsP-FA-jJ1">
-                                        <rect key="frame" x="0.0" y="205" width="315" height="300"/>
+                                        <rect key="frame" x="0.0" y="252" width="315" height="300"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="300" id="qnM-Q1-7be"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvp-yR-AG9">
-                                        <rect key="frame" x="0.0" y="522" width="315" height="45"/>
+                                        <rect key="frame" x="0.0" y="569" width="315" height="45"/>
                                         <color key="backgroundColor" red="0.54547657699999996" green="0.30354645800000002" blue="0.94171316159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="SfY-dt-XpW"/>
@@ -299,22 +306,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="BtW-ZO-W1I">
-                                <rect key="frame" x="0.0" y="651" width="375" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="ZmZ-a7-f8f"/>
-                                </constraints>
-                                <color key="color" red="0.54547657699999996" green="0.30354645800000002" blue="0.94171316159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="BtW-ZO-W1I" firstAttribute="leading" secondItem="QEt-WZ-lY8" secondAttribute="leading" id="2H3-8R-aQK"/>
                             <constraint firstItem="gIf-uh-6A4" firstAttribute="top" secondItem="caY-LF-dTn" secondAttribute="bottom" constant="20" id="4L3-GY-h7V"/>
-                            <constraint firstItem="BtW-ZO-W1I" firstAttribute="trailing" secondItem="QEt-WZ-lY8" secondAttribute="trailing" id="5Rf-Yq-D7A"/>
                             <constraint firstItem="gIf-uh-6A4" firstAttribute="leading" secondItem="QEt-WZ-lY8" secondAttribute="leading" constant="30" id="PMM-R2-eFX"/>
                             <constraint firstAttribute="trailing" secondItem="gIf-uh-6A4" secondAttribute="trailing" constant="30" id="TCH-ke-XBO"/>
-                            <constraint firstItem="BtW-ZO-W1I" firstAttribute="top" secondItem="gIf-uh-6A4" secondAttribute="bottom" constant="20" id="ZGH-Mx-Zxh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -332,8 +329,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7tC-B3-LaP"/>
-        <segue reference="0Kh-go-EMs"/>
+        <segue reference="qKf-E3-Hc4"/>
+        <segue reference="weN-WN-8gs"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>

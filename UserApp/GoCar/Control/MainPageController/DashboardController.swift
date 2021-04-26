@@ -294,12 +294,14 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == self.modelPicker{
+            
             selectedIndexModel = row
         }
         else{
             selectedIndexType = row
             self.pickerData = []
-            if selectedIndexType == 0{
+            if selectedIndexType == 0
+            {
                 self.pickerData.append("All Model")
             }
            
@@ -323,8 +325,9 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
                 }
                 
             }
-            self.modelPicker.selectRow(0, inComponent: 0, animated: true)
             self.modelPicker.reloadAllComponents()
+            self.modelPicker.selectRow(0, inComponent: 0, animated: true)
+            self.selectedIndexModel = 0
         }
        
     }
@@ -342,6 +345,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     }
     
     @IBOutlet weak var slider: UISlider!
+    
     @IBAction func showFilter(_ sender: Any) {
         blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -386,11 +390,13 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         self.typePickerView.delegate = self
         self.modelPicker.delegate = self
         self.typePickerView.selectRow(0, inComponent: 0, animated: true)
+        
         self.view.addSubview(self.popUp)
         
     }
     @IBOutlet weak var distanceLabel: UILabel!
     private var filterRange = 5000
+    
     @IBAction func sliding(_ sender: UISlider) {
         
         let newValue = Int(sender.value/100) * 100
@@ -401,7 +407,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     
     @IBAction func closeFilter(_ sender: Any) {
         self.displayable_location = self.all_locations
-        if selectedIndexModel != 0
+        if selectedIndexModel != 0 || selectedIndexType != 0
         {
             self.displayable_location = []
             for location in self.all_locations {
@@ -433,6 +439,8 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
         self.displayMarker()
         self.popUp.removeFromSuperview()
     }
+    
+    
     //____________________________________NavBar____________________________________
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
