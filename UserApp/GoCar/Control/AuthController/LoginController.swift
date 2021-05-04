@@ -38,6 +38,7 @@ class LoginController: UIViewController , UITextFieldDelegate{
             return
         }
         self.spinner.isHidden = false
+        self.logIn.isHidden = true
         self.spinner.startAnimating()
         Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
             if error != nil {
@@ -46,28 +47,32 @@ class LoginController: UIViewController , UITextFieldDelegate{
                 if e == "The email address is badly formatted."{
                     self.displayNoti(noti: "* Invalid email")
                     self.logIn.isEnabled = true
-                    self.spinner.stopAnimating()
+                    self.spinner.isHidden = true
+                    self.logIn.isHidden = false
                 }
                 else if e == "There is no user record corresponding to this identifier. The user may have been deleted."{
                     self.displayNoti(noti: "* User doesn't exist")
                     self.logIn.isEnabled = true
-                    self.spinner.stopAnimating()
+                    self.spinner.isHidden = true
+                    self.logIn.isHidden = false
                 }
                 else if e == "The password is invalid or the user does not have a password."{
                     self.displayNoti(noti: "* Wrong password")
                     self.logIn.isEnabled = true
-                    self.spinner.stopAnimating()
+                    self.spinner.isHidden = true
+                    self.logIn.isHidden = false
                 }
                 else if e == "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."{
                     self.displayNoti(noti: "* Too many failed attempts. Try again later")
                     self.logIn.isEnabled = true
-                    self.spinner.stopAnimating()
+                    self.spinner.isHidden = true
+                    self.logIn.isHidden = false
                 }
             }
             else{
                 
                 CDService().addUser(email: self.email.text!, password: self.password.text!)
-                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
                 self.performSegue(withIdentifier: "toDashboard", sender: self)
             }
         }

@@ -21,12 +21,18 @@ class SignUpController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet private weak var notification: UILabel!
     
+    @IBOutlet var privacyView: UIView!
+    
     @IBOutlet weak var verificationCode: UITextField!
     
     @IBOutlet weak var acceptBtn: UIButton!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     private var code = 0
     let db = DBService()
+    
+    private var blurEffect : UIBlurEffect = .init()
+    private var blurEffectView : UIVisualEffectView = .init()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +53,9 @@ class SignUpController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func SignUp(_ sender: Any) {
+        
+      
+        
         self.acceptBtn.isHidden = true
        
         if self.code == 0{
@@ -83,34 +92,9 @@ class SignUpController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        Auth.auth().createUser(withEmail: self.email.text!, password: self.password.text!) { authResult, error in
-            if error != nil{
-                self.displayNoti(noti: "* Email already in use")
-                self.acceptBtn.isHidden = false
-            }
-            else{
-                self.spinner.isHidden = false
-                self.spinner.startAnimating()
-                Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
-                    if error != nil {
-                        self.displayNoti(noti: "* Error with user authentication")
-                        self.spinner.stopAnimating()
-                        self.spinner.isHidden = true
-                        self.acceptBtn.isHidden = false
-                    }
-                    else{
-                        
-                        self.db.addUserInfo(userID: Auth.auth().currentUser!.uid, fullName: self.fullName.text!, email: self.email.text!)
-                        CDService().addUser(email: self.email.text!, password: self.password.text!)
-                        self.spinner.stopAnimating()
-                        self.performSegue(withIdentifier: "toDashboard", sender: self)
-                    }
-                }
-                
-                
-                
-            }
-        }
+        
+        self.showPopUp()
+       
        
     }
     
@@ -141,8 +125,6 @@ class SignUpController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var verifyBtn: UIButton!
     
     @IBAction func verifiyClicked(_ sender: Any) {
-       
-        
         
         if self.isValidEmail(email: self.email.text!){
             self.notification.textColor = .systemGreen
@@ -167,6 +149,59 @@ class SignUpController: UIViewController, UITextFieldDelegate {
             finalNumber += Int(randomNumber) * place
       }
       return finalNumber
+    }
+    
+    
+    func showPopUp(){
+        blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.backgroundColor = .clear
+        self.privacyView.isHidden = false
+        self.privacyView.center = self.view.center
+        self.privacyView.layer.cornerRadius = 30
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(self.privacyView)
+        
+    }
+    func closePopUp(){
+        self.blurEffectView.removeFromSuperview()
+        self.privacyView.removeFromSuperview()
+        
+    }
+
+    @IBAction func `continue`(_ sender: Any) {
+        Auth.auth().createUser(withEmail: self.email.text!, password: self.password.text!) { authResult, error in
+            if error != nil{
+                self.closePopUp()
+                self.displayNoti(noti: "* Email already in use")
+                self.acceptBtn.isHidden = false
+            }
+            else{
+                self.spinner.isHidden = false
+                self.spinner.startAnimating()
+                Auth.auth().signIn(withEmail:self.email.text!, password: self.password.text!) { authResult, error in
+                    if error != nil {
+                        self.closePopUp()
+                        self.displayNoti(noti: "* Error with user authentication")
+                        self.spinner.stopAnimating()
+                        self.spinner.isHidden = true
+                        self.acceptBtn.isHidden = false
+                    }
+                    else{
+                        
+                        self.db.addUserInfo(userID: Auth.auth().currentUser!.uid, fullName: self.fullName.text!, email: self.email.text!)
+                        CDService().addUser(email: self.email.text!, password: self.password.text!)
+                        self.spinner.stopAnimating()
+                        self.performSegue(withIdentifier: "toDashboard", sender: self)
+                    }
+                }
+                
+                
+                
+            }
+        }
     }
     
 
