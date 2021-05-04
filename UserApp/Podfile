@@ -4,14 +4,14 @@ target 'GoCar' do
 
   # Pods for GoCar
 
+    pod 'Braintree'
+
     pod 'Firebase/Firestore'
 
     pod 'Firebase/Auth'
     
     pod 'Firebase/Storage'
-
-    pod 'CreditCardValidator'
-
+ 
   target 'GoCarTests' do
     inherit! :search_paths
     # Pods for testing

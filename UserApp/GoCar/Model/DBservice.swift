@@ -1,9 +1,4 @@
-//
-//  DBservice.swift
-//  GoCar
-//
-//  Created by Thien Nguyen on 8/3/21.
-//
+
 
 import Foundation
 import FirebaseFirestore
@@ -115,7 +110,6 @@ class DBService{
             for car in self.cars{
                 if car.parking_location == self.locations[i].address {
                     self.locations[i].cars.append(car)
-                    self.locations[i].car_count += 1
                 }
                 
             }
@@ -129,10 +123,11 @@ class DBService{
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
+                    
                     let address = document.get("Address") as! String
                     let location = document.get("Location") as! GeoPoint
-                   
-                    self.locations.append(parking_location(parkID: document.documentID, address: address, lat: location.latitude, long: location.longitude, car_count: 0))
+                    let count = document.get("Number_cars") as! Int
+                    self.locations.append(parking_location(parkID: document.documentID, address: address, lat: location.latitude, long: location.longitude, car_count: count))
                 }
                
             }
@@ -185,6 +180,7 @@ class DBService{
     
 
     public func addTransaction(user: User, car: Car, transaction: Transaction){
+        
        let doc = self.db.collection("transaction").document()
        doc.setData([
             "carID": car.rego,
@@ -192,7 +188,7 @@ class DBService{
             "return_date": transaction.returnDate,
             "start_date": transaction.startDate,
             "userID": user.userID,
-            "return_address": "none"
+            "return_address": car.parking_location
         
         ])
         { err in
@@ -204,6 +200,13 @@ class DBService{
             }
         }
         
+        for l in self.getLocation(){
+            print(l.address, car.parking_location)
+            if l.address == car.parking_location{
+                print(l.car_count - 1)
+                self.db.collection("parking_location").document(l.parkID).updateData(["Number_cars": l.car_count - 1])
+            }
+        }
         
         self.db.collection("cars").document(car.rego).updateData(["leased" : true])
         
@@ -274,6 +277,12 @@ class DBService{
         self.db.collection("users").document(userID).updateData(["current_transaction" : "", "renting" : false])
         
         
+        for l in self.getLocation(){
+            if l.address == address{
+                self.db.collection("parking_location").document(l.parkID).updateData(["Number_cars": l.car_count + 1])
+            }
+        }
+        
         let storage = Storage.storage()
         let storageRef = storage.reference()
         var data = NSData()
@@ -288,6 +297,8 @@ class DBService{
              }
 
         }
+        
+        
         
     }
     
@@ -342,7 +353,7 @@ class DBService{
     }
     
     public func sendEmailConfirmation(user: User, trans: Transaction, selectedCar: Car){
-        
+
          self.db.collection("mail").document().setData([
             "to": user.email,
             "message": [
@@ -363,7 +374,7 @@ class DBService{
     }
     
     public func sendFinishTrip(user: User, trans: Transaction, overdueCost: Int){
-        
+
         if overdueCost > 0 {
             self.db.collection("mail").document().setData([
                "to": user.email,
@@ -412,17 +423,17 @@ class DBService{
                "subject": "Verification Code",
                "text": "Your Verifcation Code is \(code) "
            ]
-           
+
         ])
         { err in
             if let err = err {
                 print("THERE IS AN ERROR \(err)")
             }
             else{
-               
+
             }
         }
-        
+
     }
     
    

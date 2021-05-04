@@ -232,6 +232,17 @@ class ProfileController: UIViewController, UITabBarDelegate , UITextFieldDelegat
         }
        
     }
+    @IBOutlet weak var emailLbl: UILabel!
+    @IBAction func touchDown(_ sender: Any) {
+        self.email.isHidden = true
+        self.emailLbl.isHidden = true
+    }
+    
+    @IBAction func endEditing(_ sender: Any) {
+        self.email.isHidden = false
+        self.emailLbl.isHidden = false
+    }
+    
     @IBAction func cancel(_ sender: Any) {
         self.blurEffectView.removeFromSuperview()
         self.popUpView.removeFromSuperview()

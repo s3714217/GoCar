@@ -47,8 +47,9 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         self.tabBar.delegate = self
         databaseService.retrieveUserInformation(userID: Auth.auth().currentUser!.uid)
         databaseService.retreivingAllCars()
+        databaseService.retrievingLocation()
         databaseService.retrieveTransaction(userID: Auth.auth().currentUser!.uid)
-        var count = 5
+        var count = 3
         
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ timer in
             
@@ -342,6 +343,8 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
     var photoUploaded = 0
     let imagePicker = UIImagePickerController()
  
+    @IBOutlet var completedPopup: UIView!
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
         guard let image = info[.editedImage] as? UIImage else {
@@ -362,7 +365,11 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
             }
             else{
                 databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
-                self.performSegue(withIdentifier: "toExplore", sender: self)
+                
+                self.displayTripCompleted()
+                
+                
+                
                 databaseService.sendFinishTrip(user: databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
             }
                
@@ -377,6 +384,7 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         present(imagePicker, animated: true)
+        
         
     }
     
@@ -402,10 +410,10 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
 
             payPalDriver.tokenizePayPalAccount(with: request) { (tokenizedPayPalAccount, error) in
                 if let tokenizedPayPalAccount = tokenizedPayPalAccount {
-                    print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
-                    self.databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
-                    self.performSegue(withIdentifier: "toExplore", sender: self)
+                     self.databaseService.finishReturning(userID: Auth.auth().currentUser!.uid, transaction: self.current_transaction, car: self.current_car, address: self.selected_address,image: self.photo)
+                    
                     self.databaseService.sendFinishTrip(user: self.databaseService.getUser(), trans: self.current_transaction, overdueCost: self.overdue_cost)
+                    self.displayTripCompleted()
                   
                 } else if error != nil {
                     print(error!)
@@ -432,4 +440,23 @@ class TripController: UIViewController, UITabBarDelegate, UIPickerViewDelegate, 
        
     }
     
+    func displayTripCompleted(){
+        blurEffect = UIBlurEffect(style: .dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.backgroundColor = .clear
+        self.view.addSubview(self.blurEffectView)
+        self.view.addSubview(self.completedPopup)
+        
+        self.completedPopup.isHidden = false
+        self.completedPopup.center = self.view.center
+        self.completedPopup.layer.cornerRadius = 30
+    }
+    
+    @IBAction func closeCompletedPopup(_ sender: Any) {
+        self.completedPopup.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        self.performSegue(withIdentifier: "toExplore", sender: self)
+    }
 }

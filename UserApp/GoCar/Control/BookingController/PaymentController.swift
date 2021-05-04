@@ -42,6 +42,8 @@ class PaymentController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.db.retrievingLocation()
         setUp()
         sumView.layer.shadowColor = UIColor.black.cgColor
         sumView.layer.shadowOffset = CGSize(width: 0.5, height: 1)
@@ -88,7 +90,7 @@ class PaymentController: UIViewController {
                     print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
 
                     self.PayNowBtn.isEnabled = false
-                    DBService().addTransaction(user: self.currentUser, car: self.selectedCar, transaction: self.currentTransaction)
+                    self.db.addTransaction(user: self.currentUser, car: self.selectedCar, transaction: self.currentTransaction)
 
                     self.showPopUp()
                 } else if error != nil {

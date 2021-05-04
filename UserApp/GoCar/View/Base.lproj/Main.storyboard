@@ -102,7 +102,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="xe5-tX-JGC">
-                                <rect key="frame" x="30" y="60" width="315" height="645"/>
+                                <rect key="frame" x="30" y="60" width="315" height="585"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXB-yq-zJd">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="45"/>
@@ -169,19 +169,19 @@
                                         <rect key="frame" x="0.0" y="420" width="315" height="45"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <action selector="editEnd:" destination="LXU-Ww-YnP" eventType="editingDidEnd" id="adh-NL-9N1"/>
+                                            <action selector="touchDownCode:" destination="LXU-Ww-YnP" eventType="touchDown" id="dqH-7q-7iB"/>
+                                        </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vK6-Vr-AE3">
-                                        <rect key="frame" x="0.0" y="480" width="315" height="45"/>
-                                        <state key="normal" title="Term &amp; Condition"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sm5-Je-QHk">
-                                        <rect key="frame" x="0.0" y="540" width="315" height="45"/>
+                                        <rect key="frame" x="0.0" y="480" width="315" height="45"/>
                                         <color key="backgroundColor" red="0.54547657699999996" green="0.30354645800000002" blue="0.94171316159999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="iK9-Pa-sAj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                        <state key="normal" title="Accept &amp; Continue">
+                                        <state key="normal" title="Continue">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -189,7 +189,7 @@
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="fVA-zU-JgW">
-                                        <rect key="frame" x="0.0" y="600" width="315" height="45"/>
+                                        <rect key="frame" x="0.0" y="540" width="315" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="Fp9-XQ-chy"/>
                                         </constraints>
@@ -213,6 +213,7 @@
                         <outlet property="fullName" destination="HuQ-P9-dNp" id="gkG-OX-nlg"/>
                         <outlet property="notification" destination="EZd-VJ-mA5" id="7vc-fh-kSP"/>
                         <outlet property="password" destination="2k1-di-fvZ" id="dEB-KF-OtG"/>
+                        <outlet property="privacyView" destination="nE9-3M-X50" id="YHy-Bu-mB6"/>
                         <outlet property="spinner" destination="fVA-zU-JgW" id="v3N-Tr-Nu0"/>
                         <outlet property="verificationCode" destination="XSS-iD-wO5" id="T2k-KC-954"/>
                         <outlet property="verifyBtn" destination="nwd-IU-BG7" id="XyX-Ra-vd0"/>
@@ -220,6 +221,87 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VFT-WT-LAn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="nE9-3M-X50">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="450"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="op0-Tu-0If">
+                            <rect key="frame" x="20" y="20" width="260" height="410"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GoCar Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qth-7m-WgI">
+                                    <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="ct5-eh-UF0"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="grA-lj-Ccs">
+                                    <rect key="frame" x="0.0" y="50" width="260" height="310"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <mutableString key="text">We respect the privacy of our users . This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our mobile application (the “Application”). Please read this Privacy Policy carefully. IF YOU DO NOT AGREE WITH THE TERMS OF THIS PRIVACY POLICY, PLEASE DO NOT ACCESS THE APPLICATION.
+
+COLLECTION OF YOUR INFORMATION
+
+We may collect information about you in a variety of ways. The information we may collect via the Application depends on the content and materials you use, and includes:
+
+Personal Data
+
+Personal Information generally collected by us includes your name, email address, copy of your driver license and contact number.
+
+Geo-Location Information
+
+We may request access or permission to and track location-based information from your mobile device, either continuously or while you are using the Application, to provide location-based services.
+
+USE OF YOUR INFORMATION
+
+Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Application to:
+
+1 Create and manage your account
+2 Email you regarding your account or order.
+3 Fulfill and manage orders, payments, and other transactions related to the Application.
+4 Generate a personal profile about you to make future visits to the Application more personalized.
+5 Increase the efficiency and operation of the Application.
+
+SECURITY OF YOUR INFORMATION
+
+Note that GoCar application is built solely for educational purposes under RMIT. Your personal information will be stored in our database, Cloud Firestore and only accessible by GoCar development team. All your personal information will not be shared to third parties. We use administrative, technical security measures to help protect your personal information but please aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse
+
+Account Information
+
+You may at any time review or change the information in your account by logging into your account settings and updating your account such as password, contact number or email address.
+If you wish to terminate your account contact us using the contact information provided below. Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases.
+
+CONTACT US
+
+If you have questions or comments about this Privacy Policy, please contact us at:
+gocarrmit2021@gamil.com</mutableString>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hv-AE-3B2">
+                                    <rect key="frame" x="0.0" y="380" width="260" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="b3x-uK-uMD"/>
+                                    </constraints>
+                                    <state key="normal" title="I Agree to the Privacy Policy"/>
+                                    <connections>
+                                        <action selector="continue:" destination="LXU-Ww-YnP" eventType="touchUpInside" id="W7E-jo-Iqr"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="op0-Tu-0If" firstAttribute="leading" secondItem="nE9-3M-X50" secondAttribute="leading" constant="20" id="78r-2v-ih4"/>
+                        <constraint firstAttribute="bottom" secondItem="op0-Tu-0If" secondAttribute="bottom" constant="20" id="HaO-Bg-6lN"/>
+                        <constraint firstAttribute="trailing" secondItem="op0-Tu-0If" secondAttribute="trailing" constant="20" id="VZK-GL-Ule"/>
+                        <constraint firstItem="op0-Tu-0If" firstAttribute="top" secondItem="nE9-3M-X50" secondAttribute="top" constant="20" id="Vn0-YU-eLK"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="-63.768115942028992" y="136.95652173913044"/>
         </scene>
@@ -335,6 +417,9 @@
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="start-img.png" width="573" height="610"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
