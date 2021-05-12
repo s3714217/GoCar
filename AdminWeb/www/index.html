@@ -26,65 +26,16 @@
 	</script>
 
 	<!--Firebase and Cloud Firestore libraries-->
-	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-storage.js"></script>
 
 	<!--Self-defined JS-->
 	<script src="../js/config.js"></script>
 	<script src="../js/global.js"></script>
+	<script src="../js/index.js"></script>
 
-	<script>
-		function signIn() {
-			var txtUsername = document.getElementById("username").value;
-			var txtPassword = document.getElementById("password").value;
-
-			// Validation for login credentials
-			if (txtUsername === "") {
-				document.getElementById('usernameEmpty').innerHTML = "Please enter a username";
-				return
-			}
-
-			if (txtPassword === "") {
-				document.getElementById('passwordEmpty').innerHTML = "Please enter a password";
-				return
-			}
-
-			var emailRE = /^.+@gocar\.com$/;
-			if (txtUsername.match(emailRE)) {
-
-			} else {
-				document.getElementById('usernameInvalid').innerHTML = "Please enter a valid username";
-				return
-			}
-
-			var username = txtUsername;
-			localStorage.setItem("username", username);
-			var password = txtPassword;
-
-			// Checks onto Cloud Firestore (database) and validate the login credentials
-			db.collection("admins").doc(username).get()
-				.then(function (doc) {
-					if (doc.exists) {
-						var getPassword = doc.data().password;
-						if (password == getPassword) {
-							window.location.replace("dashboard.html");
-						} else {
-							document.getElementById('passwordError').innerHTML = "Please enter a valid password";
-						}
-					} else {
-						document.getElementById('usernameError').innerHTML = "Please enter an existing username";
-					}
-				})
-				.catch(function (error) {
-					console.log("error", error);
-				});
-		}
-
-		function resetUsername() {
-			var username;
-			localStorage.setItem("username", username);
-		}
-	</script>
 </head>
 
 <body id="portalLogin" class="d-flex m-0 p-0 vh-100" onload="resetUsername()">
@@ -127,6 +78,8 @@
 						onclick="signIn()">
 						Login
 					</button>
+
+					<p id="loginError" class="text-danger" role="alert"></p>
 				</form>
 			</div>
 		</div>
