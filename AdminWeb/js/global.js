@@ -16,6 +16,21 @@ function checkLoginMaster(){
 	}
 }
 
+// authentication with additional admin account
+function authentication(){
+	firebase.auth().signInWithEmailAndPassword("admin@gocar.com", "12345678")
+			  .then((userCredential) => {
+				// Signed in
+				var user = userCredential.user;
+				console.log("Signed In");
+			  })
+			  .catch((error) => {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				console.log(errorCode + " " + errorMessage);
+			  });
+}
+
 // Redirect to dashboard page
 function dashboardPage() {
 	window.location.replace("dashboard.html");
@@ -50,7 +65,14 @@ function userPage() {
 }
 
 function logOut() {
-	var username;
-	localStorage.setItem("username", username);
+	firebase.auth().signOut().then(() => {
+		// Sign-out successful.
+		document.getElementById("logoutSuccess").innerHTML = "Successfully logged out";
+	  }).catch((error) => {
+		// An error happened.
+		document.getElementById("logoutFailure").innerHTML = "Unable to logout";
+	  });
+	  
+	localStorage.clear();
 	window.location.replace("index.html");
 }

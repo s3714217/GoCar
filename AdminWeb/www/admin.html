@@ -29,12 +29,15 @@
     </script>
 
     <!--Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-storage.js"></script>
 
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script src="../js/admin.js"></script>
     <script src="../js/sortable.min.js"></script>
 
     <script>
@@ -43,60 +46,6 @@
         });
     </script>
 
-    <script>
-        // Sorts the search bar functions
-        $(document).ready(function () {
-            $("#searchInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#adminTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-
-        function renderAdmins(doc) {
-            var listAdmins = document.querySelector("#adminTable");
-
-            var tr = document.createElement("tr");
-            var td1 = document.createElement("td");
-            var td2 = document.createElement("td");
-
-            var username = document.createElement("span");
-            var changePassword = document.createElement("button");
-
-            username.textContent = doc.id;
-
-            var autoEditID = Math.floor(Math.random() * 300);
-
-            changePassword.setAttribute("id", autoEditID);
-            changePassword.setAttribute("value", doc.id);
-            changePassword.textContent = "Edit";
-            changePassword.className = "btn btn-primary";
-
-            td1.appendChild(username);
-            td2.appendChild(changePassword);
-
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-
-            listAdmins.appendChild(tr);
-
-            var eID = document.getElementById(autoEditID);
-
-            changePassword.addEventListener("click", function () {
-                localStorage.setItem("username", doc.id);
-                window.location.replace("change_password.html");
-            })
-        }
-
-        function admins() {
-            db.collection("admins").get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    renderAdmins(doc);
-                })
-            })
-        }
-    </script>
 </head>
 
 <body onload="checkLogin(); admins()">
@@ -162,6 +111,12 @@
                             <!--Error message if admin is not logged in-->
                             <p class="text-danger" id="userNullLogin" role="alert"></p>
                         </div>
+
+                        <!--Change Password Button-->
+                        <div class="col-3 my-auto">
+                            <button class="btn" onclick="changePasswordButton()"><img src="style/change_password.svg"
+                                    alt="Change Password Button"></button>
+                        </div>
                     </div>
 
                     <!--Admin Table-->
@@ -180,7 +135,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="align-middle" id="thUser">Username</th>
-                                            <th scope="col" class="align-middle" data-sortable="false">More Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="adminTable">

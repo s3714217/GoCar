@@ -26,87 +26,20 @@
     </script>
 
     <!--Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-storage.js"></script>
 
     <!--Self-defined JS-->
     <script src="../js/config.js"></script>
     <script src="../js/global.js"></script>
+    <script src="../js/add_parking.js"></script>
 
     <script>
         $(function () {
             $("#footer").load("footer.html");
         });
-    </script>
-
-    <script>
-        function parkingAdd() {
-            var address = document.getElementById("parkingAddress").value;
-            var latitude = document.getElementById("parkingLatitude").value;
-            var longitude = document.getElementById("parkingLongitude").value;
-
-            var latitudeNum = parseFloat(latitude);
-            var longitudeNum = parseFloat(longitude);
-
-            // Validation for adding new parking
-            if (latitudeNum < -90 || latitudeNum > 90) {
-                document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
-                return
-            }
-
-            if (longitudeNum < -180 || longitudeNum > 180) {
-                document.getElementById("longitudeNumError").innerHTML =
-                    "Please enter a longitude between -180 and 180";
-                return
-            }
-
-            if (address === "") {
-                document.getElementById('parkingAddressEmpty').innerHTML = "Please enter an address";
-                return
-            }
-
-            if (latitude === "") {
-                document.getElementById('parkingLatitudeEmpty').innerHTML = "Please enter a latitude";
-                return
-            }
-
-            if (longitude === "") {
-                document.getElementById('parkingLongitudeEmpty').innerHTML = "Please enter a longitude";
-                return
-            }
-
-            var geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
-
-            // Checks onto Cloud Firestore (database), validate if parking details exist
-            db.collection("parking_location").doc().get()
-                .then(function (doc) {
-                    if (doc.exists) {
-                        document.getElementById("addFailure").innerHTML = "Parking location already exists";
-                    } else {
-                        db.collection("parking_location").doc().set({
-                                Address: address,
-                                Location: geo,
-                                Number_cars: 0
-                            })
-                            .then(function () {
-                                document.getElementById("addSuccess").innerHTML =
-                                    "Parking location was added successfully";
-                                window.location.replace("parking.html");
-                            })
-                    }
-                })
-                .catch(function (error) {
-                    console.log("Error", error);
-                });
-        }
-
-        function main() {
-            parkingAdd();
-        }
-
-        function parkingCancel() {
-            window.location.replace("parking.html");
-        }
     </script>
 </head>
 
@@ -199,7 +132,7 @@
 
                                         <input type="number" class="form-control" id="parkingLatitude"
                                             name="parkingLatitude" min="-90" max="90" step="0.000001"
-                                            placeholder="Enter a Latitude">
+                                            placeholder="Enter a Latitude Between -90 to 90">
 
                                         <!--Error Message for Wrong Parking Latitude-->
                                         <p id="latitudeNumError" class="text-danger" role="alert"></p>
@@ -213,7 +146,7 @@
 
                                         <input type="number" class="form-control" id="parkingLongitude"
                                             name="parkingLongitude" min="-180" max="180" step="0.000001"
-                                            placeholder="Enter a Longitude">
+                                            placeholder="Enter a Longitude Between -180 to 180">
 
                                         <!--Error Message for Wrong Parking Longitude-->
                                         <p id="longitudeNumError" class="text-danger" role="alert"></p>
