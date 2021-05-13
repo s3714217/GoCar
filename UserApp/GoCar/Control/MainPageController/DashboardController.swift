@@ -460,7 +460,7 @@ class DashboardController: UIViewController, CLLocationManagerDelegate, UISearch
     func displayMarker() {
         self.mapKit.removeAnnotations(self.mapKit.annotations)
         for l in self.displayable_location{
-            if l.car_count > 0{
+            if l.cars.count > 0{
                 let annotation = MKPointAnnotation()
                 annotation.title = l.address
                 annotation.subtitle = "\(String(Int(CLLocation(latitude: self.current_user_lat, longitude: self.current_user_long).distance(from: CLLocation(latitude: l.lat, longitude: l.long)))))m away"
