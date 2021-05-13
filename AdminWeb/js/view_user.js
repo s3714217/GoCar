@@ -1,5 +1,5 @@
 function billingDetails() {
-    db.collection("users/" + localStorage.getItem("docID") + "/card").get().then((snapshot) => {
+    db.collection("users/" + sessionStorage.getItem("docID") + "/card").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             renderBillingDetails(doc);
         })
@@ -18,7 +18,7 @@ function renderBillingDetails(doc) {
 }
 
 function bookingHistory() {
-    db.collection("users/" + localStorage.getItem("docID") + "/history").get().then((snapshot) => {
+    db.collection("users/" + sessionStorage.getItem("docID") + "/history").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             renderHistoryDetails(doc);
         })
@@ -80,23 +80,23 @@ function renderHistoryDetails(doc) {
 
 function sendUserDetails() {
     var name = document.getElementById("name");
-    name.innerHTML = localStorage.getItem("fullName");
-    name.setAttribute("value", localStorage.getItem("docID"));
+    name.innerHTML = sessionStorage.getItem("fullName");
+    name.setAttribute("value", sessionStorage.getItem("docID"));
 
     var phone = document.getElementById("phone");
-    phone.innerHTML = localStorage.getItem("phoneNumber");
+    phone.innerHTML = sessionStorage.getItem("phoneNumber");
 
     var userEmail = document.getElementById("email");
-    userEmail.innerHTML = localStorage.getItem("contactEmail");
+    userEmail.innerHTML = sessionStorage.getItem("contactEmail");
 
     var verify = document.getElementById("verify");
-    verify.innerHTML = localStorage.getItem("verified");
+    verify.innerHTML = sessionStorage.getItem("verified");
     verify.className = "font-weight-bold text-success";
 
     // Setting private URL for driver's license picture
     var storageRef = storage.ref();
     var verifyRef = storageRef.child("verification");
-    var userRef = verifyRef.child(localStorage.getItem("docID"));
+    var userRef = verifyRef.child(sessionStorage.getItem("docID"));
     var imagesRef = userRef.child("licence");
     imagesRef.getDownloadURL()
         .then((url) => {
@@ -146,10 +146,10 @@ function checkVerify() {
 }
 
 function billing() {
-    db.collection("users").doc(localStorage.getItem("docID")).get()
+    db.collection("users").doc(sessionStorage.getItem("docID")).get()
         .then(doc => {
             if (doc.exists) {
-                db.collection("users").doc(localStorage.getItem("docID")).collection("card").get()
+                db.collection("users").doc(sessionStorage.getItem("docID")).collection("card").get()
                     .then(sub => {
                         if (sub.docs.length > 0) {
                             billingDetails();
@@ -165,10 +165,10 @@ function billing() {
 }
 
 function booking() {
-    db.collection("users").doc(localStorage.getItem("docID")).get()
+    db.collection("users").doc(sessionStorage.getItem("docID")).get()
         .then(doc => {
             if (doc.exists) {
-                db.collection("users").doc(localStorage.getItem("docID")).collection("history").get()
+                db.collection("users").doc(sessionStorage.getItem("docID")).collection("history").get()
                     .then(sub => {
                         if (sub.docs.length > 0) {
                             bookingHistory();
@@ -187,7 +187,7 @@ function displayDetails() {
 }
 
 function userBack() {
-    if (localStorage.getItem("username") === "admin_master@gocar.com") {
+    if (sessionStorage.getItem("username") === "admin_master@gocar.com") {
         window.location.replace("user_central_master.html");
     } else {
         window.location.replace("user_central.html");

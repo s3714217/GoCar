@@ -48,7 +48,7 @@ function renderAdmins(doc) {
     var rID = document.getElementById(autoRemoveID);
 
     changePassword.addEventListener("click", function () {
-        localStorage.setItem("adminName", doc.id);
+        sessionStorage.setItem("adminName", doc.id);
         window.location.replace("change_password_master.html")
     });
 

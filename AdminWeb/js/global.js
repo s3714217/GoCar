@@ -2,7 +2,7 @@
 
 // Checks if admin is logged in
 function checkLogin(){
-	if (localStorage.getItem("username") === null || localStorage.getItem("username") === "undefined"){
+	if (sessionStorage.getItem("username") === null || sessionStorage.getItem("username") === "undefined"){
 		document.getElementById("userNullLogin").innerHTML = "Please enter a username and password";
 		window.location.replace("index.html");
 	}
@@ -10,7 +10,7 @@ function checkLogin(){
 
 // Checks if master admin is logged in
 function checkLoginMaster(){
-	if (localStorage.getItem("username") != "admin_master@gocar.com"){
+	if (sessionStorage.getItem("username") != "admin_master@gocar.com"){
 		document.getElementById("userAccessDenied").innerHTML = "Access is denied";
 		window.location.replace("index.html");
 	}
@@ -48,7 +48,7 @@ function parkingPage() {
 
 // Redirect to respective admin page according to admin role
 function adminPage() {
-	if (localStorage.getItem("username") == "admin_master@gocar.com") {
+	if (sessionStorage.getItem("username") == "admin_master@gocar.com") {
 		window.location.replace("admin_master.html");
 	} else {
 		window.location.replace("admin.html");
@@ -57,7 +57,7 @@ function adminPage() {
 
 // Redirect to respective user page according to admin role
 function userPage() {
-	if (localStorage.getItem("username") === "admin_master@gocar.com") {
+	if (sessionStorage.getItem("username") === "admin_master@gocar.com") {
 		window.location.replace("user_central_master.html");
 	} else {
 		window.location.replace("user_central.html");
@@ -73,6 +73,6 @@ function logOut() {
 		document.getElementById("logoutFailure").innerHTML = "Unable to logout";
 	  });
 	  
-	localStorage.clear();
+	sessionStorage.clear();
 	window.location.replace("index.html");
 }
