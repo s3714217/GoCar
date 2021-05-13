@@ -26,7 +26,7 @@ function parking() {
 
             listParkings1.appendChild(option1);
         })
-        select("updateLocation", localStorage.getItem("carLocation"));
+        select("updateLocation", sessionStorage.getItem("carLocation"));
         $.getOldSelected();
     })
 }
@@ -51,24 +51,24 @@ function select(selectId, optionValToSelect) {
 
 function sendCarDetails() {
     var rego = document.getElementById("rego");
-    rego.innerHTML = localStorage.getItem("carID");
-    rego.setAttribute("value", localStorage.getItem("carID"));
+    rego.innerHTML = sessionStorage.getItem("carID");
+    rego.setAttribute("value", sessionStorage.getItem("carID"));
 
     var type = document.getElementById("type");
-    type.innerHTML = localStorage.getItem("carType");
-    type.setAttribute("value", localStorage.getItem("carType"));
+    type.innerHTML = sessionStorage.getItem("carType");
+    type.setAttribute("value", sessionStorage.getItem("carType"));
 
     var model = document.getElementById("model");
-    model.innerHTML = localStorage.getItem("carModel");
-    model.setAttribute("value", localStorage.getItem("carModel"));
+    model.innerHTML = sessionStorage.getItem("carModel");
+    model.setAttribute("value", sessionStorage.getItem("carModel"));
 
-    select("updateCondition", localStorage.getItem("con"));
+    select("updateCondition", sessionStorage.getItem("con"));
 
-    select("updateStatus", localStorage.getItem("carStatus"));
+    select("updateStatus", sessionStorage.getItem("carStatus"));
 
     var rate = document.getElementById("updateRate");
-    rate.innerHTML = localStorage.getItem("carRate");
-    rate.setAttribute("value", localStorage.getItem("carRate"));
+    rate.innerHTML = sessionStorage.getItem("carRate");
+    rate.setAttribute("value", sessionStorage.getItem("carRate"));
 }
 
 function updateCar() {
@@ -98,7 +98,7 @@ function updateCar() {
     }
 
     // Checks onto Cloud Firestore (database), validates the edited car details
-    db.collection("cars").doc(localStorage.getItem("carID")).update({
+    db.collection("cars").doc(sessionStorage.getItem("carID")).update({
             parking_location: carLocation,
             condition: carCondition,
             leased: isTrue,

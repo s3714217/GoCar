@@ -1,6 +1,6 @@
 function user() {
     var user = document.getElementById("user");
-    user.innerHTML = localStorage.getItem("username");
+    user.innerHTML = sessionStorage.getItem("username");
 }
 
 function change() {
@@ -39,14 +39,14 @@ function change() {
     }
 
     // Checks onto Cloud Firestore (database), validate if old password entered is the same
-    db.collection("admins").doc(localStorage.getItem("username")).get()
+    db.collection("admins").doc(sessionStorage.getItem("username")).get()
         .then(function (doc) {
             var getPassword = doc.data().password;
             if (oldPass != getPassword) {
                 document.getElementById("oldPassError").innerHTML = "Old password entered is incorrect";
                 return;
             } else {
-                db.collection("admins").doc(localStorage.getItem("username")).set({
+                db.collection("admins").doc(sessionStorage.getItem("username")).set({
                         password: newPass
                     })
                     .then(function () {

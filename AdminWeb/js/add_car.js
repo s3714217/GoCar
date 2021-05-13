@@ -27,7 +27,6 @@ function carAdd() {
     var txtModel = document.getElementById("carModel").value;
     var optCondtion = document.getElementById("carCondition").value;
     var optLocation = document.getElementById("parkingLocation").value;
-    var optLocationID = document.getElementById("parkingLocation");
     var optType = document.getElementById("carType").value;
     var txtRate = document.getElementById("carRate").value;
     var txtCarID = document.getElementById("carID").value;
@@ -37,30 +36,33 @@ function carAdd() {
     // Validation for adding new car
     if (rateNum < 100 || rateNum > 500) {
         document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
-        return
+        return;
     }
 
-    if (txtCarID < 0000000 || txtCarID > 9999999) {
+    // Regular expression for validating Car ID
+    carIdRE = /^\d{7}$/;
+    if (txtCarID.match(carIdRE)){
+    } else {
         document.getElementById('carIDError').innerHTML =
             "Please enter a car registration between 0000000 and 9999999";
-        return
+        return;
     }
 
     var carleased = false;
 
     if (txtCarID === "") {
         document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
-        return
+        return;
     }
 
     if (txtModel === "") {
         document.getElementById('carModelEmpty').innerHTML = "Please enter a car model";
-        return
+        return;
     }
 
     if (txtRate === "") {
         document.getElementById('carRateEmpty').innerHTML = "Please enter a car rate";
-        return
+        return;
     }
 
     // Checks onto Cloud Firestore (database), validate if car details exist

@@ -92,13 +92,13 @@ function renderCars(doc) {
     var eID = document.getElementById(autoEditID);
 
     editCar.addEventListener("click", function () {
-        localStorage.setItem("carID", eID.value);
-        localStorage.setItem("carType", vehicle_type.textContent);
-        localStorage.setItem("carModel", model.textContent);
-        localStorage.setItem("carLocation", parking_location.textContent);
-        localStorage.setItem("con", condition.textContent);
-        localStorage.setItem("carStatus", leased.textContent);
-        localStorage.setItem("carRate", rate.textContent);
+        sessionStorage.setItem("carID", eID.value);
+        sessionStorage.setItem("carType", vehicle_type.textContent);
+        sessionStorage.setItem("carModel", model.textContent);
+        sessionStorage.setItem("carLocation", parking_location.textContent);
+        sessionStorage.setItem("con", condition.textContent);
+        sessionStorage.setItem("carStatus", leased.textContent);
+        sessionStorage.setItem("carRate", rate.textContent);
         window.location.replace("edit_car.html");
     });
 

@@ -14,7 +14,7 @@ function getValues() {
     var countUserDIV = document.getElementById("countUsers");
     var countCarDiv = document.getElementById("countCars");
     var countParkingsDiv = document.getElementById("countParkings");
-    userDiv.innerHTML = "Welcome " + localStorage.getItem("username");
+    userDiv.innerHTML = "Welcome " + sessionStorage.getItem("username");
     db.collection("users").get().then(snap => {
         var size = snap.size; // will return the collection size
         countUserDIV.innerHTML = size;
@@ -80,13 +80,13 @@ function renderServiceList(doc) {
         carService.className = "btn btn-link";
 
         carService.addEventListener("click", function () {
-            localStorage.setItem("carID", carID);
-            localStorage.setItem("carType", doc.data().vehicle_type);
-            localStorage.setItem("carModel", doc.data().model);
-            localStorage.setItem("carLocation", doc.data().parking_location);
-            localStorage.setItem("con", condition);
-            localStorage.setItem("carStatus", doc.data().leased);
-            localStorage.setItem("carRate", doc.data().rate);
+            sessionStorage.setItem("carID", carID);
+            sessionStorage.setItem("carType", doc.data().vehicle_type);
+            sessionStorage.setItem("carModel", doc.data().model);
+            sessionStorage.setItem("carLocation", doc.data().parking_location);
+            sessionStorage.setItem("con", condition);
+            sessionStorage.setItem("carStatus", doc.data().leased);
+            sessionStorage.setItem("carRate", doc.data().rate);
             window.location.replace("edit_car.html");
         });
 
@@ -164,7 +164,7 @@ function renderTransactions(doc) {
 
 // Arrow button that redirects to user central page
 function moreArrow() {
-    if (localStorage.getItem("username") === "admin_master@gocar.com") {
+    if (sessionStorage.getItem("username") === "admin_master@gocar.com") {
         window.location.replace("user_central_master.html");
     } else {
         window.location.replace("user_central.html");

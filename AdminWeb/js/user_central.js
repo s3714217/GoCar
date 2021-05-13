@@ -85,18 +85,18 @@ function renderUsers(doc) {
 
     // Sets all of the required field inputs for the View User page
     viewUser.addEventListener("click", function () {
-        localStorage.setItem("fullName", fullName.textContent);
-        localStorage.setItem("phoneNumber", phoneNumber.textContent);
-        localStorage.setItem("verified", verified.textContent);
-        localStorage.setItem("contactEmail", contactEmail.textContent);
-        localStorage.setItem("docID", docID);
+        sessionStorage.setItem("fullName", fullName.textContent);
+        sessionStorage.setItem("phoneNumber", phoneNumber.textContent);
+        sessionStorage.setItem("verified", verified.textContent);
+        sessionStorage.setItem("contactEmail", contactEmail.textContent);
+        sessionStorage.setItem("docID", docID);
         window.location.replace("view_user.html");
     });
 
     // Validates if it can verify the selected user
     verifyUser.addEventListener("click", function () {
-        localStorage.setItem("name", fullName.textContent);
-        localStorage.setItem("email", contactEmail.textContent);
+        sessionStorage.setItem("name", fullName.textContent);
+        sessionStorage.setItem("email", contactEmail.textContent);
         db.collection("users").doc(vrID.value).update({
                 verified: "verified",
             })
@@ -114,10 +114,10 @@ function renderUsers(doc) {
 function sendEmail() {
     // send email to user that account is verified
     db.collection("mail").doc().set({
-            to: localStorage.getItem("email"),
+            to: sessionStorage.getItem("email"),
             message: {
                 subject: "GoCar - Account Verification",
-                text: "Hi " + localStorage.getItem("name") +
+                text: "Hi " + sessionStorage.getItem("name") +
                     ", this is an email confirmation that your account has been verified by GoCar."
             }
         })

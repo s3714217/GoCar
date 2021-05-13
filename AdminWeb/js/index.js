@@ -22,7 +22,7 @@ function signIn() {
     }
 
     var username = txtUsername;
-    localStorage.setItem("username", username);
+    sessionStorage.setItem("username", username);
     var password = txtPassword;
 
     // Checks onto Cloud Firestore (database) and validate the login credentials
@@ -46,5 +46,5 @@ function signIn() {
 
 function resetUsername() {
     var username;
-    localStorage.setItem("username", username);
+    sessionStorage.setItem("username", username);
 }

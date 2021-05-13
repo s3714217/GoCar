@@ -1,6 +1,6 @@
 function user() {
     var user = document.getElementById("user");
-    user.innerHTML = localStorage.getItem("adminName");
+    user.innerHTML = sessionStorage.getItem("adminName");
 }
 
 function change() {
@@ -38,7 +38,7 @@ function change() {
     }
 
     // Checks onto Cloud Firestore (database) and validate the master admin credentials
-    db.collection("admins").doc(localStorage.getItem("adminName")).update({
+    db.collection("admins").doc(sessionStorage.getItem("adminName")).update({
             password: newPass
         })
         .then(function () {
