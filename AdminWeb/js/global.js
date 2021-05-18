@@ -22,12 +22,10 @@ function authentication(){
 			  .then((userCredential) => {
 				// Signed in
 				var user = userCredential.user;
-				console.log("Signed In");
 			  })
 			  .catch((error) => {
 				var errorCode = error.code;
 				var errorMessage = error.message;
-				console.log(errorCode + " " + errorMessage);
 			  });
 }
 
@@ -48,7 +46,7 @@ function parkingPage() {
 
 // Redirect to respective admin page according to admin role
 function adminPage() {
-	if (sessionStorage.getItem("username") == "admin_master@gocar.com") {
+	if (sessionStorage.getItem("username") === "admin_master@gocar.com") {
 		window.location.replace("admin_master.html");
 	} else {
 		window.location.replace("admin.html");

@@ -2,35 +2,34 @@ function parkingAdd() {
     var address = document.getElementById("parkingAddress").value;
     var latitude = document.getElementById("parkingLatitude").value;
     var longitude = document.getElementById("parkingLongitude").value;
-
     var latitudeNum = parseFloat(latitude);
     var longitudeNum = parseFloat(longitude);
 
     // Validation for adding new parking
     if (latitudeNum < -90 || latitudeNum > 90) {
         document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
-        return
+        return;
     }
 
     if (longitudeNum < -180 || longitudeNum > 180) {
         document.getElementById("longitudeNumError").innerHTML =
             "Please enter a longitude between -180 and 180";
-        return
+        return;
     }
 
     if (address === "") {
         document.getElementById('parkingAddressEmpty').innerHTML = "Please enter an address";
-        return
+        return;
     }
 
     if (latitude === "") {
         document.getElementById('parkingLatitudeEmpty').innerHTML = "Please enter a latitude";
-        return
+        return;
     }
 
     if (longitude === "") {
         document.getElementById('parkingLongitudeEmpty').innerHTML = "Please enter a longitude";
-        return
+        return;
     }
 
     var geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);

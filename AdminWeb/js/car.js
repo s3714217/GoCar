@@ -11,7 +11,6 @@ $(document).ready(function () {
 function renderCars(doc) {
     // Renders all of the fields onto the table
     var listCars = document.querySelector("#carTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
@@ -23,16 +22,20 @@ function renderCars(doc) {
     // Dynamically create the elements onto the table
     var carRego = document.createElement("span");
     var model = document.createElement("span");
-    var parking_location = document.createElement("span");
-    var vehicle_type = document.createElement("span");
+    var parkingLocation = document.createElement("span");
+    var vehicleType = document.createElement("span");
     var leased = document.createElement("span");
     var editCar = document.createElement("button");
     var removeCar = document.createElement("button");
+	
+	// Random IDs generated for buttons
+	var autoEditId = Math.floor(Math.random() * 300);
+    var autoRemoveId = Math.floor(Math.random() * 300);
 
     // Provide bootstrap classes to change the layout of button
     editCar.className = "btn btn-primary";
     removeCar.className = "btn btn-secondary";
-    vehicle_type.className = "capital";
+    vehicleType.className = "capital";
 
     // Condition and rate used for editing car
     // Won't be shown on table
@@ -45,16 +48,13 @@ function renderCars(doc) {
     // Dynamically add text content to the fields on table
     carRego.textContent = doc.id;
     model.textContent = doc.data().model;
-    parking_location.textContent = doc.data().parking_location;
-    vehicle_type.textContent = doc.data().vehicle_type;
+    parkingLocation.textContent = doc.data().parking_location;
+    vehicleType.textContent = doc.data().vehicle_type;
     leased.textContent = doc.data().leased;
 
-    var autoEditID = Math.floor(Math.random() * 300);
-    var autoRemoveID = Math.floor(Math.random() * 300);
-
     // Dynamically set attribute of id and value to the buttons
-    editCar.setAttribute("id", autoEditID);
-    removeCar.setAttribute("id", autoRemoveID);
+    editCar.setAttribute("id", autoEditId);
+    removeCar.setAttribute("id", autoRemoveId);
 
     editCar.setAttribute("value", doc.id);
     removeCar.setAttribute("value", doc.id);
@@ -73,8 +73,8 @@ function renderCars(doc) {
 
     td1.appendChild(carRego);
     td2.appendChild(model);
-    td3.appendChild(parking_location);
-    td4.appendChild(vehicle_type);
+    td3.appendChild(parkingLocation);
+    td4.appendChild(vehicleType);
     td5.appendChild(leased);
     td6.appendChild(editCar);
     td6.appendChild(removeCar);
@@ -88,14 +88,14 @@ function renderCars(doc) {
 
     listCars.appendChild(tr);
 
-    var rID = document.getElementById(autoRemoveID);
-    var eID = document.getElementById(autoEditID);
+    var rId = document.getElementById(autoRemoveId);
+    var eId = document.getElementById(autoEditId);
 
     editCar.addEventListener("click", function () {
-        sessionStorage.setItem("carID", eID.value);
-        sessionStorage.setItem("carType", vehicle_type.textContent);
+        sessionStorage.setItem("carID", eId.value);
+        sessionStorage.setItem("carType", vehicleType.textContent);
         sessionStorage.setItem("carModel", model.textContent);
-        sessionStorage.setItem("carLocation", parking_location.textContent);
+        sessionStorage.setItem("carLocation", parkingLocation.textContent);
         sessionStorage.setItem("con", condition.textContent);
         sessionStorage.setItem("carStatus", leased.textContent);
         sessionStorage.setItem("carRate", rate.textContent);
@@ -104,7 +104,7 @@ function renderCars(doc) {
 
     // Validate if it can remove the selected car
     removeCar.addEventListener("click", function () {
-        db.collection("cars").doc(rID.value).delete()
+        db.collection("cars").doc(rId.value).delete()
             .then(function () {
                 document.getElementById("removeSuccess").innerHTML = "Car was successfully removed";
                 document.location.reload(true);

@@ -1,36 +1,38 @@
 function signIn() {
     var txtUsername = document.getElementById("username").value;
     var txtPassword = document.getElementById("password").value;
-
+	var emailRe = /^.+@gocar\.com$/;
+	var username = "";
+	var password = "";
+	
     // Validation for login credentials
     if (txtUsername === "") {
         document.getElementById('usernameEmpty').innerHTML = "Please enter a username";
-        return
+        return;
     }
 
     if (txtPassword === "") {
         document.getElementById('passwordEmpty').innerHTML = "Please enter a password";
-        return
+        return;
     }
 
-    var emailRE = /^.+@gocar\.com$/;
-    if (txtUsername.match(emailRE)) {
+    if (txtUsername.match(emailRe)) {
 
     } else {
         document.getElementById('usernameInvalid').innerHTML = "Please enter a valid username";
-        return
+        return;
     }
 
-    var username = txtUsername;
+    username = txtUsername;
     sessionStorage.setItem("username", username);
-    var password = txtPassword;
+    password = txtPassword;
 
     // Checks onto Cloud Firestore (database) and validate the login credentials
     db.collection("admins").doc(username).get()
         .then(function (doc) {
             if (doc.exists) {
                 var getPassword = doc.data().password;
-                if (password == getPassword) {
+                if (password === getPassword) {
                     window.location.replace("dashboard.html");
                 } else {
                     document.getElementById("passwordError").innerHTML = "Please enter a valid password";

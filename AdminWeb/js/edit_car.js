@@ -1,13 +1,14 @@
+var oldSelectId;
+var newSelectId;
+
 function main() {
     updateCar();
     updateParking1(); // increment no of cars
     updateParking2(); // decrement no of cars
 }
 
-var oldSelectID;
-
 $.getOldSelected = function () {
-    oldSelectID = $('#updateLocation :selected').attr('id');
+    oldSelectId = $('#updateLocation :selected').attr('id');
 }
 
 function parking() {
@@ -15,15 +16,12 @@ function parking() {
     db.collection("parking_location").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             var listParkings1 = document.querySelector("#updateLocation");
-
             var option1 = document.createElement("option");
             var address1 = doc.data().Address;
 
             option1.setAttribute("id", doc.id);
             option1.setAttribute("value", address1);
-
             option1.textContent = address1;
-
             listParkings1.appendChild(option1);
         })
         select("updateLocation", sessionStorage.getItem("carLocation"));
@@ -63,7 +61,6 @@ function sendCarDetails() {
     model.setAttribute("value", sessionStorage.getItem("carModel"));
 
     select("updateCondition", sessionStorage.getItem("con"));
-
     select("updateStatus", sessionStorage.getItem("carStatus"));
 
     var rate = document.getElementById("updateRate");
@@ -76,25 +73,24 @@ function updateCar() {
     var carCondition = document.getElementById("updateCondition").value;
     var carStatus = document.getElementById("updateStatus").value;
     var carRate = document.getElementById("updateRate").value;
-
     var rateNum = parseInt(carRate);
-
+	var isTrue = false;
+	
     // Validates for editing existing car
     if (rateNum < 100 || rateNum > 500) {
         document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
-        return
+        return;
     }
 
-    var isTrue;
     if (carStatus === "Available") {
         isTrue = false;
-    } else if (carStatus == "Leased") {
+    } else if (carStatus === "Leased") {
         isTrue = true;
     }
 
     if (carRate === "") {
         document.getElementById('carRateEmpty').innerHTML = "Please enter a car rate";
-        return
+        return;
     }
 
     // Checks onto Cloud Firestore (database), validates the edited car details
@@ -113,20 +109,18 @@ function updateCar() {
         });
 }
 
-var newSelectID;
-
 $.getNewSelected = function () {
-    newSelectID = $('#updateLocation :selected').attr('id');
+    newSelectId = $('#updateLocation :selected').attr('id');
 }
 
 function updateParking1() {
     $.getNewSelected();
     var increment = firebase.firestore.FieldValue.increment(1);
-    db.collection("parking_location").doc(newSelectID).update({
+    db.collection("parking_location").doc(newSelectId).update({
             Number_cars: increment
         })
         .then(function () {
-            console.log(newSelectID);
+			
         })
         .catch(function (error) {
             document.getElementById("updateParking1Error").innerHTML = "Error in updating document";
@@ -135,11 +129,11 @@ function updateParking1() {
 
 function updateParking2() {
     var decrement = firebase.firestore.FieldValue.increment(-1);
-    db.collection("parking_location").doc(oldSelectID).update({
+    db.collection("parking_location").doc(oldSelectId).update({
             Number_cars: decrement
         })
         .then(function () {
-            console.log(oldSelectID);
+            
         })
         .catch(function (error) {
             document.getElementById("updateParking2Error").innerHTML = "Error in updating document";

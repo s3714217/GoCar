@@ -11,25 +11,30 @@ function change() {
     // Validation for changing password details
     if (oldPass === "") {
         document.getElementById("oldPassEmpty").innerHTML = "Please enter your old password";
+		return;
     }
 
     if (newPass === "") {
         document.getElementById("newPassEmpty").innerHTML = "Please enter a new password";
+		return;
     }
 
     if (confirmPass === "") {
         document.getElementById("confirmPassEmpty").innerHTML =
             "Please confirm the new password";
+			return;
     }
 
     if (newPass.length < 8) {
         document.getElementById("newPassLengthError").innerHTML =
             "Password must be minimum of 8 characters long";
+			return;
     }
 
     if (confirmPass.length < 8) {
         document.getElementById("confirmPasswordLengthError").innerHTML =
             "Confirm password must be a minimum of 8 characters long";
+			return;
     }
 
     if (newPass != confirmPass) {

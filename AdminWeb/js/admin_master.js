@@ -11,26 +11,23 @@ $(document).ready(function () {
 // Renders the list of admins onto the table
 function renderAdmins(doc) {
     var listAdmins = document.querySelector("#adminTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
-
     var username = document.createElement("span");
     var changePassword = document.createElement("button");
     var removeAdmin = document.createElement("button");
-
+	var autoEditId = Math.floor(Math.random() * 300);
+    var autoRemoveId = Math.floor(Math.random() * 300);
+	
     username.textContent = doc.id;
 
-    var autoEditID = Math.floor(Math.random() * 300);
-    var autoRemoveID = Math.floor(Math.random() * 300);
-
-    changePassword.setAttribute("id", autoEditID);
+    changePassword.setAttribute("id", autoEditId);
     changePassword.setAttribute("value", doc.id);
     changePassword.textContent = "Edit";
     changePassword.className = "btn btn-primary";
 
-    removeAdmin.setAttribute("id", autoRemoveID);
+    removeAdmin.setAttribute("id", autoRemoveId);
     removeAdmin.setAttribute("value", doc.id);
     removeAdmin.textContent = "Remove";
     removeAdmin.className = "btn btn-secondary";
@@ -44,8 +41,7 @@ function renderAdmins(doc) {
 
     listAdmins.appendChild(tr);
 
-    var eID = document.getElementById(autoEditID);
-    var rID = document.getElementById(autoRemoveID);
+    var rId = document.getElementById(autoRemoveId);
 
     changePassword.addEventListener("click", function () {
         sessionStorage.setItem("adminName", doc.id);
@@ -54,14 +50,14 @@ function renderAdmins(doc) {
 
     // Validates if it can remove the admin account
     removeAdmin.addEventListener("click", function () {
-        db.collection("admins").doc(rID.value).get()
+        db.collection("admins").doc(rId.value).get()
             .then(function (doc) {
-                if (rID.value === "admin_master@gocar.com") {
+                if (rId.value === "admin_master@gocar.com") {
                     document.getElementById("removeAdminError").innerHTML =
                         "Unable to delete master admin";
                     return;
                 } else {
-                    db.collection("admins").doc(rID.value).delete()
+                    db.collection("admins").doc(rId.value).delete()
                         .then(function () {
                             document.getElementById("removeAdminSuccess").innerHTML =
                                 "Admin was successfully removed";

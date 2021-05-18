@@ -10,19 +10,16 @@ $(document).ready(function () {
 
 function renderUsers(doc) {
     var listUsers = document.querySelector("#userTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
-
-    var userID = document.createElement("span");
+    var userId = document.createElement("span");
     var fullName = document.createElement("span");
     var verified = document.createElement("span");
     var phoneNumber = document.createElement("span");
     var contactEmail = document.createElement("span");
-
     var verifyUser = document.createElement("button");
     var viewUser = document.createElement("button");
 
@@ -34,16 +31,16 @@ function renderUsers(doc) {
     phoneNumber.textContent = doc.data().phoneNumber;
     contactEmail.textContent = doc.data().contactEmail;
 
-    var uID = doc.id;
-    var userIDString = uID.toString();
-    var userIDSub = userIDString.substring(0, 4);
-    userID.textContent = userIDSub + "...";
+    var uId = doc.id;
+    var userIdString = uId.toString();
+    var userIdSub = userIdString.substring(0, 4);
+    userId.textContent = userIdSub + "...";
 
-    var autoVerifyID = Math.floor(Math.random() * 300);
-    var autoViewID = Math.floor(Math.random() * 300);
+    var autoVerifyId = Math.floor(Math.random() * 300);
+    var autoViewId = Math.floor(Math.random() * 300);
 
-    verifyUser.setAttribute("id", autoVerifyID);
-    viewUser.setAttribute("id", autoViewID);
+    verifyUser.setAttribute("id", autoVerifyId);
+    viewUser.setAttribute("id", autoViewId);
 
     verifyUser.setAttribute("value", doc.id);
     viewUser.setAttribute("value", doc.id);
@@ -66,7 +63,7 @@ function renderUsers(doc) {
         verified.className = "text-warning";
     }
 
-    td1.appendChild(userID);
+    td1.appendChild(userId);
     td2.appendChild(fullName);
     td3.appendChild(verified);
     td4.appendChild(verifyUser);
@@ -79,9 +76,9 @@ function renderUsers(doc) {
 
     listUsers.appendChild(tr);
 
-    var docID = doc.id;
-    var vwID = document.getElementById(autoViewID);
-    var vrID = document.getElementById(autoVerifyID);
+    var docId = doc.id;
+    var vwId = document.getElementById(autoViewId);
+    var vrId = document.getElementById(autoVerifyId);
 
     // Sets all of the required field inputs for the View User page
     viewUser.addEventListener("click", function () {
@@ -89,7 +86,7 @@ function renderUsers(doc) {
         sessionStorage.setItem("phoneNumber", phoneNumber.textContent);
         sessionStorage.setItem("verified", verified.textContent);
         sessionStorage.setItem("contactEmail", contactEmail.textContent);
-        sessionStorage.setItem("docID", docID);
+        sessionStorage.setItem("docID", docId);
         window.location.replace("view_user.html");
     });
 
@@ -97,7 +94,7 @@ function renderUsers(doc) {
     verifyUser.addEventListener("click", function () {
         sessionStorage.setItem("name", fullName.textContent);
         sessionStorage.setItem("email", contactEmail.textContent);
-        db.collection("users").doc(vrID.value).update({
+        db.collection("users").doc(vrId.value).update({
                 verified: "verified",
             })
             .then(function () {
