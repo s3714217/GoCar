@@ -1,29 +1,29 @@
 function adminAdd() {
     var txtUsernameSU = document.getElementById("adminUsername").value;
     var txtPasswordSU = document.getElementById("adminPassword").value;
-
+	var usernameRe = /^.+@gocar\.com$/;
+	
     // Validation for adding new admin
     if (txtUsernameSU === "") {
         document.getElementById('adminUsernameEmpty').innerHTML = "Please enter a username";
-        return
+        return;
     }
 
     if (txtPasswordSU === "") {
         document.getElementById('adminPasswordEmpty').innerHTML = "Please enter a password";
-        return
+        return;
     }
 
     if (txtPasswordSU.length < 8) {
         document.getElementById("passwordLengthError").innerHTML = "Password must be minimum 8 characters long";
-        return
+        return;
     }
 
-    var usernameRE = /^.+@gocar\.com$/;
-    if (txtUsernameSU.match(usernameRE)) {
+    if (txtUsernameSU.match(usernameRe)) {
 
     } else {
         document.getElementById("adminUsernameInvalid").innerHTML = "Please enter a valid email address";
-        return
+        return;
     }
 
     // Checks onto Cloud Firestore (database), validate if admin credentials exist

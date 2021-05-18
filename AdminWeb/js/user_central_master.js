@@ -10,19 +10,16 @@ $(document).ready(function () {
 
 function renderUsers(doc) {
     var listUsers = document.querySelector("#userTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
-
-    var userID = document.createElement("span");
+    var userId = document.createElement("span");
     var fullName = document.createElement("span");
     var verified = document.createElement("span");
     var phoneNumber = document.createElement("span");
     var contactEmail = document.createElement("span");
-
     var verifyUser = document.createElement("button");
     var viewUser = document.createElement("button");
     var removeUser = document.createElement("button");
@@ -36,18 +33,18 @@ function renderUsers(doc) {
     phoneNumber.textContent = doc.data().phoneNumber;
     contactEmail.textContent = doc.data().contactEmail;
 
-    var uID = doc.id;
-    var userIDString = uID.toString();
-    var userIDSub = userIDString.substring(0, 4);
-    userID.textContent = userIDSub + "...";
+    var uId = doc.id;
+    var userIdString = uId.toString();
+    var userIdSub = userIdString.substring(0, 4);
+    userId.textContent = userIdSub + "...";
 
-    var autoVerifyID = Math.floor(Math.random() * 300);
-    var autoViewID = Math.floor(Math.random() * 300);
-    var autoRemoveID = Math.floor(Math.random() * 300);
+    var autoVerifyId = Math.floor(Math.random() * 300);
+    var autoViewId = Math.floor(Math.random() * 300);
+    var autoRemoveId = Math.floor(Math.random() * 300);
 
-    verifyUser.setAttribute("id", autoVerifyID);
-    viewUser.setAttribute("id", autoViewID);
-    removeUser.setAttribute("id", autoRemoveID);
+    verifyUser.setAttribute("id", autoVerifyId);
+    viewUser.setAttribute("id", autoViewId);
+    removeUser.setAttribute("id", autoRemoveId);
 
     verifyUser.setAttribute("value", doc.id);
     viewUser.setAttribute("value", doc.id);
@@ -72,7 +69,7 @@ function renderUsers(doc) {
         verified.className = "text-warning";
     }
 
-    td1.appendChild(userID)
+    td1.appendChild(userId)
     td2.appendChild(fullName);
     td3.appendChild(verified);
     td4.appendChild(verifyUser);
@@ -86,45 +83,45 @@ function renderUsers(doc) {
 
     listUsers.appendChild(tr);
 
-    var docID = doc.id;
-    var vwID = document.getElementById(autoViewID);
-    var vrID = document.getElementById(autoVerifyID);
-    var rID = document.getElementById(autoRemoveID);
+    var docId = doc.id;
+    var vwId = document.getElementById(autoViewId);
+    var vrId = document.getElementById(autoVerifyId);
+    var rId = document.getElementById(autoRemoveId);
 
     viewUser.addEventListener("click", function () {
         sessionStorage.setItem("fullName", fullName.textContent);
         sessionStorage.setItem("phoneNumber", phoneNumber.textContent);
         sessionStorage.setItem("verified", verified.textContent);
         sessionStorage.setItem("contactEmail", contactEmail.textContent);
-        sessionStorage.setItem("docID", docID);
+        sessionStorage.setItem("docID", docId);
         window.location.replace("view_user.html");
     });
 
     // Validates if it can remove the selected user
     removeUser.addEventListener("click", function () {
-        db.collection("users").doc(rID.value).get()
+        db.collection("users").doc(rId.value).get()
             .then(doc => {
                 if (doc.exists) {
-                    db.collection("users").doc(rID.value).collection("card").get()
+                    db.collection("users").doc(rId.value).collection("card").get()
                         .then(sub => {
                             if (sub.docs.length > 0) {
                                 // card sub-collection has documents
-                                db.collection("users").doc(rID.value + "/card/payment")
+                                db.collection("users").doc(rId.value + "/card/payment")
                                     .delete()
                                     .then(function () {
 
                                     })
                             }
-                            db.collection("users").doc(rID.value).collection("history")
+                            db.collection("users").doc(rId.value).collection("history")
                                 .get()
                                 .then(sub => {
                                     if (sub.docs.length > 0) {
                                         // history sub-collection has documents
-                                        db.collection("users/" + rID.value +
+                                        db.collection("users/" + rId.value +
                                             "/history").get().then((snapshot) => {
                                             snapshot.docs.forEach(doc => {
                                                 db.collection("users")
-                                                    .doc(rID.value +
+                                                    .doc(rId.value +
                                                         "/history/" + doc.id
                                                     ).delete()
                                                     .then(function () {
@@ -134,7 +131,7 @@ function renderUsers(doc) {
                                         })
                                     }
                                     // no documents in sub-collections
-                                    db.collection("users").doc(rID.value).delete()
+                                    db.collection("users").doc(rId.value).delete()
                                         .then(function () {
                                             document.getElementById("removeSuccess")
                                                 .innerHTML =
@@ -156,7 +153,7 @@ function renderUsers(doc) {
     verifyUser.addEventListener("click", function () {
         sessionStorage.setItem("name", fullName.textContent);
         sessionStorage.setItem("email", contactEmail.textContent);
-        db.collection("users").doc(vrID.value).update({
+        db.collection("users").doc(vrId.value).update({
                 verified: "verified",
             })
             .then(function () {

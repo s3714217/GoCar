@@ -11,10 +11,8 @@ $(document).ready(function () {
 // Renders the list of admins onto the table
 function renderAdmins(doc) {
     var listAdmins = document.querySelector("#adminTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
-
     var username = document.createElement("span");
 
     username.textContent = doc.id;

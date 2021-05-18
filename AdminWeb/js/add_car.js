@@ -1,3 +1,5 @@
+var selectId;
+
 function main() {
     carAdd();
     updateParking();
@@ -8,7 +10,6 @@ function parking() {
     db.collection("parking_location").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
             var listParkings1 = document.querySelector("#parkingLocation");
-
             var option1 = document.createElement("option");
             var address1 = document.createElement("span");
 
@@ -30,9 +31,10 @@ function carAdd() {
     var optType = document.getElementById("carType").value;
     var txtRate = document.getElementById("carRate").value;
     var txtCarID = document.getElementById("carID").value;
-
+	var carLeased = false;
     var rateNum = parseInt(txtRate);
-
+	var carIdRe = /^\d{7}$/;
+	
     // Validation for adding new car
     if (rateNum < 100 || rateNum > 500) {
         document.getElementById('rateNumError').innerHTML = "Please enter a rate between 100 and 500";
@@ -40,15 +42,13 @@ function carAdd() {
     }
 
     // Regular expression for validating Car ID
-    carIdRE = /^\d{7}$/;
-    if (txtCarID.match(carIdRE)){
+    if (txtCarID.match(carIdRe)){
+		
     } else {
         document.getElementById('carIDError').innerHTML =
             "Please enter a car registration between 0000000 and 9999999";
         return;
     }
-
-    var carleased = false;
 
     if (txtCarID === "") {
         document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
@@ -73,7 +73,7 @@ function carAdd() {
             } else {
                 db.collection("cars").doc(txtCarID).set({
                     condition: optCondtion,
-                    leased: carleased,
+                    leased: carLeased,
                     model: txtModel,
                     parking_location: optLocation,
                     rate: rateNum,
@@ -87,20 +87,18 @@ function carAdd() {
         });
 }
 
-var selectID;
-
 $.getSelected = function () {
-    selectID = $('#parkingLocation :selected').attr('id');
+    selectId = $('#parkingLocation :selected').attr('id');
 }
 
 function updateParking() {
     $.getSelected();
     var increment = firebase.firestore.FieldValue.increment(1);
-    db.collection("parking_location").doc(selectID).update({
+    db.collection("parking_location").doc(selectId).update({
             Number_cars: increment
         })
         .then(function () {
-            console.log(selectID);
+			
         })
         .catch(function (error) {
             document.getElementById("updateParkingError").innerHTML = "Could not update parking";

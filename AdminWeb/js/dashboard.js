@@ -11,13 +11,13 @@ $(document).ready(function () {
 // Return values for the summary of stats panel
 function getValues() {
     var userDiv = document.getElementById("user");
-    var countUserDIV = document.getElementById("countUsers");
+    var countUserDiv = document.getElementById("countUsers");
     var countCarDiv = document.getElementById("countCars");
     var countParkingsDiv = document.getElementById("countParkings");
     userDiv.innerHTML = "Welcome " + sessionStorage.getItem("username");
     db.collection("users").get().then(snap => {
         var size = snap.size; // will return the collection size
-        countUserDIV.innerHTML = size;
+        countUserDiv.innerHTML = size;
     });
     db.collection("cars").get().then(snap => {
         var size = snap.size; // will return the collection size
@@ -40,10 +40,8 @@ function verifyList() {
 
 function renderVerifyList(doc) {
     var listNotifications = document.querySelector("#verify");
-
     var li = document.createElement("li");
     var verifyStatus = document.createElement("span");
-
     var fullName = doc.data().fullName;
     var verified = doc.data().verified;
 
@@ -66,21 +64,19 @@ function carsService() {
 
 function renderServiceList(doc) {
     var listNotifications = document.querySelector("#carsService");
-
     var li = document.createElement("li");
     var carService = document.createElement("button");
-
-    var carID = doc.id;
+    var carId = doc.id;
     var condition = doc.data().condition;
 
     // Show list of cars that require service
     if (condition === "need_service") {
-        carService.textContent = carID + " needs a service";
+        carService.textContent = carId + " needs a service";
         li.classList.add("attention_icon");
         carService.className = "btn btn-link";
 
         carService.addEventListener("click", function () {
-            sessionStorage.setItem("carID", carID);
+            sessionStorage.setItem("carID", carId);
             sessionStorage.setItem("carType", doc.data().vehicle_type);
             sessionStorage.setItem("carModel", doc.data().model);
             sessionStorage.setItem("carLocation", doc.data().parking_location);
@@ -111,13 +107,12 @@ function recent() {
 
 function renderTransactions(doc) {
     var listTransactions = document.querySelector("#recentBookingsTable");
-
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
-    var userID = document.createElement("span");
+    var userId = document.createElement("span");
     var carRego = document.createElement("span");
     var bookingDate = document.createElement("span");
     var returnDate = document.createElement("span");
@@ -125,10 +120,10 @@ function renderTransactions(doc) {
     carRego.textContent = doc.data().carID;
 
     // Showing first four characters of user ID
-    var uID = doc.data().userID;
-    var userIDString = uID.toString();
-    var userIDSub = userIDString.substring(0, 4);
-    userID.textContent = userIDSub + "...";
+    var uId = doc.data().userID;
+    var userIdString = uId.toString();
+    var userIdSub = userIdString.substring(0, 4);
+    userId.textContent = userIdSub + "...";
 
     // Converting booking date format to string
     var dateStart = doc.data().start_date;
@@ -149,7 +144,7 @@ function renderTransactions(doc) {
     returnDate.textContent = dateReturnSub;
 
     if (dateMonth > dateNow) {
-        td1.appendChild(userID);
+        td1.appendChild(userId);
         td2.appendChild(carRego);
         td3.appendChild(bookingDate);
         td4.appendChild(returnDate);

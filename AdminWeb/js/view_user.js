@@ -9,7 +9,6 @@ function billingDetails() {
 function renderBillingDetails(doc) {
     var cardNumber = doc.data().card_number;
     var date = doc.data().date;
-
     var cardNo = document.getElementById("cardNo");
     var subCardNo = cardNumber.substring(12, 16);
     cardNo.textContent = "**** **** **** " + subCardNo;
@@ -27,16 +26,13 @@ function bookingHistory() {
 
 function renderHistoryDetails(doc) {
     var listHistory = document.querySelector("#historyList");
-
     var li1 = document.createElement("li");
     var li2 = document.createElement("li");
     var li3 = document.createElement("li");
     var li4 = document.createElement("li");
     var li5 = document.createElement("li");
     var li6 = document.createElement("li");
-
     var br = document.createElement("br");
-
     var carRef = document.createElement("span");
     var carModel = document.createElement("span");
     var startDate = document.createElement("span");
@@ -107,7 +103,6 @@ function sendUserDetails() {
             switch (error.code) {
                 case 'storage/object-not-found':
                     // File doesn't exist
-                    console.log(error.code);
                     break;
                 case 'storage/unauthorized':
                     // User doesn't have permission to access the object
@@ -120,7 +115,6 @@ function sendUserDetails() {
                     break;
                 case 'storage/unknown':
                     // Unknown error occurred, inspect the server response
-                    console.log(error.code);
                     document.getElementById("unknownError").innerHTML = "Unknown error occured";
                     break;
             }
