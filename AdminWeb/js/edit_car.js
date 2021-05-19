@@ -49,21 +49,22 @@ function select(selectId, optionValToSelect) {
 
 function sendCarDetails() {
     var rego = document.getElementById("rego");
+	var type = document.getElementById("type");
+	var model = document.getElementById("model");
+	var rate = document.getElementById("updateRate");
+	
     rego.innerHTML = sessionStorage.getItem("carID");
     rego.setAttribute("value", sessionStorage.getItem("carID"));
 
-    var type = document.getElementById("type");
     type.innerHTML = sessionStorage.getItem("carType");
     type.setAttribute("value", sessionStorage.getItem("carType"));
 
-    var model = document.getElementById("model");
     model.innerHTML = sessionStorage.getItem("carModel");
     model.setAttribute("value", sessionStorage.getItem("carModel"));
 
     select("updateCondition", sessionStorage.getItem("con"));
     select("updateStatus", sessionStorage.getItem("carStatus"));
 
-    var rate = document.getElementById("updateRate");
     rate.innerHTML = sessionStorage.getItem("carRate");
     rate.setAttribute("value", sessionStorage.getItem("carRate"));
 }

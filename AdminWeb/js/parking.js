@@ -19,14 +19,14 @@ function renderLocations(doc) {
     var location = document.createElement("span");
     var numCars = document.createElement("span");
     var removeLocation = document.createElement("button");
+	var autoRemoveId = Math.floor(Math.random() * 300);
+	var rId = "";
 
     removeLocation.className = "btn btn-secondary";
 
     address.textContent = doc.data().Address;
     location.textContent = doc.data().Location.latitude + " " + doc.data().Location.longitude;
     numCars.textContent = doc.data().Number_cars;
-
-    var autoRemoveId = Math.floor(Math.random() * 300);
 
     removeLocation.setAttribute("id", autoRemoveId);
     removeLocation.setAttribute("value", doc.id);
@@ -44,7 +44,7 @@ function renderLocations(doc) {
 
     listLocations.appendChild(tr);
 
-    var rId = document.getElementById(autoRemoveId);
+    rId = document.getElementById(autoRemoveId);
 
     // Validates if it can remove the parking location
     removeLocation.addEventListener("click", function () {

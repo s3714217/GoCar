@@ -15,6 +15,7 @@ function renderUsers(doc) {
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
+	
     var userId = document.createElement("span");
     var fullName = document.createElement("span");
     var verified = document.createElement("span");
@@ -23,6 +24,19 @@ function renderUsers(doc) {
     var verifyUser = document.createElement("button");
     var viewUser = document.createElement("button");
     var removeUser = document.createElement("button");
+	
+	var uId = doc.id;
+    var userIdString = uId.toString();
+    var userIdSub = userIdString.substring(0, 4);
+	
+	var autoVerifyId = Math.floor(Math.random() * 300);
+    var autoViewId = Math.floor(Math.random() * 300);
+    var autoRemoveId = Math.floor(Math.random() * 300);
+	
+	var docId = "";
+    var vwId = "";
+    var vrId = "";
+    var rId = "";
 
     verifyUser.className = "btn btn-primary";
     viewUser.className = "btn btn-primary";
@@ -32,15 +46,8 @@ function renderUsers(doc) {
     verified.textContent = doc.data().verified;
     phoneNumber.textContent = doc.data().phoneNumber;
     contactEmail.textContent = doc.data().contactEmail;
-
-    var uId = doc.id;
-    var userIdString = uId.toString();
-    var userIdSub = userIdString.substring(0, 4);
+    
     userId.textContent = userIdSub + "...";
-
-    var autoVerifyId = Math.floor(Math.random() * 300);
-    var autoViewId = Math.floor(Math.random() * 300);
-    var autoRemoveId = Math.floor(Math.random() * 300);
 
     verifyUser.setAttribute("id", autoVerifyId);
     viewUser.setAttribute("id", autoViewId);
@@ -83,10 +90,10 @@ function renderUsers(doc) {
 
     listUsers.appendChild(tr);
 
-    var docId = doc.id;
-    var vwId = document.getElementById(autoViewId);
-    var vrId = document.getElementById(autoVerifyId);
-    var rId = document.getElementById(autoRemoveId);
+    docId = doc.id;
+    vwId = document.getElementById(autoViewId);
+    vrId = document.getElementById(autoVerifyId);
+    rId = document.getElementById(autoRemoveId);
 
     viewUser.addEventListener("click", function () {
         sessionStorage.setItem("fullName", fullName.textContent);

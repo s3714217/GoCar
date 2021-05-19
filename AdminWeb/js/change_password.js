@@ -7,6 +7,7 @@ function change() {
     var oldPass = document.getElementById("oldPassword").value;
     var newPass = document.getElementById("newPassword").value;
     var confirmPass = document.getElementById("confirmPassword").value;
+	var getPassword = "";
 
     // Validation for changing password details
     if (oldPass === "") {
@@ -46,7 +47,7 @@ function change() {
     // Checks onto Cloud Firestore (database), validate if old password entered is the same
     db.collection("admins").doc(sessionStorage.getItem("username")).get()
         .then(function (doc) {
-            var getPassword = doc.data().password;
+            getPassword = doc.data().password;
             if (oldPass != getPassword) {
                 document.getElementById("oldPassError").innerHTML = "Old password entered is incorrect";
                 return;

@@ -31,16 +31,19 @@ function renderCars(doc) {
 	// Random IDs generated for buttons
 	var autoEditId = Math.floor(Math.random() * 300);
     var autoRemoveId = Math.floor(Math.random() * 300);
+	
+	// Condition and rate used for editing car
+    // Won't be shown on table
+    var condition = document.createElement("span");
+    var rate = document.createElement("span");
+	
+	var rId = "";
+    var eId = "";
 
     // Provide bootstrap classes to change the layout of button
     editCar.className = "btn btn-primary";
     removeCar.className = "btn btn-secondary";
     vehicleType.className = "capital";
-
-    // Condition and rate used for editing car
-    // Won't be shown on table
-    var condition = document.createElement("span");
-    var rate = document.createElement("span");
 
     condition.textContent = doc.data().condition;
     rate.textContent = doc.data().rate;
@@ -88,8 +91,8 @@ function renderCars(doc) {
 
     listCars.appendChild(tr);
 
-    var rId = document.getElementById(autoRemoveId);
-    var eId = document.getElementById(autoEditId);
+    rId = document.getElementById(autoRemoveId);
+    eId = document.getElementById(autoEditId);
 
     editCar.addEventListener("click", function () {
         sessionStorage.setItem("carID", eId.value);

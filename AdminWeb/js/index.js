@@ -4,6 +4,7 @@ function signIn() {
 	var emailRe = /^.+@gocar\.com$/;
 	var username = "";
 	var password = "";
+	var getPassword = "";
 	
     // Validation for login credentials
     if (txtUsername === "") {
@@ -31,7 +32,7 @@ function signIn() {
     db.collection("admins").doc(username).get()
         .then(function (doc) {
             if (doc.exists) {
-                var getPassword = doc.data().password;
+                getPassword = doc.data().password;
                 if (password === getPassword) {
                     window.location.replace("dashboard.html");
                 } else {
