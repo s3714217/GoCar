@@ -16,11 +16,10 @@ function renderAdmins(doc) {
     var username = document.createElement("span");
 
     username.textContent = doc.id;
-
+	
     td1.appendChild(username);
-
     tr.appendChild(td1);
-
+	
     listAdmins.appendChild(tr);
 }
 

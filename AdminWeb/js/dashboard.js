@@ -14,17 +14,18 @@ function getValues() {
     var countUserDiv = document.getElementById("countUsers");
     var countCarDiv = document.getElementById("countCars");
     var countParkingsDiv = document.getElementById("countParkings");
+	var size = "";
     userDiv.innerHTML = "Welcome " + sessionStorage.getItem("username");
     db.collection("users").get().then(snap => {
-        var size = snap.size; // will return the collection size
+        size = snap.size; // will return the collection size
         countUserDiv.innerHTML = size;
     });
     db.collection("cars").get().then(snap => {
-        var size = snap.size; // will return the collection size
+        size = snap.size; // will return the collection size
         countCarDiv.innerHTML = size;
     });
     db.collection("parking_location").get().then(snap => {
-        var size = snap.size; // will return the collection size
+        size = snap.size; // will return the collection size
         countParkingsDiv.innerHTML = size;
     });
 
@@ -112,35 +113,39 @@ function renderTransactions(doc) {
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
+	
     var userId = document.createElement("span");
     var carRego = document.createElement("span");
     var bookingDate = document.createElement("span");
     var returnDate = document.createElement("span");
-
-    carRego.textContent = doc.data().carID;
-
-    // Showing first four characters of user ID
-    var uId = doc.data().userID;
+	
+	var uId = doc.data().userID;
     var userIdString = uId.toString();
     var userIdSub = userIdString.substring(0, 4);
-    userId.textContent = userIdSub + "...";
-
-    // Converting booking date format to string
-    var dateStart = doc.data().start_date;
+	
+	// Converting booking date format to string
+	var dateStart = doc.data().start_date;
     var dateStartFormat = dateStart.toDate();
     var startString = dateStartFormat.toString();
     var dateStartSub = startString.substring(0, 16);
-    bookingDate.textContent = dateStartSub;
-
-    // Show most recent bookings from 1 month
+	
+	// Show most recent bookings from 1 month
     var dateNow = new Date();
     var dateMonth = new Date(dateStartFormat.setMonth(dateStartFormat.getMonth() + 1));
-
-    // Converting return date format to string
+	
+	// Converting return date format to string
     var dateReturn = doc.data().return_date;
     var dateReturnFormat = dateReturn.toDate();
     var returnString = dateReturnFormat.toString();
     var dateReturnSub = returnString.substring(0, 16);
+	
+    carRego.textContent = doc.data().carID;
+
+    // Showing first four characters of user ID
+    userId.textContent = userIdSub + "...";
+	
+    bookingDate.textContent = dateStartSub;
+
     returnDate.textContent = dateReturnSub;
 
     if (dateMonth > dateNow) {

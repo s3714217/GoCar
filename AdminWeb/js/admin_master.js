@@ -14,11 +14,15 @@ function renderAdmins(doc) {
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
+	
     var username = document.createElement("span");
     var changePassword = document.createElement("button");
     var removeAdmin = document.createElement("button");
+	
 	var autoEditId = Math.floor(Math.random() * 300);
     var autoRemoveId = Math.floor(Math.random() * 300);
+	
+	var rID = "";
 	
     username.textContent = doc.id;
 
@@ -41,7 +45,7 @@ function renderAdmins(doc) {
 
     listAdmins.appendChild(tr);
 
-    var rId = document.getElementById(autoRemoveId);
+    rId = document.getElementById(autoRemoveId);
 
     changePassword.addEventListener("click", function () {
         sessionStorage.setItem("adminName", doc.id);

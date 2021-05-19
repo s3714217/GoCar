@@ -4,7 +4,8 @@ function parkingAdd() {
     var longitude = document.getElementById("parkingLongitude").value;
     var latitudeNum = parseFloat(latitude);
     var longitudeNum = parseFloat(longitude);
-
+	var geo = {};
+	
     // Validation for adding new parking
     if (latitudeNum < -90 || latitudeNum > 90) {
         document.getElementById("latitudeNumError").innerHTML = "Please enter a latitude between -90 and 90";
@@ -32,7 +33,7 @@ function parkingAdd() {
         return;
     }
 
-    var geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
+    geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
 
     // Checks onto Cloud Firestore (database), validate if parking details exist
     db.collection("parking_location").doc().set({
