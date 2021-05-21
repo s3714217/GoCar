@@ -10,6 +10,7 @@ $(document).ready(function () {
 
 // Renders the list of admins onto the table
 function renderAdmins(doc) {
+	// Variable declarations
     var listAdmins = document.querySelector("#adminTable");
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
@@ -24,6 +25,7 @@ function renderAdmins(doc) {
 	
 	var rID = "";
 	
+	// Adds the admins onto the table
     username.textContent = doc.id;
 
     changePassword.setAttribute("id", autoEditId);
@@ -47,6 +49,7 @@ function renderAdmins(doc) {
 
     rId = document.getElementById(autoRemoveId);
 
+	// Redirects to the change_password_master.html page.
     changePassword.addEventListener("click", function () {
         sessionStorage.setItem("adminName", doc.id);
         window.location.replace("change_password_master.html")
@@ -76,6 +79,7 @@ function renderAdmins(doc) {
     });
 }
 
+// Loops through all the admins in the database 
 function admins() {
     db.collection("admins").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -84,6 +88,7 @@ function admins() {
     })
 }
 
+// Function to go back to add_admin.html page
 function addAdminButton() {
     window.location.replace("add_admin.html");
 }

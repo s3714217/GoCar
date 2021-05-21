@@ -1,5 +1,7 @@
+// Global variable declarations
 var selectId;
 
+// Main function for Add button, invoked on-click
 function main() {
     carAdd();
     updateParking();
@@ -25,6 +27,7 @@ function parking() {
 }
 
 function carAdd() {
+	// Variable declarations
     var txtModel = document.getElementById("carModel").value;
     var optCondtion = document.getElementById("carCondition").value;
     var optLocation = document.getElementById("parkingLocation").value;
@@ -49,7 +52,8 @@ function carAdd() {
             "Please enter a car registration between 0000000 and 9999999";
         return;
     }
-
+	
+	// Checks if text boxes are empty
     if (txtCarID === "") {
         document.getElementById('carIDEmpty').innerHTML = "Please enter a car registration number";
         return;
@@ -87,10 +91,12 @@ function carAdd() {
         });
 }
 
+// Stores the currently selected parking location
 $.getSelected = function () {
     selectId = $('#parkingLocation :selected').attr('id');
 }
 
+// Updates the Number_cars field by 1 in the parking_location collection, for the currently selected parking location
 function updateParking() {
     $.getSelected();
     var increment = firebase.firestore.FieldValue.increment(1);
@@ -105,6 +111,7 @@ function updateParking() {
         });
 }
 
+// Function to go back to car.html page
 function carCancel() {
     window.location.replace("car.html");
 }

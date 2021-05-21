@@ -9,19 +9,23 @@ $(document).ready(function () {
 });
 
 function renderLocations(doc) {
+	// Variable declarations
     var listLocations = document.querySelector("#locationsTable");
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
+	
     var address = document.createElement("span");
     var location = document.createElement("span");
     var numCars = document.createElement("span");
+	
     var removeLocation = document.createElement("button");
 	var autoRemoveId = Math.floor(Math.random() * 300);
 	var rId = "";
-
+	
+	// Adds the parking elements onto the table and sets the attributes of the elements
     removeLocation.className = "btn btn-secondary";
 
     address.textContent = doc.data().Address;
@@ -61,6 +65,7 @@ function renderLocations(doc) {
     });
 }
 
+// Loops through all the parking's in the database 
 function locations() {
     db.collection("parking_location").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -69,6 +74,7 @@ function locations() {
     })
 }
 
+// Function to go back to the add_parking.html page
 function addParkingButton() {
     window.location.replace("add_parking.html");
 }

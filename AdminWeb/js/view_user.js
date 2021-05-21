@@ -1,3 +1,9 @@
+// Main function that displays user booking details on the page, on-load
+function displayDetails() {
+    booking();
+}
+
+// Loops through the booking history sub-collection in the database
 function bookingHistory() {
     db.collection("users/" + sessionStorage.getItem("docID") + "/history").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -7,6 +13,7 @@ function bookingHistory() {
 }
 
 function renderHistoryDetails(doc) {
+	// Variable declarations
     var li1 = document.createElement("li");
     var li2 = document.createElement("li");
     var li3 = document.createElement("li");
@@ -32,6 +39,7 @@ function renderHistoryDetails(doc) {
     var returnString = dateReturnFormat.toString();
     var dateReturnSub = returnString.substring(0, 25);
 	
+	// Adds the booking history sub-collection elements onto the table and sets the attributes of the elements
     carRef.textContent = "Car Registration No: " + doc.data().carID;
     carModel.textContent = "Car Model: " + doc.data().carModel;
     startDate.textContent = "Pickup: " + dateStartSub;
@@ -56,6 +64,7 @@ function renderHistoryDetails(doc) {
 }
 
 function sendUserDetails() {
+	// Variable declarations
     var name = document.getElementById("name");
 	var phone = document.getElementById("phone");
 	var userEmail = document.getElementById("email");
@@ -66,6 +75,7 @@ function sendUserDetails() {
     var imagesRef = userRef.child("licence");
 	var image = document.getElementById("licence");
 	
+	// Sets the attributes of the elements to be displayed on the page on-load
     name.innerHTML = sessionStorage.getItem("fullName");
     name.setAttribute("value", sessionStorage.getItem("docID"));
     phone.innerHTML = sessionStorage.getItem("phoneNumber");    
@@ -101,8 +111,11 @@ function sendUserDetails() {
 }
 
 function checkVerify() {
+	// Variable declarations
     var verify = document.getElementById("verify");
     var historyList = document.getElementById("historyList");
+	
+	// Checks whether a user is Unverified or Pending, if so doesn't display the user booking history
     if (verify.textContent === "Unverified") {
         verify.className = "font-weight-bold text-danger";
         historyList.style.display = "none";
@@ -112,6 +125,7 @@ function checkVerify() {
     }
 }
 
+// Checks if the documents in booking history sub-collection exist first, before displaying the booking history of the user
 function booking() {
 	var history = document.getElementById("historyList");
     db.collection("users").doc(sessionStorage.getItem("docID")).get()
@@ -129,10 +143,7 @@ function booking() {
         });
 }
 
-function displayDetails() {
-    booking();
-}
-
+// Function to go back to the users page, depending on which admin is logged in
 function userBack() {
     if (sessionStorage.getItem("username") === "admin_master@gocar.com") {
         window.location.replace("user_central_master.html");

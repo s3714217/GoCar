@@ -1,4 +1,5 @@
 function signIn() {
+	// Variable declarations
     var txtUsername = document.getElementById("username").value;
     var txtPassword = document.getElementById("password").value;
 	var emailRe = /^.+@gocar\.com$/;
@@ -47,6 +48,7 @@ function signIn() {
         });
 }
 
+// Resets the username sessionStorage variable to undefined on-load
 function resetUsername() {
     var username;
     sessionStorage.setItem("username", username);

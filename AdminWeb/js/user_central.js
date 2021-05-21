@@ -9,6 +9,7 @@ $(document).ready(function () {
 });
 
 function renderUsers(doc) {
+	// Variable declarations
     var listUsers = document.querySelector("#userTable");
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
@@ -35,6 +36,7 @@ function renderUsers(doc) {
     var vwId = "";
     var vrId = "";
 	
+	// Adds the user elements onto the table and sets the attributes of the elements
     verifyUser.className = "btn btn-primary";
     viewUser.className = "btn btn-primary";
 
@@ -114,7 +116,7 @@ function renderUsers(doc) {
 }
 
 function sendEmail() {
-    // send email to user that account is verified
+    // sends an email to the user that the account is verified
     db.collection("mail").doc().set({
             to: sessionStorage.getItem("email"),
             message: {
@@ -132,6 +134,7 @@ function sendEmail() {
         });
 }
 
+// Loops through all the users in the database
 function users() {
     db.collection("users").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {

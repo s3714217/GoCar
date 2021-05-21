@@ -31,6 +31,7 @@ function getValues() {
 
 }
 
+// Loops through all the users in the database
 function verifyList() {
     db.collection("users").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -40,6 +41,7 @@ function verifyList() {
 }
 
 function renderVerifyList(doc) {
+	// Variable declarations
     var listNotifications = document.querySelector("#verify");
     var li = document.createElement("li");
     var verifyStatus = document.createElement("span");
@@ -55,6 +57,7 @@ function renderVerifyList(doc) {
     }
 }
 
+// Loops through all the cars in the database
 function carsService() {
     db.collection("cars").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -64,6 +67,7 @@ function carsService() {
 }
 
 function renderServiceList(doc) {
+	// Variable declarations
     var listNotifications = document.querySelector("#carsService");
     var li = document.createElement("li");
     var carService = document.createElement("button");
@@ -75,7 +79,7 @@ function renderServiceList(doc) {
         carService.textContent = carId + " needs a service";
         li.classList.add("attention_icon");
         carService.className = "btn btn-link";
-
+	
         carService.addEventListener("click", function () {
             sessionStorage.setItem("carID", carId);
             sessionStorage.setItem("carType", doc.data().vehicle_type);
@@ -93,11 +97,14 @@ function renderServiceList(doc) {
     }
 }
 
+
+// Displays notifications of pending users and cars in service
 function notifications() {
     verifyList();
     carsService();
 }
 
+// Loops through all the transactions in the database
 function recent() {
     db.collection("transaction").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -107,6 +114,7 @@ function recent() {
 }
 
 function renderTransactions(doc) {
+	// Variable declarations
     var listTransactions = document.querySelector("#recentBookingsTable");
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
@@ -148,6 +156,7 @@ function renderTransactions(doc) {
 
     returnDate.textContent = dateReturnSub;
 
+	// Displays the recent booking elements onto the table
     if (dateMonth > dateNow) {
         td1.appendChild(userId);
         td2.appendChild(carRego);
