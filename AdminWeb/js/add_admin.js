@@ -1,7 +1,9 @@
 function adminAdd() {
+	// Variable declarations
     var txtUsernameSU = document.getElementById("adminUsername").value;
     var txtPasswordSU = document.getElementById("adminPassword").value;
 	var usernameRe = /^.+@gocar\.com$/;
+	var passwordRe = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,25})$/;
 	
     // Validation for adding new admin
     if (txtUsernameSU === "") {
@@ -15,7 +17,7 @@ function adminAdd() {
     }
 
     if (txtPasswordSU.length < 8) {
-        document.getElementById("passwordLengthError").innerHTML = "Password must be minimum 8 characters long";
+        document.getElementById("passwordLengthError").innerHTML += " Password must be minimum 8 characters long";
         return;
     }
 
@@ -26,6 +28,14 @@ function adminAdd() {
         return;
     }
 
+	if (txtPasswordSU.match(passwordRe)) {
+		
+	} else {
+		document.getElementById("passwordLengthError").innerHTML += 
+		" Password must meet the minimum complexity requirements: One digit from 0-9, one lower-case, one upper-case, one special character: @#$%, and a maximum of 25 characters.";
+        return;
+	}
+	
     // Checks onto Cloud Firestore (database), validate if admin credentials exist
     db.collection("admins").doc(txtUsernameSU).get()
         .then(function (doc) {
@@ -47,6 +57,7 @@ function adminAdd() {
         });
 }
 
+// Function to go back to admin_master.html page
 function adminCancel() {
     window.location.replace("admin_master.html");
 }

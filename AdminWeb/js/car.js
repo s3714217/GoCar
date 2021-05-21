@@ -9,6 +9,8 @@ $(document).ready(function () {
 });
 
 function renderCars(doc) {
+	// Variable declarations
+	
     // Renders all of the fields onto the table
     var listCars = document.querySelector("#carTable");
     var tr = document.createElement("tr");
@@ -74,6 +76,7 @@ function renderCars(doc) {
         leased.className = "text-success";
     }
 
+	// Adds the car elements onto the table
     td1.appendChild(carRego);
     td2.appendChild(model);
     td3.appendChild(parkingLocation);
@@ -94,6 +97,7 @@ function renderCars(doc) {
     rId = document.getElementById(autoRemoveId);
     eId = document.getElementById(autoEditId);
 
+	// Stores car data temporarily, to be retrieved in the edit_car.html page.
     editCar.addEventListener("click", function () {
         sessionStorage.setItem("carID", eId.value);
         sessionStorage.setItem("carType", vehicleType.textContent);
@@ -118,6 +122,7 @@ function renderCars(doc) {
     });
 }
 
+// Loops through all the cars in the database 
 function cars() {
     db.collection("cars").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
@@ -126,6 +131,7 @@ function cars() {
     })
 }
 
+// Function to go back to the add_car.html page
 function addCarButton() {
     window.location.replace("add_car.html");
 }

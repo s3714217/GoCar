@@ -1,4 +1,4 @@
-// Store global variables and functions
+// Stores global functions
 
 // Checks if admin is logged in
 function checkLogin(){
@@ -62,6 +62,7 @@ function userPage() {
 	}
 }
 
+// Logs out the user from the additional admin account, clears the sessionStorage information and redirects to index.html
 function logOut() {
 	firebase.auth().signOut().then(() => {
 		// Sign-out successful.

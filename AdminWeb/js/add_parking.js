@@ -1,4 +1,10 @@
+// Main function for Add button, invoked on-click 
+function main() {
+    parkingAdd();
+}
+
 function parkingAdd() {
+	// Variable declarations
     var address = document.getElementById("parkingAddress").value;
     var latitude = document.getElementById("parkingLatitude").value;
     var longitude = document.getElementById("parkingLongitude").value;
@@ -33,9 +39,10 @@ function parkingAdd() {
         return;
     }
 
+	// GeoPoint variable to store latitude and longitude in the database 
     geo = new firebase.firestore.GeoPoint(latitudeNum, longitudeNum);
 
-    // Checks onto Cloud Firestore (database), validate if parking details exist
+    // Checks onto Cloud Firestore (database)
     db.collection("parking_location").doc().set({
             Address: address,
             Location: geo,
@@ -51,10 +58,7 @@ function parkingAdd() {
         });
 }
 
-function main() {
-    parkingAdd();
-}
-
+// Function to go back to parking.html page
 function parkingCancel() {
     window.location.replace("parking.html");
 }

@@ -1,12 +1,15 @@
+// Global variable declarations
 var oldSelectId;
 var newSelectId;
 
+// Main function for Edit button, invoked on-click
 function main() {
-    updateCar();
+    updateCar();	  // updates the car details	
     updateParking1(); // increment no of cars
     updateParking2(); // decrement no of cars
 }
 
+// Gets the currently selected car location on-load
 $.getOldSelected = function () {
     oldSelectId = $('#updateLocation :selected').attr('id');
 }
@@ -48,11 +51,13 @@ function select(selectId, optionValToSelect) {
 }
 
 function sendCarDetails() {
+	// Variable declarations
     var rego = document.getElementById("rego");
 	var type = document.getElementById("type");
 	var model = document.getElementById("model");
 	var rate = document.getElementById("updateRate");
 	
+	// Displays car details onto the page
     rego.innerHTML = sessionStorage.getItem("carID");
     rego.setAttribute("value", sessionStorage.getItem("carID"));
 
@@ -70,6 +75,7 @@ function sendCarDetails() {
 }
 
 function updateCar() {
+	// Variable declarations
     var carLocation = document.getElementById("updateLocation").value;
     var carCondition = document.getElementById("updateCondition").value;
     var carStatus = document.getElementById("updateStatus").value;
@@ -110,10 +116,12 @@ function updateCar() {
         });
 }
 
+// Gets the newly selected car location
 $.getNewSelected = function () {
     newSelectId = $('#updateLocation :selected').attr('id');
 }
 
+// Updates the Number_cars field by 1 in the parking_location collection, for the newly selected parking location
 function updateParking1() {
     $.getNewSelected();
     var increment = firebase.firestore.FieldValue.increment(1);
@@ -128,6 +136,7 @@ function updateParking1() {
         });
 }
 
+// Updates the Number_cars field by -1 in the parking_location collection, for the old selected parking location, that is stored on-load
 function updateParking2() {
     var decrement = firebase.firestore.FieldValue.increment(-1);
     db.collection("parking_location").doc(oldSelectId).update({
@@ -141,6 +150,7 @@ function updateParking2() {
         });
 }
 
+// Function to go back to car.html page
 function carCancel() {
     window.location.replace("car.html");
 }
