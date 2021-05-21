@@ -57,16 +57,16 @@ public class logintest {
 		public void NoPassword() {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"username\"]"));
-			chromeWebElement.sendKeys("admin@gocar.com");
-			expectedResult = "Please enter a username and password";
+			chromeWebElement.sendKeys("admin_master@gocar.com");
+			expectedResult = "Please enter a password";
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
+			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"passwordEmpty\"]"));
 			
-			actualResult = driver.switchTo().alert().getText();
+			actualResult = chromeWebElement.getText();
 			assertEquals(expectedResult, actualResult);
 			
-			driver.switchTo().alert().accept();
 			
 		}
 		
@@ -76,10 +76,10 @@ public class logintest {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"username\"]"));
 			chromeWebElement.clear();
-			chromeWebElement.sendKeys("admin@gocar.com");
-			expectedResult = "Welcome admin@gocar.com";
+			chromeWebElement.sendKeys("admin_master@gocar.com");
+			expectedResult = "Welcome admin_master@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("qwerty");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();

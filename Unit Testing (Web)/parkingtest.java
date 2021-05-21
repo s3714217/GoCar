@@ -65,7 +65,7 @@ public class parkingtest {
 			chromeWebElement.sendKeys("admin_master@gocar.com");
 			expectedResult = "Welcome admin_master@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("12345678");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -94,7 +94,25 @@ public class parkingtest {
 		
 		@Test
 		@Order(4)
-		public void addparking() {
+		public void list() {
+			
+			
+			//No.of rows 
+			List<WebElement>  rows = driver.findElements(By.xpath("//*[@id=\"locationsTable\"]/tr/td[1]")); 
+			System.out.println("No of rows are : " + rows.size());
+        
+			int expectedsize = 65;
+			int tablesize = rows.size();
+			assertEquals(expectedsize, tablesize);
+		
+	}
+		
+		
+		
+		
+		@Test
+		@Order(5)
+		public void addparkingpage() {
 			
 			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div[2]/button"));
 			chromeWebElement.click();
@@ -118,7 +136,7 @@ public class parkingtest {
 		
 		
 		@Test
-		@Order(5) 
+		@Order(6) 
 			public void deleteparking() {
 				
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"sidebarMenu\"]/ul/li[4]/a"));

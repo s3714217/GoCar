@@ -64,10 +64,10 @@ public class carstest {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"username\"]"));
 			chromeWebElement.clear();
-			chromeWebElement.sendKeys("admin@gocar.com");
-			expectedResult = "Welcome admin@gocar.com";
+			chromeWebElement.sendKeys("admin_master@gocar.com");
+			expectedResult = "Welcome admin_master@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("qwerty");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -90,8 +90,31 @@ public class carstest {
 			assertEquals(expectedResult, actualResult);
 		}
 		
+	
 		@Test
 		@Order(4)
+		public void list() {
+			
+			
+			expectedResult = "Car Management | GoCar";
+			actualResult = driver.getTitle();
+			assertEquals(expectedResult, actualResult);
+			
+			
+			//No.of rows 
+			List<WebElement>  rows = driver.findElements(By.xpath("//*[@id=\"carTable\"]/tr/td[1]")); 
+			System.out.println("No of rows are : " + rows.size());
+        
+			int expectedsize = 115;
+			int tablesize = rows.size();
+			assertEquals(expectedsize, tablesize);
+		
+	}
+		
+		
+		
+		@Test
+		@Order(5)
 		public void addcarpage() {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div[2]/button/img"));
@@ -102,8 +125,10 @@ public class carstest {
 			assertEquals(expectedResult, actualResult);
 		}
 		
+		
+		
 		@Test
-		@Order(5)
+		@Order(6)
 		public void add() {
 			
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"carModel\"]"));
@@ -114,13 +139,13 @@ public class carstest {
 			Select dropdown = new Select(driver.findElement(By.xpath("//*[@id=\"carCondition\"]")));
 			dropdown.selectByVisibleText("New");
 			dropdown = new Select(driver.findElement(By.xpath("//*[@id=\"parkingLocation\"]")));
-			dropdown.selectByVisibleText("376 Flinders St, Melbourne VIC 3000");
+			dropdown.selectByVisibleText("8-14 Malvina Pl, Carlton VIC 3053");
 			dropdown = new Select(driver.findElement(By.xpath("//*[@id=\"carType\"]")));
 			dropdown.selectByVisibleText("SUV");
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"carRate\"]"));
-			chromeWebElement.sendKeys("20");
+			chromeWebElement.sendKeys("200");
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"carID\"]"));
-			chromeWebElement.sendKeys("4000000");
+			chromeWebElement.sendKeys("4888888");
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"addCarButton\"]"));
 			chromeWebElement.click();
 			
@@ -133,28 +158,7 @@ public class carstest {
 		
 		}
 		
-		@Test
-		@Order(6)
-		public void list() {
-			
-			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"sidebarMenu\"]/ul/li[3]/a"));
-			chromeWebElement.click();
-			
-			expectedResult = "Car Management | GoCar";
-			actualResult = driver.getTitle();
-			assertEquals(expectedResult, actualResult);
-			
-			
-			//No.of rows 
-			List<WebElement>  rows = driver.findElements(By.xpath("//*[@id=\"carTable\"]/tr/td[1]")); 
-			System.out.println("No of rows are : " + rows.size());
-        
-			int expectedsize = 47;
-			int tablesize = rows.size();
-			assertEquals(expectedsize, tablesize);
-		
-	}
-		
+	
 		   
 		
 		

@@ -63,10 +63,10 @@ public class editcar {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"username\"]"));
 			chromeWebElement.clear();
-			chromeWebElement.sendKeys("admin@gocar.com");
+			chromeWebElement.sendKeys("admin_master@gocar.com");
 			expectedResult = "Welcome admin@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("qwerty");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -92,33 +92,21 @@ public class editcar {
 		@Test
 		@Order(4)
 		public void caredit() {
-			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"carTable\"]/tr[1]/td[5]"));
+			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[1]/td[6]/button[1]"));
 			chromeWebElement.click();
 			
 			
 		    Select dropdown = new Select(driver.findElement(By.xpath("//*[@id=\"updateLocation\"]")));
-			dropdown.selectByVisibleText("376 Flinders St, Melbourne VIC 3000");
+			dropdown.selectByVisibleText("8-14 Malvina Pl, Carlton VIC 3053");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"addCarButton\"]"));
 			chromeWebElement.click();
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"carTable\"]/tr[1]/td[2]"));
 			actualResult = chromeWebElement.getText();
-			expectedResult = "376 Flinders St, Melbourne VIC 3000";
+			expectedResult = "8-14 Malvina Pl, Carlton VIC 3053";
 		}
-		
-		@Test
-		@Order(5)
-		public void deletecar() {
-								
-			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div/table/tr[1]/td[5]/button[2]"));
-			chromeWebElement.click();
-		
-			
 				
-		}
-			
-		
 		
 	
 		

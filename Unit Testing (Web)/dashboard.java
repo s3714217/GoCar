@@ -20,7 +20,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-
 @TestMethodOrder(OrderAnnotation.class) 
 public class dashboard {
 	
@@ -59,10 +58,10 @@ public class dashboard {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"username\"]"));
 			chromeWebElement.clear();
-			chromeWebElement.sendKeys("admin@gocar.com");
+			chromeWebElement.sendKeys("admin_master@gocar.com");
 		
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("qwerty");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -73,6 +72,7 @@ public class dashboard {
 			
 		}
 		
+		@SuppressWarnings("unchecked")
 		@Test
 		@Order(3)
 		public void totalusers() {
@@ -84,7 +84,7 @@ public class dashboard {
 		    wait.until(ExpectedConditions.visibilityOf(chromeWebElement));
 
 		    actualResult = chromeWebElement.getText();
-		    expectedResult = "24";
+		    expectedResult = "9";
 			assertEquals(expectedResult, actualResult);
 		}
 		
@@ -95,7 +95,7 @@ public class dashboard {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"countCars\"]"));
 			actualResult = chromeWebElement.getText();
-			expectedResult = "39";
+			expectedResult = "116";
 			assertEquals(expectedResult, actualResult);
 			
 			
@@ -108,7 +108,7 @@ public class dashboard {
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); 
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"countParkings\"]"));
 			actualResult = chromeWebElement.getText();
-			expectedResult = "20";
+			expectedResult = "66";
 			assertEquals(expectedResult, actualResult);
 		}
 		

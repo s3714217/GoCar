@@ -65,7 +65,7 @@ public class admintest {
 			chromeWebElement.sendKeys("admin_master@gocar.com");
 			expectedResult = "Welcome admin_master@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("12345678");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -77,29 +77,54 @@ public class admintest {
 			
 		}
 		
+		
+		
+		
 		@Test
-		@Order(3) 
+		@Order(4) 
 		public void Adminpage() {
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"sidebarMenu\"]/ul/li[6]/a"));
 			chromeWebElement.click();
 			
-			chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div[2]/button"));
-			chromeWebElement.click();
+		
 		}
 		
 		@Test
-		@Order(4)
+		@Order(5)
+		public void list() {
+			
+		
+			
+			
+			//No.of rows 
+			List<WebElement>  rows = driver.findElements(By.xpath("//*[@id=\"adminTable\"]/tr/td[1]")); 
+			System.out.println("No of rows are : " + rows.size());
+        
+			int expectedsize = 5;
+			int tablesize = rows.size();
+			assertEquals(expectedsize, tablesize);
+		
+	}
+		
+		@Test
+		@Order(6)
 		public void Addadmin() {
+			
+			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[1]/div[2]/button/img"));
+			chromeWebElement.click();
+			
+			
+			
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			
 			
-			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"adminUsername\"]"));
+			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"adminUsername\"]"));
 			Wait wait = new WebDriverWait(driver, 10);
 		    wait.until(ExpectedConditions.visibilityOf(chromeWebElement));
 			chromeWebElement.sendKeys("admin_test@gocar.com");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"adminPassword\"]"));
-			chromeWebElement.sendKeys("12345678");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"addAdminButton\"]"));
 			chromeWebElement.click();
@@ -107,19 +132,32 @@ public class admintest {
 		}
 		
 		@Test
-		@Order(5) 
+		@Order(7) 
 		public void changepass() {
-			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div/table/tr[5]/td[2]/button[2]"));
+			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[5]/td[2]/button[1]"));
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			chromeWebElement.click();
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"newPassword\"]"));
-			chromeWebElement.sendKeys("87654321");
+			chromeWebElement.sendKeys("MASTERpassword2@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"confirmPassword\"]"));
-			chromeWebElement.sendKeys("87654321");
+			chromeWebElement.sendKeys("MASTERpassword2@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"addAdminButton\"]"));
+			chromeWebElement.click();
+			
+			
+		}
+		
+		@Test
+		@Order(8) 
+		public void deletetest() {
+			
+			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"sidebarMenu\"]/ul/li[6]/a"));
+			chromeWebElement.click();
+			
+			chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[6]/td[2]/button[2]"));
 			chromeWebElement.click();
 			
 			
