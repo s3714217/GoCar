@@ -65,7 +65,7 @@ public class usertest {
 			chromeWebElement.sendKeys("admin_master@gocar.com");
 			expectedResult = "Welcome admin_master@gocar.com";
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-			chromeWebElement.sendKeys("12345678");
+			chromeWebElement.sendKeys("MASTERpassword1@");
 			
 			chromeWebElement = driver.findElement(By.xpath("//*[@id=\"login\"]"));
 			chromeWebElement.click();
@@ -83,9 +83,7 @@ public class usertest {
 			WebElement chromeWebElement = driver.findElement(By.xpath("//*[@id=\"sidebarMenu\"]/ul/li[5]/a"));
 			chromeWebElement.click();
 			
-			chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div/table/tr[1]/td[3]/button[1]"));
-			chromeWebElement.click();
-			
+		
 			expectedResult = "User Central | GoCar";
 			actualResult = driver.getTitle();
 			assertEquals(expectedResult, actualResult);
@@ -95,10 +93,28 @@ public class usertest {
 		}
 		
 		@Test
+		@Order(4) 
+		public void userlist () {
+			
+			
+			//No.of rows 
+			List<WebElement>  rows = driver.findElements(By.xpath("//*[@id=\"userTable\"]/tr/td[1]")); 
+			System.out.println("No of rows are : " + rows.size());
+        
+			int expectedsize = 8;
+			int tablesize = rows.size();
+			assertEquals(expectedsize, tablesize);
+			
+		}
+		
+		@Test
 		@Order(4)
 		public void userdetail() {
-			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div/table/tr[1]/td[3]/button[2]"));
+			
+			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[1]/td[4]/button[2]"));
 			chromeWebElement.click();
+			
+
 			
 			expectedResult = "View User Management | GoCar";
 			actualResult = driver.getTitle();
@@ -128,7 +144,7 @@ public class usertest {
 		public void deletetest() {
 			
 			
-			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div/table/tr[2]/td[3]/button[3]"));
+			WebElement chromeWebElement = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[1]/div[2]/div/div[2]/table/tbody/tr[4]/td[4]/button[3]"));
 			chromeWebElement.click();
 			
 			
