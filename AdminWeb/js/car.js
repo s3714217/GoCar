@@ -31,8 +31,8 @@ function renderCars(doc) {
     var removeCar = document.createElement("button");
 	
 	// Random IDs generated for buttons
-	var autoEditId = Math.floor(Math.random() * 300);
-    var autoRemoveId = Math.floor(Math.random() * 300);
+	var autoEditId = Math.floor(Math.random() * 900);
+    var autoRemoveId = Math.floor(Math.random() * 900);
 	
 	// Condition and rate used for editing car
     // Won't be shown on table
