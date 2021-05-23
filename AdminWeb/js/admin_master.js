@@ -20,8 +20,8 @@ function renderAdmins(doc) {
     var changePassword = document.createElement("button");
     var removeAdmin = document.createElement("button");
 	
-	var autoEditId = Math.floor(Math.random() * 300);
-    var autoRemoveId = Math.floor(Math.random() * 300);
+	var autoEditId = Math.floor(Math.random() * 900);
+    var autoRemoveId = Math.floor(Math.random() * 900);
 	
 	var rID = "";
 	
@@ -37,6 +37,10 @@ function renderAdmins(doc) {
     removeAdmin.setAttribute("value", doc.id);
     removeAdmin.textContent = "Remove";
     removeAdmin.className = "btn btn-secondary";
+
+    if (username.textContent === "admin_master@gocar.com"){
+		removeAdmin.style.display = "none";
+	}
 
     td1.appendChild(username);
     td2.appendChild(changePassword);
