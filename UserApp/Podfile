@@ -3,13 +3,15 @@ target 'GoCar' do
   use_frameworks!
 
   # Pods for GoCar
-	
-    pod 'Charts', '~>3.4.0'
+
+    pod 'Braintree'
 
     pod 'Firebase/Firestore'
 
     pod 'Firebase/Auth'
-
+    
+    pod 'Firebase/Storage'
+ 
   target 'GoCarTests' do
     inherit! :search_paths
     # Pods for testing
