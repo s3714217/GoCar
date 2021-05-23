@@ -29,8 +29,8 @@ function renderUsers(doc) {
     var userIdString = uId.toString();
     var userIdSub = userIdString.substring(0, 4);
 
-	var autoVerifyId = Math.floor(Math.random() * 300);
-    var autoViewId = Math.floor(Math.random() * 300);
+	var autoVerifyId = Math.floor(Math.random() * 900);
+    var autoViewId = Math.floor(Math.random() * 900);
 	
 	var docId = "";
     var vwId = "";
