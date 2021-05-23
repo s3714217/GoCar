@@ -2,136 +2,79 @@
 $(document).ready(function () {
     $("#searchInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#carTable tr").filter(function () {
+        $("#locationsTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
 
-function renderCars(doc) {
+function renderLocations(doc) {
 	// Variable declarations
-	
-    // Renders all of the fields onto the table
-    var listCars = document.querySelector("#carTable");
+    var listLocations = document.querySelector("#locationsTable");
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
     var td3 = document.createElement("td");
     var td4 = document.createElement("td");
-    var td5 = document.createElement("td");
-    var td6 = document.createElement("td");
-
-    // Dynamically create the elements onto the table
-    var carRego = document.createElement("span");
-    var model = document.createElement("span");
-    var parkingLocation = document.createElement("span");
-    var vehicleType = document.createElement("span");
-    var leased = document.createElement("span");
-    var editCar = document.createElement("button");
-    var removeCar = document.createElement("button");
 	
-	// Random IDs generated for buttons
-	var autoEditId = Math.floor(Math.random() * 300);
-    var autoRemoveId = Math.floor(Math.random() * 300);
+    var address = document.createElement("span");
+    var location = document.createElement("span");
+    var numCars = document.createElement("span");
 	
-	// Condition and rate used for editing car
-    // Won't be shown on table
-    var condition = document.createElement("span");
-    var rate = document.createElement("span");
-	
+    var removeLocation = document.createElement("button");
+	var autoRemoveId = Math.floor(Math.random() * 900);
 	var rId = "";
-    var eId = "";
+	
+	// Adds the parking elements onto the table and sets the attributes of the elements
+    removeLocation.className = "btn btn-secondary";
 
-    // Provide bootstrap classes to change the layout of button
-    editCar.className = "btn btn-primary";
-    removeCar.className = "btn btn-secondary";
-    vehicleType.className = "capital";
+    address.textContent = doc.data().Address;
+    location.textContent = doc.data().Location.latitude + " " + doc.data().Location.longitude;
+    numCars.textContent = doc.data().Number_cars;
 
-    condition.textContent = doc.data().condition;
-    rate.textContent = doc.data().rate;
+    removeLocation.setAttribute("id", autoRemoveId);
+    removeLocation.setAttribute("value", doc.id);
+    removeLocation.textContent = "Remove";
 
-    // Dynamically add text content to the fields on table
-    carRego.textContent = doc.id;
-    model.textContent = doc.data().model;
-    parkingLocation.textContent = doc.data().parking_location;
-    vehicleType.textContent = doc.data().vehicle_type;
-    leased.textContent = doc.data().leased;
-
-    // Dynamically set attribute of id and value to the buttons
-    editCar.setAttribute("id", autoEditId);
-    removeCar.setAttribute("id", autoRemoveId);
-
-    editCar.setAttribute("value", doc.id);
-    removeCar.setAttribute("value", doc.id);
-
-    editCar.textContent = "Edit";
-    removeCar.textContent = "Remove";
-
-    // Change colour of status if available or leased
-    if (leased.textContent === "true") {
-        leased.textContent = "Leased";
-        leased.className = "text-danger";
-    } else if (leased.textContent === "false") {
-        leased.textContent = "Available"
-        leased.className = "text-success";
-    }
-
-	// Adds the car elements onto the table
-    td1.appendChild(carRego);
-    td2.appendChild(model);
-    td3.appendChild(parkingLocation);
-    td4.appendChild(vehicleType);
-    td5.appendChild(leased);
-    td6.appendChild(editCar);
-    td6.appendChild(removeCar);
+    td1.appendChild(address);
+    td2.appendChild(location);
+    td3.appendChild(numCars);
+    td4.appendChild(removeLocation);
 
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
-    tr.appendChild(td5);
-    tr.appendChild(td6);
 
-    listCars.appendChild(tr);
+    listLocations.appendChild(tr);
 
     rId = document.getElementById(autoRemoveId);
-    eId = document.getElementById(autoEditId);
 
-	// Stores car data temporarily, to be retrieved in the edit_car.html page.
-    editCar.addEventListener("click", function () {
-        sessionStorage.setItem("carID", eId.value);
-        sessionStorage.setItem("carType", vehicleType.textContent);
-        sessionStorage.setItem("carModel", model.textContent);
-        sessionStorage.setItem("carLocation", parkingLocation.textContent);
-        sessionStorage.setItem("con", condition.textContent);
-        sessionStorage.setItem("carStatus", leased.textContent);
-        sessionStorage.setItem("carRate", rate.textContent);
-        window.location.replace("edit_car.html");
-    });
-
-    // Validate if it can remove the selected car
-    removeCar.addEventListener("click", function () {
-        db.collection("cars").doc(rId.value).delete()
+    // Validates if it can remove the parking location
+    removeLocation.addEventListener("click", function () {
+        db.collection("parking_location").doc(rId.value).delete()
             .then(function () {
-                document.getElementById("removeSuccess").innerHTML = "Car was successfully removed";
+                document.getElementById("removeSuccess").innerHTML =
+                    "Parking location was successfully removed";
                 document.location.reload(true);
             })
             .catch(function (error) {
-                document.getElementById("removeFailure").innerHTML = "Car could not be removed";
+                document.getElementById("removeFailure").innerHTML =
+                    "Parking location could not be removed";
             });
     });
 }
 
-// Loops through all the cars in the database 
-function cars() {
-    db.collection("cars").get().then((snapshot) => {
+// Loops through all the parking's in the database 
+function locations() {
+    db.collection("parking_location").get().then((snapshot) => {
         snapshot.docs.forEach(doc => {
-            renderCars(doc);
+            renderLocations(doc);
         })
     })
 }
 
-// Function to go back to the add_car.html page
-function addCarButton() {
-    window.location.replace("add_car.html");
+// Function to go back to the add_parking.html page
+function addParkingButton() {
+    window.location.replace("add_parking.html");
 }
