@@ -22,7 +22,7 @@ function renderLocations(doc) {
     var numCars = document.createElement("span");
 	
     var removeLocation = document.createElement("button");
-	var autoRemoveId = Math.floor(Math.random() * 300);
+	var autoRemoveId = Math.floor(Math.random() * 900);
 	var rId = "";
 	
 	// Adds the parking elements onto the table and sets the attributes of the elements
