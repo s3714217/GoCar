@@ -23,7 +23,6 @@ function renderLocations(doc) {
 	
     var removeLocation = document.createElement("button");
 	var autoRemoveId = Math.floor(Math.random() * 900);
-	var rId = "";
 	
 	// Adds the parking elements onto the table and sets the attributes of the elements
     removeLocation.className = "btn btn-secondary";
@@ -48,7 +47,7 @@ function renderLocations(doc) {
 
     listLocations.appendChild(tr);
 
-    rId = document.getElementById(autoRemoveId);
+    var rId = document.getElementById(autoRemoveId);
 
     // Validates if it can remove the parking location
     removeLocation.addEventListener("click", function () {

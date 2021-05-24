@@ -38,9 +38,6 @@ function renderCars(doc) {
     // Won't be shown on table
     var condition = document.createElement("span");
     var rate = document.createElement("span");
-	
-	var rId = "";
-    var eId = "";
 
     // Provide bootstrap classes to change the layout of button
     editCar.className = "btn btn-primary";
@@ -94,8 +91,8 @@ function renderCars(doc) {
 
     listCars.appendChild(tr);
 
-    rId = document.getElementById(autoRemoveId);
-    eId = document.getElementById(autoEditId);
+    var rId = document.getElementById(autoRemoveId);
+    var eId = document.getElementById(autoEditId);
 
 	// Stores car data temporarily, to be retrieved in the edit_car.html page.
     editCar.addEventListener("click", function () {
