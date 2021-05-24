@@ -34,11 +34,6 @@ function renderUsers(doc) {
     var autoViewId = Math.floor(Math.random() * 900);
     var autoRemoveId = Math.floor(Math.random() * 900);
 	
-	var docId = "";
-    var vwId = "";
-    var vrId = "";
-    var rId = "";
-	
 	// Adds the user elements onto the table and sets the attributes of the elements
     verifyUser.className = "btn btn-primary";
     viewUser.className = "btn btn-primary";
@@ -92,10 +87,10 @@ function renderUsers(doc) {
 
     listUsers.appendChild(tr);
 
-    docId = doc.id;
-    vwId = document.getElementById(autoViewId);
-    vrId = document.getElementById(autoVerifyId);
-    rId = document.getElementById(autoRemoveId);
+    var docId = doc.id;
+    var vwId = document.getElementById(autoViewId);
+    var vrId = document.getElementById(autoVerifyId);
+    var rId = document.getElementById(autoRemoveId);
 
 	// Sets all of the required field inputs for the View User page
     viewUser.addEventListener("click", function () {

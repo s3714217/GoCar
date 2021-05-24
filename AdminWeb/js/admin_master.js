@@ -23,8 +23,6 @@ function renderAdmins(doc) {
 	var autoEditId = Math.floor(Math.random() * 900);
     var autoRemoveId = Math.floor(Math.random() * 900);
 	
-	var rID = "";
-	
 	// Adds the admins onto the table
     username.textContent = doc.id;
 
@@ -37,8 +35,8 @@ function renderAdmins(doc) {
     removeAdmin.setAttribute("value", doc.id);
     removeAdmin.textContent = "Remove";
     removeAdmin.className = "btn btn-secondary";
-
-    if (username.textContent === "admin_master@gocar.com"){
+	
+	if (username.textContent === "admin_master@gocar.com"){
 		removeAdmin.style.display = "none";
 	}
 
@@ -51,7 +49,7 @@ function renderAdmins(doc) {
 
     listAdmins.appendChild(tr);
 
-    rId = document.getElementById(autoRemoveId);
+    var rId = document.getElementById(autoRemoveId);
 
 	// Redirects to the change_password_master.html page.
     changePassword.addEventListener("click", function () {
@@ -61,20 +59,11 @@ function renderAdmins(doc) {
 
     // Validates if it can remove the admin account
     removeAdmin.addEventListener("click", function () {
-        db.collection("admins").doc(rId.value).get()
-            .then(function (doc) {
-                if (rId.value === "admin_master@gocar.com") {
-                    document.getElementById("removeAdminError").innerHTML =
-                        "Unable to delete master admin";
-                    return;
-                } else {
-                    db.collection("admins").doc(rId.value).delete()
-                        .then(function () {
-                            document.getElementById("removeAdminSuccess").innerHTML =
-                                "Admin was successfully removed";
-                            document.location.reload(true);
-                        })
-                }
+            db.collection("admins").doc(rId.value).delete()
+                .then(function () {
+                    document.getElementById("removeAdminSuccess").innerHTML =
+                        "Admin was successfully removed";
+                    document.location.reload(true);
             })
             .catch(function (error) {
                 document.getElementById("removeAdminFailure").innerHTML =

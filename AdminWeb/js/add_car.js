@@ -84,6 +84,7 @@ function carAdd() {
                     vehicle_type: optType
                 })
                 document.getElementById('carAddedSuccess').innerHTML = "Car was added successfully";
+                window.location.replace("car.html");
             }
         })
         .catch(function (error) {
