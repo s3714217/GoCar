@@ -1,17 +1,16 @@
-Steps
+## Steps
+1. Install git
 
-    1. Install git
+2. Open a command prompt or terminal window
 
-    2. Open a command prompt or terminal window
+3. From the prompt clone the repository using the git command: git clone https://github.com/s3714217/GoCar.git
 
-    3. From the prompt clone the repository using the git command: git clone https://github.com/s3714217/GoCar.git
+4. Navigate into the cloned directory "AdminWeb"
 
-    4. Navigate into the cloned directory "AdminWeb"
+5. Install the Google Cloud SDK
 
-    5. Install the Google Cloud SDK
+6. Set the project to deploy into using the command: gcloud config set project gocarrmit
 
-    6. Set the project to deploy into using the command: gcloud config set project gocarrmit
+7. Deploy the website to Google App Engine using the command: gcloud app deploy
 
-    7. Deploy the website to Google App Engine using the command: gcloud app deploy
-
-    8. Run the deployed website using the command: gcloud app browse
+8. Run the deployed website using the command: gcloud app browse
